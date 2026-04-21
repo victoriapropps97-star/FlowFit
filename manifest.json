@@ -2,7 +2,7 @@
   "name": "MojoFit - Elevate Your Wellness",
   "short_name": "MojoFit",
   "description": "Your intelligent fitness companion. Track squats, plan your muscle groups, and level up with Mojo the Monkey.",
-  "start_url": "/",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f111a",
   "theme_color": "#4f46e5",
