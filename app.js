@@ -139,7 +139,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         quoteFrequency: 3,
         lockEnabled: false,
         pin: null,
-        voiceGuidance: true
+        voiceGuidance: true,
+        onboardingDone: false,
+        accountCreated: false
     };
 
     window.partnerState = { active: false, name: '' };
@@ -1428,6 +1430,7 @@ const inspirationalQuotes = [
         if (allPossible.length === 0) return [];
 
         const prefs = appState.workoutPreference || {};
+        const isBeginner = appState.fitnessLevel === 'beginner';
         
         // Strategy: 2 heavy compound (first half of list), 3 accessories (second half)
         const compounds = allPossible.slice(0, Math.floor(allPossible.length / 2));
@@ -1436,12 +1439,16 @@ const inspirationalQuotes = [
         const shuffle = (array) => array.sort(() => Math.random() - 0.5);
         
         const selected = [
-            ...shuffle(compounds).slice(0, 2),
-            ...shuffle(accessories).slice(0, 3)
+            ...shuffle(compounds).slice(0, isBeginner ? 1 : 2),
+            ...shuffle(accessories).slice(0, isBeginner ? 2 : 3)
         ];
 
         return selected.map(ex => {
             let name = ex.name, sets = ex.sets;
+            // Adjust sets for beginners
+            if (isBeginner && sets && sets.includes('3')) {
+                sets = sets.replace('3', '2');
+            }
             if (ex.modifications) {
                 if (prefs.lowImpact && ex.modifications.lowImpact) name = ex.modifications.lowImpact.name;
                 else if (prefs.noEquipment && ex.modifications.noEquipment) name = ex.modifications.noEquipment.name;
@@ -2759,6 +2766,66 @@ const inspirationalQuotes = [
         }
     };
 
+    // --- Onboarding Flow Logic ---
+    const onboardingModal = document.getElementById('onboarding-modal');
+    const onboardNameInput = document.getElementById('onboard-name-input');
+    const onboardDots = document.querySelectorAll('.onboard-dots .dot');
+
+    window.openOnboarding = () => {
+        if (onboardingModal) onboardingModal.classList.remove('hidden');
+    };
+
+    window.onboardNext = (currentStep) => {
+        if (currentStep === 1) {
+            const name = onboardNameInput.value.trim();
+            if (!name) {
+                onboardNameInput.classList.add('error-shake');
+                setTimeout(() => onboardNameInput.classList.remove('error-shake'), 500);
+                return;
+            }
+            appState.displayName = name;
+            appState.accountCreated = true;
+        }
+
+        const currentSlide = document.getElementById(`onboard-slide-${currentStep}`);
+        const nextSlide = document.getElementById(`onboard-slide-${currentStep + 1}`);
+
+        if (currentSlide && nextSlide) {
+            currentSlide.classList.add('hidden');
+            nextSlide.classList.remove('hidden');
+            
+            // Update dots
+            onboardDots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentStep);
+            });
+        }
+    };
+
+    window.finishOnboarding = () => {
+        appState.onboardingDone = true;
+        saveState();
+        if (onboardingModal) onboardingModal.classList.add('hidden');
+        
+        // Final handoff to main app initialization
+        updateDashboard();
+        renderWeekSchedule();
+        renderNutrition('snack');
+        renderDailyPicks();
+        
+        // Show cycle setup card if that's still needed (onboarding Slide 5 transitions here)
+        showSetupOrTracker();
+        showMojoMessage(`Nice to meet you, ${appState.displayName}!`, "I've personalized your dashboard. Let's start with your weekly schedule!");
+    };
+
+    // Fitness Level Selector in Onboarding
+    document.querySelectorAll('.onboard-level-card').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.onboard-level-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            appState.fitnessLevel = card.dataset.level;
+        });
+    });
+
     // Step 1: regularity buttons
     document.querySelectorAll('.setup-regularity-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -3273,12 +3340,25 @@ const inspirationalQuotes = [
 
     // --- Final Initialization Call ---
     console.log("FlowFit: Initializing UI...");
-    updateDashboard();
-    renderWeekSchedule();
-    renderNutrition('snack');
-    renderDailyPicks();
-    if (typeof updateInsights === 'function') updateInsights();
-    if (typeof renderHistory === 'function') renderHistory();
+    if (!appState.onboardingDone) {
+        openOnboarding();
+    } else {
+        updateDashboard();
+        renderWeekSchedule();
+        renderNutrition('snack');
+        renderDailyPicks();
+        if (typeof updateInsights === 'function') updateInsights();
+        if (typeof renderHistory === 'function') renderHistory();
+    }
 
 });
+
+// Service Worker Registration
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('SW Registered', reg.scope))
+            .catch(err => console.log('SW Failed', err));
+    });
+}
 

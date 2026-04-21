@@ -2,19 +2,19 @@
 const CACHE_NAME = 'flowfit-v1';
 
 const PRECACHE_ASSETS = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  '/manifest.json',
-  '/assets/buddy1.png',
-  '/assets/buddy2.png',
-  '/assets/buddy3.png',
-  '/data/workouts.json',
-  '/data/nutrition.json',
-  '/data/ingredients.json',
-  '/data/cycle.json',
-  '/data/symptoms.json'
+  './',
+  'index.html',
+  'style.css',
+  'app.js',
+  'manifest.json',
+  'assets/buddy1.png',
+  'assets/buddy2.png',
+  'assets/buddy3.png',
+  'data/workouts.json',
+  'data/nutrition.json',
+  'data/ingredients.json',
+  'data/cycle.json',
+  'data/symptoms.json'
 ];
 
 // Install: pre-cache all critical assets
