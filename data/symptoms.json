@@ -1,0 +1,22 @@
+{
+  "cramps": {
+    "movement": "Try lying on your back with legs up the wall, or a gentle child's pose to relieve pelvic pressure.",
+    "nutrition": "Warm liquids like chamomile or raspberry leaf tea. Magnesium supplements or pumpkin seeds can reduce muscle spasms."
+  },
+  "bloating": {
+    "movement": "Gentle twists (like seated spinal twists) can aid digestion. Avoid heavy core workouts.",
+    "nutrition": "Stay extremely hydrated. Drink peppermint or dandelion root tea. Avoid excessive salt and highly processed carbs."
+  },
+  "fatigue": {
+    "movement": "Scale back your planned workout. Focus on mobility and breathing. It's okay to just walk today.",
+    "nutrition": "Small, frequent meals with protein and complex carbs to avoid blood sugar crashes. Avoid heavy sugar."
+  },
+  "headache": {
+    "movement": "Avoid jumping or inversions (keeping head below heart). Stick to steady, upright movements.",
+    "nutrition": "Hydrate immediately with electrolytes. Limit caffeine if it triggers you, or have a small amount if it helps."
+  },
+  "low-mood": {
+    "movement": "Endorphins help! A brisk walk outside in the sun or your favorite upbeat dance workout.",
+    "nutrition": "Omega-3s (salmon, chia seeds) and dark chocolate can help boost serotonin."
+  }
+}

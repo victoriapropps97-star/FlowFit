@@ -1,0 +1,9 @@
+{
+  "name": "flowfit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "npx serve -s . -l 8000",
+    "preview:python": "python -m http.server 8000"
+  }
+}

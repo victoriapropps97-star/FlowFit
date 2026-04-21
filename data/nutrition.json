@@ -1,0 +1,264 @@
+{
+  "snack": [
+    {
+      "name": "Greek Yogurt & Berries",
+      "desc": "High protein, antioxidants. Great pre-workout!",
+      "ingredients": ["yogurt", "dairy", "blueberries", "strawberries", "raspberries"],
+      "instructions": ["Scoop 1 cup Greek yogurt.", "Top with fresh berries.", "Add a drizzle of honey if desired."],
+      "macros": { "calories": 180, "protein": "18g", "carbs": "22g", "fat": "2g" },
+      "prepTime": "2 min"
+    },
+    {
+      "name": "Apple & Almond Butter",
+      "desc": "Healthy fats and simple carbs for energy.",
+      "ingredients": ["apple", "almonds", "nuts"],
+      "instructions": ["Slice one medium apple.", "Serve with 2 tablespoons of almond butter."],
+      "macros": { "calories": 250, "protein": "5g", "carbs": "25g", "fat": "16g" },
+      "prepTime": "3 min"
+    },
+    {
+      "name": "Rice Cakes & Cottage Cheese",
+      "desc": "Low calorie, high protein snack.",
+      "ingredients": ["rice", "cottage cheese", "dairy"],
+      "instructions": ["Top 2 rice cakes with 1/2 cup cottage cheese.", "Season with salt and pepper."],
+      "macros": { "calories": 150, "protein": "14g", "carbs": "18g", "fat": "3g" },
+      "prepTime": "3 min"
+    },
+    {
+      "name": "Roasted Edamame",
+      "desc": "Crunchy, plant-based protein snack.",
+      "ingredients": ["edamame", "soy", "salt"],
+      "instructions": ["Dry frozen edamame thoroughly.", "Coat with 1 tsp olive oil and salt.", "Roast at 400°F for 15 minutes."],
+      "macros": { "calories": 120, "protein": "11g", "carbs": "9g", "fat": "5g" },
+      "prepTime": "20 min"
+    },
+    {
+      "name": "Celery & Almond Butter",
+      "desc": "Low carb, high fiber snack with healthy fats.",
+      "ingredients": ["celery", "almonds", "nuts"],
+      "instructions": ["Clean and cut celery stalks.", "Fill with 1-2 tbsp almond butter."],
+      "macros": { "calories": 200, "protein": "4g", "carbs": "7g", "fat": "16g" },
+      "prepTime": "5 min"
+    },
+    {
+      "name": "Chia Pudding",
+      "desc": "Creamy, fiber-rich snack.",
+      "ingredients": ["chia seeds", "almond milk", "vanilla"],
+      "instructions": ["Mix 3 tbsp chia seeds with 1 cup almond milk.", "Let sit in fridge for at least 4 hours."],
+      "macros": { "calories": 190, "protein": "6g", "carbs": "14g", "fat": "11g" },
+      "prepTime": "4 hours"
+    },
+    {
+      "name": "Protein Shake",
+      "desc": "Quick and easy post-workout fuel.",
+      "ingredients": ["whey", "milk", "dairy", "banana"],
+      "instructions": ["Blend 1 scoop whey, 1 cup milk, and 1/2 banana until smooth."],
+      "macros": { "calories": 220, "protein": "26g", "carbs": "21g", "fat": "4g" },
+      "prepTime": "2 min"
+    },
+    {
+      "name": "Hummus & Carrots",
+      "desc": "A fiber-filled snack for steady energy.",
+      "ingredients": ["hummus", "chickpeas", "carrots", "garlic"],
+      "instructions": ["Serve 1/4 cup hummus with 1 cup baby carrots."],
+      "macros": { "calories": 150, "protein": "5g", "carbs": "18g", "fat": "9g" },
+      "prepTime": "2 min"
+    },
+    {
+      "name": "Hard Boiled Egg & Sriracha",
+      "desc": "Simple high-protein snack with a kick.",
+      "ingredients": ["eggs", "sriracha"],
+      "instructions": ["Boil egg for 9 mins.", "Peel and top with a dash of sriracha."],
+      "macros": { "calories": 75, "protein": "6g", "carbs": "1g", "fat": "5g" },
+      "prepTime": "10 min"
+    },
+    {
+      "name": "String Cheese & Apple",
+      "desc": "Convenient snack for balanced energy on the go.",
+      "ingredients": ["cheese", "dairy", "apple"],
+      "instructions": ["Pair 1 string cheese with 1 small apple."],
+      "macros": { "calories": 160, "protein": "7g", "carbs": "20g", "fat": "6g" },
+      "prepTime": "1 min"
+    }
+  ],
+  "meal": [
+    {
+      "name": "Chicken & Sweet Potato Bowl",
+      "desc": "A balanced fitness staple.",
+      "ingredients": ["chicken", "poultry", "sweet potato", "broccoli"],
+      "instructions": ["Roast sweet potato cubes.", "Pan-sear chicken breast.", "Steam broccoli and combine."],
+      "macros": { "calories": 450, "protein": "40g", "carbs": "38g", "fat": "12g" },
+      "prepTime": "25 min"
+    },
+    {
+      "name": "Salmon Quinoa Salad",
+      "desc": "Omega-3 rich meal for heart and muscle health.",
+      "ingredients": ["salmon", "fish", "quinoa", "spinach", "tomatoes"],
+      "instructions": ["Cook quinoa.", "Pan-sear salmon filleted.", "Mix with spinach and tomatoes."],
+      "macros": { "calories": 510, "protein": "32g", "carbs": "35g", "fat": "22g" },
+      "prepTime": "20 min"
+    },
+    {
+      "name": "Turkey Taco Salad",
+      "desc": "High protein, low carb taco alternative.",
+      "ingredients": ["turkey", "poultry", "lettuce", "tomatoes", "corn", "black beans"],
+      "instructions": ["Cook lean world turkey with seasoning.", "Layer with lettuce, corn, and beans.", "Top with salsa."],
+      "macros": { "calories": 380, "protein": "34g", "carbs": "28g", "fat": "14g" },
+      "prepTime": "15 min"
+    },
+    {
+      "name": "Tofu Stir Fry",
+      "desc": "Plant-based energy with plenty of fiber.",
+      "ingredients": ["tofu", "soy", "peppers", "rice", "onions"],
+      "instructions": ["Sauté tofu until golden.", "Add peppers and onions.", "Serve over brown rice."],
+      "macros": { "calories": 410, "protein": "22g", "carbs": "52g", "fat": "10g" },
+      "prepTime": "20 min"
+    },
+    {
+      "name": "Beef & Broccoli",
+      "desc": "Lean protein with a classic flavor.",
+      "ingredients": ["beef", "broccoli", "rice", "garlic", "ginger"],
+      "instructions": ["Sauté lean beef strips.", "Add broccoli and ginger sauce.", "Serve with rice."],
+      "macros": { "calories": 470, "protein": "38g", "carbs": "44g", "fat": "15g" },
+      "prepTime": "15 min"
+    },
+    {
+      "name": "Shrimp & Garlic Pasta",
+      "desc": "Light and flavorful seafood meal.",
+      "ingredients": ["shrimp", "seafood", "pasta", "wheat", "garlic"],
+      "instructions": ["Boil wheat pasta.", "Sauté shrimp with garlic.", "Combine with olive oil."],
+      "macros": { "calories": 430, "protein": "32g", "carbs": "50g", "fat": "12g" },
+      "prepTime": "15 min"
+    },
+    {
+      "name": "Lentil Soup",
+      "desc": "Warm and filling plant protein source.",
+      "ingredients": ["lentils", "carrots", "onions", "garlic"],
+      "instructions": ["Boil lentils with vegetable broth.", "Add carrots, onions, and herbs.", "Simmer for 30 minutes."],
+      "macros": { "calories": 320, "protein": "18g", "carbs": "48g", "fat": "4g" },
+      "prepTime": "40 min"
+    },
+    {
+      "name": "Cod with Lemon & Herbs",
+      "desc": "Lean white fish for low-calorie high protein.",
+      "ingredients": ["cod", "fish", "parsley", "lemon", "rice"],
+      "instructions": ["Bake cod at 400°F with lemon and herbs.", "Serve alongside light white rice."],
+      "macros": { "calories": 350, "protein": "30g", "carbs": "38g", "fat": "5g" },
+      "prepTime": "15 min"
+    },
+    {
+      "name": "Stuffed Bell Peppers",
+      "desc": "Rich in vitamins with lean turkey filling.",
+      "ingredients": ["peppers", "turkey", "poultry", "rice", "onions"],
+      "instructions": ["Clean peppers and hollow out.", "Fill with mixture of cooked turkey and rice.", "Bake at 375°F for 30 minutes."],
+      "macros": { "calories": 400, "protein": "28g", "carbs": "45g", "fat": "12g" },
+      "prepTime": "45 min"
+    },
+    {
+      "name": "Zucchini Boats",
+      "desc": "Low carb, high nutrients.",
+      "ingredients": ["zucchini", "beef", "cheese", "dairy"],
+      "instructions": ["Hollow zucchini.", "Fill with lean ground beef.", "Top with cheese and bake until tender."],
+      "macros": { "calories": 360, "protein": "32g", "carbs": "12g", "fat": "22g" },
+      "prepTime": "30 min"
+    },
+    {
+      "name": "Lamb & Rice Salad",
+      "desc": "A hearty Mediterranean inspired bowl.",
+      "ingredients": ["lamb", "rice", "cucumber", "lemon"],
+      "instructions": ["Grill lamb strips.", "Toss with rice and diced cucumbers.", "Dress with lemon and oil."],
+      "macros": { "calories": 530, "protein": "35g", "carbs": "42g", "fat": "26g" },
+      "prepTime": "25 min"
+    },
+    {
+      "name": "Quinoa Power Bowl",
+      "desc": "The ultimate fuel for busy days.",
+      "ingredients": ["quinoa", "chicken", "poultry", "zucchini", "peppers"],
+      "instructions": ["Roast zucchini and peppers.", "Combine with cooked quinoa and grilled chicken strips."],
+      "macros": { "calories": 440, "protein": "36g", "carbs": "45g", "fat": "12g" },
+      "prepTime": "20 min"
+    }
+  ],
+  "recovery": [
+    {
+      "name": "Choco-Banana Recovery Shake",
+      "desc": "Fast absorbing protein for muscle repair.",
+      "ingredients": ["whey", "milk", "dairy", "banana", "cocoa"],
+      "instructions": ["Blend whey, milk, 1 banana, and 1 tsp cocoa."],
+      "macros": { "calories": 290, "protein": "28g", "carbs": "38g", "fat": "5g" },
+      "prepTime": "2 min"
+    },
+    {
+      "name": "Tuna & Whole Grain Crackers",
+      "desc": "Simple, easy, high protein recovery.",
+      "ingredients": ["tuna", "fish", "crackers", "wheat"],
+      "instructions": ["Mix tuna with a little yogurt.", "Serve on 8 whole wheat crackers."],
+      "macros": { "calories": 260, "protein": "25g", "carbs": "22g", "fat": "6g" },
+      "prepTime": "5 min"
+    },
+    {
+      "name": "Cottage Cheese & Honey",
+      "desc": "Slow digesting protein to fuel recovery while you rest.",
+      "ingredients": ["cottage cheese", "dairy", "honey"],
+      "instructions": ["Serve 1 cup cottage cheese with 1 tsp honey."],
+      "macros": { "calories": 190, "protein": "24g", "carbs": "12g", "fat": "4g" },
+      "prepTime": "1 min"
+    },
+    {
+      "name": "Turkey & Avocado Slices",
+      "desc": "Healthy fats and clean protein.",
+      "ingredients": ["turkey", "poultry", "avocado"],
+      "instructions": ["Wrap avocado slices in 4 slices of deli turkey."],
+      "macros": { "calories": 220, "protein": "20g", "carbs": "8g", "fat": "12g" },
+      "prepTime": "3 min"
+    },
+    {
+      "name": "Hard Boiled Eggs & Spinach",
+      "desc": "A clean, simple complete protein source.",
+      "ingredients": ["eggs", "spinach"],
+      "instructions": ["Boil eggs.", "Slice and serve on a fresh bed of spinach."],
+      "macros": { "calories": 160, "protein": "13g", "carbs": "2g", "fat": "11g" },
+      "prepTime": "10 min"
+    },
+    {
+      "name": "Oatmeal & Protein Powder",
+      "desc": "The classic 'proats' for glycogen replenishment.",
+      "ingredients": ["oats", "whey", "milk", "dairy"],
+      "instructions": ["Cook oats as directed.", "Stir in 1 scoop protein powder once cooked."],
+      "macros": { "calories": 340, "protein": "30g", "carbs": "42g", "fat": "6g" },
+      "prepTime": "5 min"
+    },
+    {
+      "name": "Skillet Egg Scramble",
+      "desc": "Delicious high protein recovery meal.",
+      "ingredients": ["eggs", "spinach", "bell peppers"],
+      "instructions": ["Sauté peppers and spinach.", "Scramble in 3 eggs and cook through."],
+      "macros": { "calories": 280, "protein": "21g", "carbs": "6g", "fat": "18g" },
+      "prepTime": "8 min"
+    },
+    {
+      "name": "Bacon & Egg Protein Cup",
+      "desc": "A savory reward for a hard workout session.",
+      "ingredients": ["bacon", "pork", "eggs"],
+      "instructions": ["Line muffin tin with bacon.", "Crack an egg into each and bake at 375°F for 15 minutes."],
+      "macros": { "calories": 190, "protein": "14g", "carbs": "1g", "fat": "14g" },
+      "prepTime": "20 min"
+    },
+    {
+      "name": "Banana & PB Smoothie",
+      "desc": "Tasty, high energy recovery fuel.",
+      "ingredients": ["banana", "peanuts", "nuts", "milk", "dairy"],
+      "instructions": ["Blend 1 banana, 2 tbsp peanut butter, and 1 cup milk."],
+      "macros": { "calories": 380, "protein": "14g", "carbs": "42g", "fat": "18g" },
+      "prepTime": "2 min"
+    },
+    {
+      "name": "Smoothie Bowl with Seeds",
+      "desc": "Nutrient-dense recovery with crunch.",
+      "ingredients": ["banana", "blueberries", "yogurt", "sunflower seeds", "pumpkin seeds"],
+      "instructions": ["Blend banana, berries and yogurt.", "Top with sunflower and pumpkin seeds."],
+      "macros": { "calories": 310, "protein": "12g", "carbs": "44g", "fat": "10g" },
+      "prepTime": "5 min"
+    }
+  ]
+}

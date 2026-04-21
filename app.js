@@ -1,424 +1,29 @@
-// Data Models
-const workoutData = {
-    'back-shoulders': [
-        { name: "Dumbbell Rows", sets: "3 sets of 10-12 reps", desc: "Keep that back straight and pull to your hips!" },
-        { name: "Lateral Raises", sets: "4 sets of 15 reps", desc: "Control the weight on the way down." },
-        { name: "Pull-ups (or Assisted)", sets: "3 sets to failure", desc: "Focus on pulling with your lats, not your arms." },
-        { name: "Overhead Press", sets: "4 sets of 8-10 reps", desc: "Core tight, press overhead without arching your back too much." },
-        { name: "Face Pulls", sets: "3 sets of 15 reps", desc: "Great for shoulder health and posture." },
-        { name: "Rear Delt Flyes", sets: "3 sets of 12-15 reps", desc: "Squeeze at the top of the movement." },
-        { name: "Lat Pulldown", sets: "3 sets of 10-12 reps", desc: "Bring the bar to your upper chest." }
-    ],
-    'legs-glutes': [
-        { name: "Goblet Squats", sets: "4 sets of 10 reps", desc: "Chest up, sink deep into the hips." },
-        { name: "Romanian Deadlifts (RDL)", sets: "3 sets of 12 reps", desc: "Hinge at the hips, feel the stretch in your hamstrings." },
-        { name: "Bulgarian Split Squats", sets: "3 sets of 8-10 reps per leg", desc: "The burn means it's working." },
-        { name: "Glute Bridges", sets: "3 sets of 15 reps", desc: "Squeeze your glutes hard at the top." },
-        { name: "Leg Press", sets: "4 sets of 12 reps", desc: "Don't lock your knees out!" },
-        { name: "Walking Lunges", sets: "3 sets of 20 steps", desc: "Keep your balance and stay low." },
-        { name: "Calf Raises", sets: "4 sets of 20 reps", desc: "Full stretch at the bottom." }
-    ],
-    'chest-triceps': [
-        { name: "Push-ups", sets: "3 sets to failure", desc: "Keep your elbows tucked at a 45-degree angle." },
-        { name: "Dumbbell Bench Press", sets: "4 sets of 8-10 reps", desc: "Squeeze the chest at the top." },
-        { name: "Tricep Dips", sets: "3 sets of 10-12 reps", desc: "Keep your torso upright for more triceps focus." },
-        { name: "Incline Chest Press", sets: "3 sets of 10 reps", desc: "Targeting the upper chest." },
-        { name: "Overhead Tricep Extension", sets: "3 sets of 12-15 reps", desc: "Keep your elbows pointing towards the ceiling." },
-        { name: "Cable Crossovers", sets: "3 sets of 15 reps", desc: "Imagine hugging a large tree." },
-        { name: "Skull Crushers", sets: "3 sets of 10-12 reps", desc: "Control the weight!" }
-    ],
-    'core-cardio': [
-        { name: "Plank", sets: "3 sets, hold for 45-60s", desc: "Squeeze your glutes and brace your core." },
-        { name: "Russian Twists", sets: "3 sets of 20 reps", desc: "Control the twist, don't rush." },
-        { name: "Mountain Climbers", sets: "3 sets of 45 seconds", desc: "Keep a steady pace." },
-        { name: "Jump Rope", sets: "5 sets of 2 minutes", desc: "Light on your feet!" },
-        { name: "Bicycle Crunches", sets: "3 sets of 20 reps per side", desc: "Elbow to opposite knee." },
-        { name: "High Knees", sets: "4 sets of 30 seconds", desc: "Pump your arms!" },
-        { name: "Burpees", sets: "3 sets of 10 reps", desc: "Love them or hate them, they work." }
-    ],
-    'full-body': [
-        { name: "Kettlebell Swings", sets: "4 sets of 15 reps", desc: "It's a hip hinge, not a squat." },
-        { name: "Thrusters", sets: "3 sets of 12 reps", desc: "Seamless movement from squat to press." },
-        { name: "Renegade Rows", sets: "3 sets of 10 reps per side", desc: "Keep your hips completely still." },
-        { name: "Wall Balls", sets: "3 sets of 15 reps", desc: "Explosive power from the squat." },
-        { name: "Bear Crawls", sets: "3 sets of 20 meters", desc: "Keep your hips low and shoulders engaged." }
-    ],
-    'biceps': [
-        { name: "Dumbbell Curls", sets: "3 sets of 12 reps", desc: "Full range of motion, squeeze at the top." },
-        { name: "Hammer Curls", sets: "3 sets of 12 reps", desc: "Target the brachialis and forearms." },
-        { name: "Preacher Curls", sets: "3 sets of 10 reps", desc: "Isolate those biceps, no swinging!" },
-        { name: "Concentration Curls", sets: "3 sets of 12 reps per arm", desc: "Focus on the peak contraction." }
-    ],
-    'triceps': [
-        { name: "Tricep Pushdowns", sets: "4 sets of 12 reps", desc: "Lock out your elbows at the bottom." },
-        { name: "Overhead Extension", sets: "3 sets of 12 reps", desc: "Keep elbows close to your ears." },
-        { name: "Dips", sets: "3 sets of 15 reps", desc: "Leaning forward hits more chest, stay upright for triceps." },
-        { name: "Close Grip Press", sets: "3 sets of 10 reps", desc: "Keep elbows tucked in tight." }
-    ],
-    'quads': [
-        { name: "Leg Press", sets: "4 sets of 12 reps", desc: "Push through your heels." },
-        { name: "Leg Extensions", sets: "3 sets of 15 reps", desc: "Pause at the top for maximum tension." },
-        { name: "Hack Squat", sets: "3 sets of 10 reps", desc: "Great for quad isolation." },
-        { name: "Step Ups", sets: "3 sets of 12 reps per leg", desc: "Control the movement on the way down." }
-    ],
-    'glutes-hams': [
-        { name: "Hip Thrusts", sets: "4 sets of 10 reps", desc: "The king of glute exercises. Squeeze hard!" },
-        { name: "Leg Curls", sets: "3 sets of 12 reps", desc: "Don't let your hips lift off the pad." },
-        { name: "Sumo Deadlifts", sets: "3 sets of 8 reps", desc: "Wide stance, focus on the glute drive." },
-        { name: "Bulgarian Split Squats", sets: "3 sets of 10 reps", desc: "Elevate your back foot, stay upright." }
-    ]
-};
-
-const nutritionData = {
-    'snack': [
-        { 
-            name: "Greek Yogurt & Berries", 
-            desc: "High protein, antioxidants. Great pre-workout!", 
-            ingredients: ["yogurt", "dairy", "blueberries", "strawberries", "raspberries"],
-            instructions: ["Scoop 1 cup Greek yogurt.", "Top with fresh berries.", "Add a drizzle of honey if desired."],
-            macros: { calories: 180, protein: "18g", carbs: "22g", fat: "2g" },
-            prepTime: "2 min"
-        },
-        { 
-            name: "Apple & Almond Butter", 
-            desc: "Healthy fats and simple carbs for energy.", 
-            ingredients: ["apple", "almonds", "nuts"],
-            instructions: ["Slice one medium apple.", "Serve with 2 tablespoons of almond butter."],
-            macros: { calories: 250, protein: "5g", carbs: "25g", fat: "16g" },
-            prepTime: "3 min"
-        },
-        { 
-            name: "Rice Cakes & Cottage Cheese", 
-            desc: "Low calorie, high protein snack.", 
-            ingredients: ["rice", "cottage cheese", "dairy"],
-            instructions: ["Top 2 rice cakes with 1/2 cup cottage cheese.", "Season with salt and pepper."],
-            macros: { calories: 150, protein: "14g", carbs: "18g", fat: "3g" },
-            prepTime: "3 min"
-        },
-        { 
-            name: "Roasted Edamame", 
-            desc: "Crunchy, plant-based protein snack.", 
-            ingredients: ["edamame", "soy", "salt"],
-            instructions: ["Dry frozen edamame thoroughly.", "Coat with 1 tsp olive oil and salt.", "Roast at 400°F for 15 minutes."],
-            macros: { calories: 120, protein: "11g", carbs: "9g", fat: "5g" },
-            prepTime: "20 min"
-        },
-        { 
-            name: "Celery & Almond Butter", 
-            desc: "Low carb, high fiber snack with healthy fats.", 
-            ingredients: ["celery", "almonds", "nuts"],
-            instructions: ["Clean and cut celery stalks.", "Fill with 1-2 tbsp almond butter."],
-            macros: { calories: 200, protein: "4g", carbs: "7g", fat: "16g" },
-            prepTime: "5 min"
-        },
-        { 
-            name: "Chia Pudding", 
-            desc: "Creamy, fiber-rich snack.", 
-            ingredients: ["chia seeds", "almond milk", "vanilla"],
-            instructions: ["Mix 3 tbsp chia seeds with 1 cup almond milk.", "Let sit in fridge for at least 4 hours."],
-            macros: { calories: 190, protein: "6g", carbs: "14g", fat: "11g" },
-            prepTime: "4 hours"
-        },
-        { 
-            name: "Protein Shake", 
-            desc: "Quick and easy post-workout fuel.", 
-            ingredients: ["whey", "milk", "dairy", "banana"],
-            instructions: ["Blend 1 scoop whey, 1 cup milk, and 1/2 banana until smooth."],
-            macros: { calories: 220, protein: "26g", carbs: "21g", fat: "4g" },
-            prepTime: "2 min"
-        },
-        { 
-            name: "Hummus & Carrots", 
-            desc: "A fiber-filled snack for steady energy.", 
-            ingredients: ["hummus", "chickpeas", "carrots", "garlic"],
-            instructions: ["Serve 1/4 cup hummus with 1 cup baby carrots."],
-            macros: { calories: 150, protein: "5g", carbs: "18g", fat: "9g" },
-            prepTime: "2 min"
-        },
-        { 
-            name: "Hard Boiled Egg & Sriracha", 
-            desc: "Simple high-protein snack with a kick.", 
-            ingredients: ["eggs", "sriracha"],
-            instructions: ["Boil egg for 9 mins.", "Peel and top with a dash of sriracha."],
-            macros: { calories: 75, protein: "6g", carbs: "1g", fat: "5g" },
-            prepTime: "10 min"
-        },
-        { 
-            name: "String Cheese & Apple", 
-            desc: "Convenient snack for balanced energy on the go.", 
-            ingredients: ["cheese", "dairy", "apple"],
-            instructions: ["Pair 1 string cheese with 1 small apple."],
-            macros: { calories: 160, protein: "7g", carbs: "20g", fat: "6g" },
-            prepTime: "1 min"
-        }
-    ],
-    'meal': [
-        { 
-            name: "Chicken & Sweet Potato Bowl", 
-            desc: "A balanced fitness staple.", 
-            ingredients: ["chicken", "poultry", "sweet potato", "broccoli"],
-            instructions: ["Roast sweet potato cubes.", "Pan-sear chicken breast.", "Steam broccoli and combine."],
-            macros: { calories: 450, protein: "40g", carbs: "38g", fat: "12g" },
-            prepTime: "25 min"
-        },
-        { 
-            name: "Salmon Quinoa Salad", 
-            desc: "Omega-3 rich meal for heart and muscle health.", 
-            ingredients: ["salmon", "fish", "quinoa", "spinach", "tomatoes"],
-            instructions: ["Cook quinoa.", "Pan-sear salmon filleted.", "Mix with spinach and tomatoes."],
-            macros: { calories: 510, protein: "32g", carbs: "35g", fat: "22g" },
-            prepTime: "20 min"
-        },
-        { 
-            name: "Turkey Taco Salad", 
-            desc: "High protein, low carb taco alternative.", 
-            ingredients: ["turkey", "poultry", "lettuce", "tomatoes", "corn", "black beans"],
-            instructions: ["Cook lean world turkey with seasoning.", "Layer with lettuce, corn, and beans.", "Top with salsa."],
-            macros: { calories: 380, protein: "34g", carbs: "28g", fat: "14g" },
-            prepTime: "15 min"
-        },
-        { 
-            name: "Tofu Stir Fry", 
-            desc: "Plant-based energy with plenty of fiber.", 
-            ingredients: ["tofu", "soy", "peppers", "rice", "onions"],
-            instructions: ["Sauté tofu until golden.", "Add peppers and onions.", "Serve over brown rice."],
-            macros: { calories: 410, protein: "22g", carbs: "52g", fat: "10g" },
-            prepTime: "20 min"
-        },
-        { 
-            name: "Beef & Broccoli", 
-            desc: "Lean protein with a classic flavor.", 
-            ingredients: ["beef", "broccoli", "rice", "garlic", "ginger"],
-            instructions: ["Sauté lean beef strips.", "Add broccoli and ginger sauce.", "Serve with rice."],
-            macros: { calories: 470, protein: "38g", carbs: "44g", fat: "15g" },
-            prepTime: "15 min"
-        },
-        { 
-            name: "Shrimp & Garlic Pasta", 
-            desc: "Light and flavorful seafood meal.", 
-            ingredients: ["shrimp", "seafood", "pasta", "wheat", "garlic"],
-            instructions: ["Boil wheat pasta.", "Sauté shrimp with garlic.", "Combine with olive oil."],
-            macros: { calories: 430, protein: "32g", carbs: "50g", fat: "12g" },
-            prepTime: "15 min"
-        },
-        { 
-            name: "Lentil Soup", 
-            desc: "Warm and filling plant protein source.", 
-            ingredients: ["lentils", "carrots", "onions", "garlic"],
-            instructions: ["Boil lentils with vegetable broth.", "Add carrots, onions, and herbs.", "Simmer for 30 minutes."],
-            macros: { calories: 320, protein: "18g", carbs: "48g", fat: "4g" },
-            prepTime: "40 min"
-        },
-        { 
-            name: "Cod with Lemon & Herbs", 
-            desc: "Lean white fish for low-calorie high protein.", 
-            ingredients: ["cod", "fish", "parsley", "lemon", "rice"],
-            instructions: ["Bake cod at 400°F with lemon and herbs.", "Serve alongside light white rice."],
-            macros: { calories: 350, protein: "30g", carbs: "38g", fat: "5g" },
-            prepTime: "15 min"
-        },
-        { 
-            name: "Stuffed Bell Peppers", 
-            desc: "Rich in vitamins with lean turkey filling.", 
-            ingredients: ["peppers", "turkey", "poultry", "rice", "onions"],
-            instructions: ["Clean peppers and hollow out.", "Fill with mixture of cooked turkey and rice.", "Bake at 375°F for 30 minutes."],
-            macros: { calories: 400, protein: "28g", carbs: "45g", fat: "12g" },
-            prepTime: "45 min"
-        },
-        { 
-            name: "Zucchini Boats", 
-            desc: "Low carb, high nutrients.", 
-            ingredients: ["zucchini", "beef", "cheese", "dairy"],
-            instructions: ["Hollow zucchini.", "Fill with lean ground beef.", "Top with cheese and bake until tender."],
-            macros: { calories: 360, protein: "32g", carbs: "12g", fat: "22g" },
-            prepTime: "30 min"
-        },
-        { 
-            name: "Lamb & Rice Salad", 
-            desc: "A hearty Mediterranean inspired bowl.", 
-            ingredients: ["lamb", "rice", "cucumber", "lemon"],
-            instructions: ["Grill lamb strips.", "Toss with rice and diced cucumbers.", "Dress with lemon and oil."],
-            macros: { calories: 530, protein: "35g", carbs: "42g", fat: "26g" },
-            prepTime: "25 min"
-        },
-        { 
-            name: "Quinoa Power Bowl", 
-            desc: "The ultimate fuel for busy days.", 
-            ingredients: ["quinoa", "chicken", "poultry", "zucchini", "peppers"],
-            instructions: ["Roast zucchini and peppers.", "Combine with cooked quinoa and grilled chicken strips."],
-            macros: { calories: 440, protein: "36g", carbs: "45g", fat: "12g" },
-            prepTime: "20 min"
-        }
-    ],
-    'recovery': [
-        { 
-            name: "Choco-Banana Recovery Shake", 
-            desc: "Fast absorbing protein for muscle repair.", 
-            ingredients: ["whey", "milk", "dairy", "banana", "cocoa"],
-            instructions: ["Blend whey, milk, 1 banana, and 1 tsp cocoa."],
-            macros: { calories: 290, protein: "28g", carbs: "38g", fat: "5g" },
-            prepTime: "2 min"
-        },
-        { 
-            name: "Tuna & Whole Grain Crackers", 
-            desc: "Simple, easy, high protein recovery.", 
-            ingredients: ["tuna", "fish", "crackers", "wheat"],
-            instructions: ["Mix tuna with a little yogurt.", "Serve on 8 whole wheat crackers."],
-            macros: { calories: 260, protein: "25g", carbs: "22g", fat: "6g" },
-            prepTime: "5 min"
-        },
-        { 
-            name: "Cottage Cheese & Honey", 
-            desc: "Slow digesting protein to fuel recovery while you rest.", 
-            ingredients: ["cottage cheese", "dairy", "honey"],
-            instructions: ["Serve 1 cup cottage cheese with 1 tsp honey."],
-            macros: { calories: 190, protein: "24g", carbs: "12g", fat: "4g" },
-            prepTime: "1 min"
-        },
-        { 
-            name: "Turkey & Avocado Slices", 
-            desc: "Healthy fats and clean protein.", 
-            ingredients: ["turkey", "poultry", "avocado"],
-            instructions: ["Wrap avocado slices in 4 slices of deli turkey."],
-            macros: { calories: 220, protein: "20g", carbs: "8g", fat: "12g" },
-            prepTime: "3 min"
-        },
-        { 
-            name: "Hard Boiled Eggs & Spinach", 
-            desc: "A clean, simple complete protein source.", 
-            ingredients: ["eggs", "spinach"],
-            instructions: ["Boil eggs.", "Slice and serve on a fresh bed of spinach."],
-            macros: { calories: 160, protein: "13g", carbs: "2g", fat: "11g" },
-            prepTime: "10 min"
-        },
-        { 
-            name: "Oatmeal & Protein Powder", 
-            desc: "The classic 'proats' for glycogen replenishment.", 
-            ingredients: ["oats", "whey", "milk", "dairy"],
-            instructions: ["Cook oats as directed.", "Stir in 1 scoop protein powder once cooked."],
-            macros: { calories: 340, protein: "30g", carbs: "42g", fat: "6g" },
-            prepTime: "5 min"
-        },
-        { 
-            name: "Skillet Egg Scramble", 
-            desc: "Delicious high protein recovery meal.", 
-            ingredients: ["eggs", "spinach", "bell peppers"],
-            instructions: ["Sauté peppers and spinach.", "Scramble in 3 eggs and cook through."],
-            macros: { calories: 280, protein: "21g", carbs: "6g", fat: "18g" },
-            prepTime: "8 min"
-        },
-        { 
-            name: "Bacon & Egg Protein Cup", 
-            desc: "A savory reward for a hard workout session.", 
-            ingredients: ["bacon", "pork", "eggs"],
-            instructions: ["Line muffin tin with bacon.", "Crack an egg into each and bake at 375°F for 15 minutes."],
-            macros: { calories: 190, protein: "14g", carbs: "1g", fat: "14g" },
-            prepTime: "20 min"
-        },
-        { 
-            name: "Banana & PB Smoothie", 
-            desc: "Tasty, high energy recovery fuel.", 
-            ingredients: ["banana", "peanuts", "nuts", "milk", "dairy"],
-            instructions: ["Blend 1 banana, 2 tbsp peanut butter, and 1 cup milk."],
-            macros: { calories: 380, protein: "14g", carbs: "42g", fat: "18g" },
-            prepTime: "2 min"
-        },
-        { 
-            name: "Smoothie Bowl with Seeds", 
-            desc: "Nutrient-dense recovery with crunch.", 
-            ingredients: ["banana", "blueberries", "yogurt", "sunflower seeds", "pumpkin seeds"],
-            instructions: ["Blend banana, berries and yogurt.", "Top with sunflower and pumpkin seeds."],
-            macros: { calories: 310, protein: "12g", carbs: "44g", fat: "10g" },
-            prepTime: "5 min"
-        }
-    ]
-};
-
-const commonIngredients = [
-    // --- Major & Common Allergies ---
-    "milk", "dairy", "eggs", "peanuts", "almonds", "walnuts", "cashews", "pistachios", "pecans", "hazelnuts", "tree nuts", 
-    "wheat", "gluten", "soy", "tofu", "tempeh", "edamame", "fish", "salmon", "tuna", "cod", "bass", "shellfish", "shrimp", 
-    "crab", "lobster", "mussels", "sesame", "mustard", "celery", "lupin", "sulfites", "corn", "gelatin", "beef", "pork", 
-
-    // --- The "Ick" Foods (Common Dislikes) ---
-    "mushrooms", "cilantro", "onions", "raw onions", "garlic", "olives", "pickles", "anchovies", "sardines", "beets", 
-    "brussels sprouts", "liver", "capers", "blue cheese", "cottage cheese", "mayonnaise", "eggplant", "okra", "raisins", 
-    "asparagus", "kale", "cauliflower", "squid", "oysters", "caviar", "licorice", "peas", "raw tomatoes", "mayo", 
-    "artichokes", "tofu", "radishes", "cabbage", "vinegar", "spicy peppers", "jalapenos", "cilantro", "goat cheese",
-
-    // --- General Cooking Ingredients (For Filtering) ---
-    "chicken", "poultry", "turkey", "lamb", "bacon", "honey", "banana", "apple", "blueberries", "strawberries", 
-    "raspberries", "broccoli", "spinach", "carrots", "bell peppers", "zucchini", "cucumber", "avocado", "sweet potato", 
-    "white potato", "rice", "brown rice", "pasta", "quinoa", "lentils", "chickpeas", "hummus", "black beans", "kidney beans", 
-    "oats", "chia seeds", "flax seeds", "sunflower seeds", "pumpkin seeds", "cinnamon", "ginger", "lemon", "lime", 
-    "coconut", "almond milk", "oat milk", "greek yogurt", "butter", "olive oil", "maple syrup", "stevia"
-];
-
-const cycleData = {
-    'menstrual': {
-        mood: "You might feel inward, sensitive, or seeking rest. It's perfectly okay to take a break and focus on self-care.",
-        baseMovement: "Low intensity (Walking, Stretching, Yoga). Focus on decongesting the pelvic floor. Avoid heavy core work.",
-        baseNutrition: "Iron-rich foods (Red meat, Spinach, Lentils). Warm soothing liquids. Magnesium (Dark chocolate, Almonds) to reduce cramps."
-    },
-    'follicular': {
-        mood: "Estrogen is rising! You may feel more confident, creative, and ready to socialize or try new things.",
-        baseMovement: "High intensity (Powerlifting, HIIT, Boxing). You are most resilient to stress right now. Push for those PRs!",
-        baseNutrition: "Fermented foods for gut health. Sprouts, leafy greens, and protein-packed grains like Quinoa to fuel your energy."
-    },
-    'ovulatory': {
-        mood: "Confidence and energy usually peak. You might feel more sociable, attractive, and physically capable.",
-        baseMovement: "Explosive movement (Sprinting, Heavy lifting). Your strength is likely at its absolute highest this week.",
-        baseNutrition: "Anti-inflammatory foods (Berries, Turmeric). Plenty of water and fiber to help the body process estrogen effectively."
-    },
-    'luteal': {
-        mood: "Progesterone is high. You might feel more introverted, prone to PMS symptoms, or craving comfort and slower paces.",
-        baseMovement: "Moderate to Low intensity. Focus on strength maintenance and mobility. Listen to your body's energy signals.",
-        baseNutrition: "Complex carbs (sweet potatoes, brown rice) stabilize blood sugar. Magnesium-rich foods help combat symptoms."
-    }
-};
-
-const symptomData = {
-    'cramps': {
-        movement: "Try lying on your back with legs up the wall, or a gentle child's pose to relieve pelvic pressure.",
-        nutrition: "Warm liquids like chamomile or raspberry leaf tea. Magnesium supplements or pumpkin seeds can reduce muscle spasms."
-    },
-    'bloating': {
-        movement: "Gentle twists (like seated spinal twists) can aid digestion. Avoid heavy core workouts.",
-        nutrition: "Stay extremely hydrated. Drink peppermint or dandelion root tea. Avoid excessive salt and highly processed carbs."
-    },
-    'fatigue': {
-        movement: "Scale back your planned workout. Focus on mobility and breathing. It's okay to just walk today.",
-        nutrition: "Small, frequent meals with protein and complex carbs to avoid blood sugar crashes. Avoid heavy sugar."
-    },
-    'headache': {
-        movement: "Avoid jumping or inversions (keeping head below heart). Stick to steady, upright movements.",
-        nutrition: "Hydrate immediately with electrolytes. Limit caffeine if it triggers you, or have a small amount if it helps."
-    },
-    'low-mood': {
-        movement: "Endorphins help! A brisk walk outside in the sun or your favorite upbeat dance workout.",
-        nutrition: "Omega-3s (salmon, chia seeds) and dark chocolate can help boost serotonin."
-    },
-    'insomnia': {
-        movement: "Gentle, repetitive stretches like slow yoga or a relaxing evening walk to prepare the body for sleep.",
-        nutrition: "Tart cherry juice or a small handful of walnuts before bed. Magnesium can also promote better sleep."
-    },
-    'abdominal-pain': {
-        movement: "Deep belly breathing and supported child's pose. Avoid high-impact jumping or heavy lifting.",
-        nutrition: "Ginger tea or warm broth to soothe the stomach. Avoid highly spicy or acidic foods."
-    },
-    'tender-breasts': {
-        movement: "Low-impact cardio and lower-body focus. Avoid heavy chest presses or exercises requiring bouncing.",
-        nutrition: "Reduce caffeine and salt intake. Vitamin E rich foods like almonds and spinach may help."
-    },
-    'backache': {
-        movement: "Cat-cow stretches, gentle pelvic tilts, and avoiding heavy axial loading (like heavy barbell squats).",
-        nutrition: "Turmeric or ginger tea for anti-inflammatory benefits. Drink plenty of water."
-    },
-    'acne': {
-        movement: "Ensure you shower and cleanse your face immediately after a workout. Sweating is good, just don't let it sit!",
-        nutrition: "Focus on zinc-rich foods (pumpkin seeds), probiotics, and avoid excess dairy or high-glycemic foods if they trigger you."
-    }
-};
+// Data models were moved to JSON files under /data to improve modularity and reduce bundle size.
+// This loader fetches them at runtime and exposes the data as globals on `window`.
+async function loadData() {
+  console.log('FlowFit: Starting loadData');
+  const base = 'data';
+  try {
+    console.log('FlowFit: Fetching data files...');
+    const [workoutDataRes, nutritionDataRes, ingredientsRes, cycleDataRes, symptomsRes] = await Promise.all([
+      fetch(`${base}/workouts.json`).then(r => r.json()),
+      fetch(`${base}/nutrition.json`).then(r => r.json()),
+      fetch(`${base}/ingredients.json`).then(r => r.json()),
+      fetch(`${base}/cycle.json`).then(r => r.json()),
+      fetch(`${base}/symptoms.json`).then(r => r.json())
+    ]);
+    console.log('FlowFit: Fetched data, setting globals');
+    window.workoutData = workoutDataRes;
+    window.nutritionData = nutritionDataRes;
+    window.commonIngredients = ingredientsRes;
+    window.cycleData = cycleDataRes;
+    window.symptomData = symptomsRes;
+    console.log('FlowFit: Data loaded from /data', window.workoutData ? 'workouts ok' : 'workouts missing');
+  } catch (err) {
+    console.error('FlowFit: Failed to load data files', err);
+  }
+}
+// loadData(); // moved inside DOMContentLoaded
 
 const availableSymptoms = [
     { id: 'cramps', label: 'Cramps' },
@@ -485,7 +90,9 @@ const mobilityAdvice = {
 };
 
 // Event Listeners on DOM Load
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadData(); // load data first
+
     // --- State Management ---
     const defaultState = {
         streak: 0,
@@ -493,7 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
         lastWorkoutDate: null,
         workoutHistory: [],
         lastPeriodStart: null,
+        cycleSetupDone: false,
+        cycleRegularity: null,
         irregularCycles: false,
+        periodHistory: [],
         allergies: [],
         ickFoods: [],
         showMacros: false,
@@ -501,8 +111,38 @@ document.addEventListener('DOMContentLoaded', () => {
         dislikes: [],
         buddyXP: 0,
         buddyLevel: 1,
-        customWorkouts: []
+        customWorkouts: [],
+        displayName: '',
+        units: 'lbs',
+        fitnessLevel: 'intermediate',
+        waterGoal: 8,
+        defaultRestTimer: 60,
+        reduceMotion: false,
+        dayPlans: {},
+        userPresets: {},
+        workoutPreference: {
+            requireModified: false,
+            lowImpact: false,
+            noEquipment: false
+        },
+        weeklySchedule: {},
+        cycleLength: 28,
+        conditions: {
+            pcos: false,
+            endometriosis: false,
+            'hormonal-bc': false,
+            perimenopause: false,
+            hysterectomy: false,
+            pregnancy: false,
+            postpartum: false
+        },
+        quoteFrequency: 3,
+        lockEnabled: false,
+        pin: null,
+        voiceGuidance: true
     };
+
+    window.partnerState = { active: false, name: '' };
 
     let appState = JSON.parse(localStorage.getItem('flowfit_state')) || defaultState;
     
@@ -514,16 +154,78 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('flowfit_state', JSON.stringify(appState));
     };
 
+const inspirationalQuotes = [
+    "Strength does not come from physical capacity. It comes from an indomitable will.",
+    "The only bad workout is the one that didn't happen.",
+    "Your body can do it. It's your mind you have to convince.",
+    "Fitness is not about being better than someone else. It's about being better than you used to be.",
+    "Push yourself, because no one else is going to do it for you.",
+    "The hardest lift of all is lifting your butt off the couch.",
+    "Sweat is just fat crying.",
+    "You don't have to be great to start, but you have to start to be great.",
+    "Believe you can and you're halfway there.",
+    "The pain you feel today will be the strength you feel tomorrow."
+];
+
     const updateDashboard = () => {
         const streakDisplay = document.getElementById('streak-display');
         const progressBarFill = document.getElementById('progress-bar-fill');
         const progressText = document.getElementById('progress-text');
+        const dailyQuote = document.getElementById('daily-quote');
+        const welcomeHeading = document.getElementById('welcome-heading');
+        const mojoXpBar = document.getElementById('mojo-xp-bar');
+        const mojoXpFill = document.getElementById('mojo-xp-fill');
+        const mojoLvl = document.getElementById('mojo-lvl');
+        const xpNumbers = document.getElementById('xp-numbers');
 
-        if (streakDisplay) streakDisplay.innerText = `🔥 ${appState.streak} Days`;
+        if (welcomeHeading) {
+            welcomeHeading.innerText = appState.displayName
+                ? `Welcome Back, ${appState.displayName}!`
+                : 'Welcome Back!';
+        }
+        if (streakDisplay) streakDisplay.innerText = `🔥 ${appState.streak || 0} Days`;
         
-        let progressPercent = Math.min((appState.completedExercises / weeklyGoal) * 100, 100);
-        if (progressBarFill) progressBarFill.style.width = `${progressPercent}%`;
-        if (progressText) progressText.innerText = `${Math.round(progressPercent)}% towards your weekly goal.`;
+        const xpPct = (appState.buddyXP % 500) / 5;
+        if (mojoXpBar) mojoXpBar.style.width = `${xpPct}%`;
+        if (mojoXpFill) mojoXpFill.style.width = `${xpPct}%`;
+        if (mojoLvl) mojoLvl.innerText = Math.floor(appState.buddyXP / 500) + 1;
+        if (xpNumbers) xpNumbers.innerText = `${appState.buddyXP % 500} / 500`;
+
+        // Volume Highlight (Invisible Insight)
+        const lastWorkout = appState.workoutHistory[appState.workoutHistory.length - 1];
+        if (lastWorkout && progressText) {
+            const todayVol = (lastWorkout.volume || 0).toLocaleString();
+            progressText.innerHTML = `Last session: <strong>${todayVol}</strong> ${appState.units || 'lbs'} volume. <br>Great consistency!`;
+            if (progressBarFill) progressBarFill.style.width = '75%'; // Symbolic
+        }
+
+        // Partner Accountability Status
+        const pName = document.getElementById('partner-name-display');
+        const pStatus = document.getElementById('partner-status-text');
+        const pPulse = document.getElementById('partner-pulse');
+
+        if (pName && pStatus && pPulse) {
+            if (window.partnerState && window.partnerState.active) {
+                pPulse.classList.remove('hidden');
+                pName.innerText = window.partnerState.name;
+                pStatus.innerText = "Active now — you got this!";
+            } else {
+                pPulse.classList.add('hidden');
+                pName.innerText = "Mojo (Solo)";
+                pStatus.innerText = "Mojo is watching your back!";
+                // Randomly activate "simulated partner" for demo
+                if (Math.random() > 0.8) {
+                    window.partnerState.active = true;
+                    window.partnerState.name = "Coach Sarah"; // Mock partner
+                    updateDashboard();
+                }
+            }
+        }
+        
+        // Rotate quote based on frequency
+        const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+        const quoteIndex = Math.floor(dayOfYear / appState.quoteFrequency) % inspirationalQuotes.length;
+        if (dailyQuote) dailyQuote.innerText = `"${inspirationalQuotes[quoteIndex]}"`;
         
         updateMojoUI();
     };
@@ -602,16 +304,61 @@ document.addEventListener('DOMContentLoaded', () => {
         showMojoMessage("Mojo says:", cheer);
     };
 
-    // Check streak reset logic on load
-    const today = new Date().toDateString();
-    if (appState.lastWorkoutDate && appState.lastWorkoutDate !== today) {
-        const lastDate = new Date(appState.lastWorkoutDate);
-        const diffTime = Math.abs(new Date() - lastDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-        if (diffDays > 1) {
-            appState.streak = 0; // Lost streak
+    // --- Privacy Lock Logic ---
+    const lockScreen = document.getElementById('lock-screen');
+    const pinDots = document.querySelectorAll('.pin-dot');
+    const lockError = document.getElementById('lock-error');
+    let enteredPin = "";
+
+    const initPrivacyLock = () => {
+        if (!appState.lockEnabled || !appState.pin) {
+            if (lockScreen) lockScreen.classList.add('hidden');
+            return;
         }
-    }
+        
+        if (lockScreen) {
+            lockScreen.classList.remove('hidden');
+            enteredPin = "";
+            updatePinDots();
+        }
+    };
+
+    const updatePinDots = () => {
+        pinDots.forEach((dot, i) => {
+            dot.classList.toggle('filled', i < enteredPin.length);
+        });
+    };
+
+    document.querySelectorAll('.key').forEach(key => {
+        key.addEventListener('click', () => {
+            const val = key.dataset.val;
+            if (val === 'back') {
+                enteredPin = enteredPin.slice(0, -1);
+            } else if (enteredPin.length < 4) {
+                enteredPin += val;
+            }
+
+            updatePinDots();
+
+            if (enteredPin.length === 4) {
+                if (enteredPin === appState.pin) {
+                    lockScreen.classList.add('hidden');
+                    if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
+                    showMojoMessage("Unlocked", "Welcome back!");
+                } else {
+                    if (lockError) lockError.classList.remove('hidden');
+                    if (navigator.vibrate) navigator.vibrate(200);
+                    setTimeout(() => {
+                        enteredPin = "";
+                        updatePinDots();
+                    }, 500);
+                }
+            }
+        });
+    });
+
+    initPrivacyLock();
+
     saveState();
     console.log("FlowFit: Core state initialized.");
     updateDashboard();
@@ -620,30 +367,325 @@ document.addEventListener('DOMContentLoaded', () => {
     const navItems = document.querySelectorAll('.nav-links li');
     const views = document.querySelectorAll('.view');
 
+    const navigateTo = (target) => {
+        console.log('FlowFit: Navigating to', target);
+        if (!target) return;
+        console.log(`FlowFit: Navigating to ${target}`);
+        // Update active nav
+        navItems.forEach(nav => nav.classList.remove('active'));
+        const navItem = document.querySelector(`[data-target="${target}"]`);
+        if (navItem) navItem.classList.add('active');
+        // Update active view
+        views.forEach(view => {
+            if (view.id === target) {
+                view.classList.add('active');
+                if (target === 'insights') renderInsights();
+            } else {
+                view.classList.remove('active');
+            }
+        });
+    };
+
+    window.navigateTo = navigateTo; // make global for onclick
+
     if (navItems.length > 0) {
         navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const target = item.getAttribute('data-target');
-                if (!target) return;
-                
-                console.log(`FlowFit: Navigating to ${target}`);
-                
-                // Update active nav
-                navItems.forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
-
-                // Update active view
-                views.forEach(view => {
-                    if (view.id === target) {
-                        view.classList.add('active');
-                    } else {
-                        view.classList.remove('active');
-                    }
-                });
+            // Keyboard support
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const target = item.getAttribute('data-target');
+                    navigateTo(target);
+                }
             });
         });
         console.log("FlowFit: Navigation initialized.");
     }
+
+    // Fix broken buttons
+    const openWellnessBtn = document.getElementById('open-wellness-btn');
+    const startWorkoutsBtn = document.getElementById('start-workouts-btn');
+    if (openWellnessBtn) openWellnessBtn.addEventListener('click', () => navigateTo('wellness'));
+    if (startWorkoutsBtn) startWorkoutsBtn.addEventListener('click', () => navigateTo('workouts'));
+
+    // --- Accessible Modal + Settings Handling ---
+    // Focus trap helpers
+    let lastFocusTrapRemover = null;
+    let lastActiveElementBeforeModal = null;
+
+    const enableFocusTrap = (modal) => {
+        if (!modal) return () => {};
+        const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+        const focusables = Array.from(modal.querySelectorAll(focusableSelector)).filter(el => el.offsetParent !== null);
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        const keyHandler = (e) => {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeModalGeneric(modal);
+                return;
+            }
+            if (e.key === 'Tab') {
+                if (focusables.length === 0) {
+                    e.preventDefault();
+                    return;
+                }
+                if (e.shiftKey) {
+                    if (document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    }
+                } else {
+                    if (document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
+            }
+        };
+
+        document.addEventListener('keydown', keyHandler);
+        return () => document.removeEventListener('keydown', keyHandler);
+    };
+
+    const openModalGeneric = (modal) => {
+        if (!modal) return;
+        lastActiveElementBeforeModal = document.activeElement;
+        modal.setAttribute('aria-hidden', 'false');
+        modal.classList.remove('hidden');
+        // focus first focusable
+        const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+        const focusables = Array.from(modal.querySelectorAll(focusableSelector)).filter(el => el.offsetParent !== null);
+        if (focusables.length > 0) focusables[0].focus();
+        if (lastFocusTrapRemover) lastFocusTrapRemover();
+        lastFocusTrapRemover = enableFocusTrap(modal);
+    };
+
+    const closeModalGeneric = (modal) => {
+        if (!modal) return;
+        modal.setAttribute('aria-hidden', 'true');
+        modal.classList.add('hidden');
+        if (lastFocusTrapRemover) {
+            lastFocusTrapRemover();
+            lastFocusTrapRemover = null;
+        }
+        if (lastActiveElementBeforeModal && typeof lastActiveElementBeforeModal.focus === 'function') {
+            lastActiveElementBeforeModal.focus();
+        }
+    };
+
+    const settingsToggleBtn = document.getElementById('settings-toggle-btn');
+    const settingsModal = document.getElementById('settings-modal');
+    const closeSettingsBtn = document.getElementById('close-settings-btn');
+    const saveSettingsBtn = document.getElementById('save-settings-btn');
+    const prefModifiedEl = document.getElementById('pref-modified');
+    const prefLowImpactEl = document.getElementById('pref-lowimpact');
+    const prefNoEquipmentEl = document.getElementById('pref-noequipment');
+    const quoteFrequencyEl = document.getElementById('quote-frequency-select');
+    const prefVoiceGuidanceEl = document.getElementById('pref-voice-guidance');
+    const prefDisplayNameEl = document.getElementById('pref-display-name');
+    const prefFitnessLevelEl = document.getElementById('pref-fitness-level');
+    const prefWaterGoalEl = document.getElementById('pref-water-goal');
+    const prefWaterGoalDisplay = document.getElementById('pref-water-goal-display');
+    const prefReduceMotionEl = document.getElementById('pref-reduce-motion');
+    const prefLockEnabledEl = document.getElementById('pref-lock-enabled');
+    const pinSetupWrap = document.getElementById('pin-setup-wrap');
+    const prefPinInput = document.getElementById('pref-pin-input');
+    const savePinBtn = document.getElementById('save-pin-btn');
+    const resetAllDataBtn = document.getElementById('reset-all-data-btn');
+
+    // Track temporary selections for unit and rest buttons in the modal
+    let tempUnits = appState.units || 'lbs';
+    let tempRestTimer = appState.defaultRestTimer || 60;
+
+    // Water goal slider live preview
+    if (prefWaterGoalEl) {
+        prefWaterGoalEl.addEventListener('input', () => {
+            if (prefWaterGoalDisplay) prefWaterGoalDisplay.textContent = prefWaterGoalEl.value;
+        });
+    }
+
+    // Unit toggle buttons in settings
+    document.querySelectorAll('.unit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            tempUnits = btn.dataset.unit;
+        });
+    });
+
+    // Rest timer preference buttons in settings
+    document.querySelectorAll('.rest-pref-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.rest-pref-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            tempRestTimer = parseInt(btn.dataset.secs);
+        });
+    });
+
+    const openSettings = () => {
+        if (!settingsModal) return;
+        const prefs = appState.workoutPreference || {};
+
+        // Profile
+        if (prefDisplayNameEl) prefDisplayNameEl.value = appState.displayName || '';
+        if (prefFitnessLevelEl) prefFitnessLevelEl.value = appState.fitnessLevel || 'intermediate';
+
+        // Workout
+        tempUnits = appState.units || 'lbs';
+        document.querySelectorAll('.unit-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.unit === tempUnits);
+        });
+        tempRestTimer = appState.defaultRestTimer || 60;
+        document.querySelectorAll('.rest-pref-btn').forEach(b => {
+            b.classList.toggle('active', parseInt(b.dataset.secs) === tempRestTimer);
+        });
+        if (prefModifiedEl) prefModifiedEl.checked = !!prefs.requireModified;
+        if (prefLowImpactEl) prefLowImpactEl.checked = !!prefs.lowImpact;
+        if (prefNoEquipmentEl) prefNoEquipmentEl.checked = !!prefs.noEquipment;
+
+        // Nutrition & Hydration
+        if (prefWaterGoalEl) {
+            prefWaterGoalEl.value = appState.waterGoal || 8;
+            if (prefWaterGoalDisplay) prefWaterGoalDisplay.textContent = appState.waterGoal || 8;
+        }
+
+        // General
+        if (quoteFrequencyEl) quoteFrequencyEl.value = appState.quoteFrequency || 3;
+        if (prefVoiceGuidanceEl) prefVoiceGuidanceEl.checked = appState.voiceGuidance !== false;
+
+        // Accessibility
+        if (prefReduceMotionEl) prefReduceMotionEl.checked = !!appState.reduceMotion;
+
+        // Security
+        if (prefLockEnabledEl) {
+            prefLockEnabledEl.checked = !!appState.lockEnabled;
+            if (pinSetupWrap) pinSetupWrap.classList.toggle('hidden', !prefLockEnabledEl.checked);
+        }
+
+        openModalGeneric(settingsModal);
+    };
+
+    if (prefLockEnabledEl) {
+        prefLockEnabledEl.addEventListener('change', () => {
+            if (pinSetupWrap) pinSetupWrap.classList.toggle('hidden', !prefLockEnabledEl.checked);
+        });
+    }
+
+    if (savePinBtn) {
+        savePinBtn.addEventListener('click', () => {
+            const val = prefPinInput.value.trim();
+            if (val.length === 4 && /^\d+$/.test(val)) {
+                appState.pin = val;
+                appState.lockEnabled = true;
+                saveState();
+                showMojoMessage("PIN Saved", "App will lock on next restart.");
+            } else {
+                alert("Please enter a 4-digit numeric PIN.");
+            }
+        });
+    }
+
+    const closeSettings = () => closeModalGeneric(settingsModal);
+
+    if (settingsToggleBtn) settingsToggleBtn.addEventListener('click', openSettings);
+    if (closeSettingsBtn) closeSettingsBtn.addEventListener('click', closeSettings);
+    if (saveSettingsBtn) {
+        saveSettingsBtn.addEventListener('click', () => {
+            // Profile
+            appState.displayName = (prefDisplayNameEl?.value || '').trim();
+            appState.fitnessLevel = prefFitnessLevelEl?.value || 'intermediate';
+
+            // Workout
+            appState.units = tempUnits;
+            appState.defaultRestTimer = tempRestTimer;
+            restDuration = tempRestTimer;
+            appState.workoutPreference = {
+                requireModified: !!(prefModifiedEl && prefModifiedEl.checked),
+                lowImpact: !!(prefLowImpactEl && prefLowImpactEl.checked),
+                noEquipment: !!(prefNoEquipmentEl && prefNoEquipmentEl.checked)
+            };
+
+            // Nutrition & Hydration
+            appState.waterGoal = parseInt(prefWaterGoalEl?.value) || 8;
+
+            // General
+            appState.quoteFrequency = parseInt(quoteFrequencyEl?.value) || 3;
+            appState.voiceGuidance = !!(prefVoiceGuidanceEl && prefVoiceGuidanceEl.checked);
+
+            // Security
+            appState.lockEnabled = !!(prefLockEnabledEl && prefLockEnabledEl.checked);
+
+            // Accessibility
+            appState.reduceMotion = !!(prefReduceMotionEl && prefReduceMotionEl.checked);
+            applyReduceMotion();
+
+            saveState();
+            closeSettings();
+            updateDashboard();
+            initWaterTracker();
+            showMojoMessage('Preferences saved', 'All settings updated.');
+        });
+    }
+
+    // Reset all data
+    if (resetAllDataBtn) {
+        resetAllDataBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to delete ALL your FlowFit data? This cannot be undone.')) {
+                localStorage.removeItem('flowfit_state');
+                location.reload();
+            }
+        });
+    }
+
+    // Export Data
+    const exportDataBtn = document.getElementById('export-data-btn');
+    if (exportDataBtn) {
+        exportDataBtn.addEventListener('click', () => {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", `mojofit_backup_${new Date().toISOString().split('T')[0]}.json`);
+            dlAnchorElem.click();
+            showMojoMessage('Backup Exported', 'Keep this file safe!');
+        });
+    }
+
+    // Import Data
+    const importDataBtn = document.getElementById('import-data-btn');
+    const importFileInput = document.getElementById('import-file-input');
+    if (importDataBtn && importFileInput) {
+        importDataBtn.addEventListener('click', () => {
+            if (confirm("Are you sure you want to overwrite your current data with a backup?")) {
+                importFileInput.click();
+            }
+        });
+        importFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                try {
+                    const importedState = JSON.parse(ev.target.result);
+                    if (importedState && typeof importedState === 'object') {
+                        localStorage.setItem('flowfit_state', JSON.stringify(importedState));
+                        alert('Backup successfully imported! The app will now reload.');
+                        location.reload();
+                    }
+                } catch (err) {
+                    alert('Invalid backup file. Please ensure it is a valid MojoFit JSON file.');
+                }
+            };
+            reader.readAsText(file);
+        });
+    }
+
+    // Reduce motion helper
+    const applyReduceMotion = () => {
+        document.body.classList.toggle('reduce-motion', !!appState.reduceMotion);
+    };
+    applyReduceMotion();
 
     // --- Workout Tracker Logic ---
     const startWorkoutBtn = document.getElementById('start-workout-btn');
@@ -652,13 +694,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const activeWorkoutContainer = document.getElementById('active-workout-container');
     const trackerContainer = document.getElementById('tracker-exercises-container');
     const workoutStatus = document.getElementById('workout-status');
-
-    // Modal elements
-    const exerciseModal = document.getElementById('exercise-modal');
-    const addExerciseBtn = document.getElementById('add-exercise-btn');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-    const modalMuscleGroup = document.getElementById('modal-muscle-group');
-    const modalExerciseList = document.getElementById('modal-exercise-list');
 
     let activeWorkout = [];
 
@@ -669,221 +704,454 @@ document.addEventListener('DOMContentLoaded', () => {
             if (trackerContainer) trackerContainer.innerHTML = '';
             if (workoutControls) workoutControls.classList.add('hidden');
             if (activeWorkoutContainer) activeWorkoutContainer.classList.remove('hidden');
+            const searchInput = document.getElementById('exercise-search-input');
+            if (searchInput) { searchInput.value = ''; searchInput.focus(); }
+            updateWorkoutControls();
         });
     }
 
-    // Open/Close Modal
-    if (addExerciseBtn) {
-        addExerciseBtn.addEventListener('click', () => {
-            if (exerciseModal) exerciseModal.classList.remove('hidden');
-            renderModalExercises(modalMuscleGroup ? modalMuscleGroup.value : 'back-shoulders');
-        });
-    }
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', () => {
-            if (exerciseModal) exerciseModal.classList.add('hidden');
-        });
-    }
-
-    // Populate Modal list
-    if (modalMuscleGroup) {
-        modalMuscleGroup.addEventListener('change', (e) => renderModalExercises(e.target.value));
-    }
-
-    // --- Session Sharing Logic ---
-    const shareBtn = document.getElementById('share-session-btn');
-    const joinBtn = document.getElementById('join-session-btn');
-
-    if (shareBtn) {
-        shareBtn.addEventListener('click', () => {
-            if (activeWorkout.length === 0) {
-                alert("Start a workout first to share a code!");
+    const useDayPlanBtn = document.getElementById('use-day-plan-btn');
+    if (useDayPlanBtn) {
+        useDayPlanBtn.addEventListener('click', () => {
+            if (viewingDayIdx === null) return;
+            const plan = (appState.dayPlans || {})[viewingDayIdx] || [];
+            if (plan.length === 0) {
+                showMojoMessage('Empty Plan', 'Add some exercises first!');
                 return;
             }
-            const sessionData = btoa(JSON.stringify(activeWorkout));
-            prompt("Copy this Session Code and send it to your partner:", sessionData);
-        });
-    }
 
-    if (joinBtn) {
-        joinBtn.addEventListener('click', () => {
-            const code = prompt("Paste your partner's Session Code here:");
-            if (code) {
-                try {
-                    const decoded = JSON.parse(atob(code));
-                    activeWorkout = decoded;
-                    if (workoutControls) workoutControls.classList.add('hidden');
-                    if (activeWorkoutContainer) activeWorkoutContainer.classList.remove('hidden');
-                    renderTracker();
-                    showMojoMessage("Partner Joined!", "Success! You are now synced with your gym buddy.");
-                } catch (err) {
-                    alert("Invalid Session Code. Please try again.");
-                }
+            // Copy plan to active workout
+            activeWorkout = plan.map(ex => ({
+                name: ex.name,
+                target: ex.sets,
+                sets: []
+            }));
+
+            // Switch UI
+            if (dayPlanViewer) dayPlanViewer.classList.add('hidden');
+            if (workoutControls) workoutControls.classList.add('hidden');
+            if (activeWorkoutContainer) {
+                activeWorkoutContainer.classList.remove('hidden');
+                activeWorkoutContainer.scrollIntoView({ behavior: 'smooth' });
             }
+            
+            renderTracker();
+            showMojoMessage('Session Started!', `Let's crush this ${days[viewingDayIdx]} workout!`);
         });
     }
 
-    // --- Workout Customization helpers ---
-    const renderModalExercises = (group) => {
-        modalExerciseList.innerHTML = '';
-        
-        // Show pre-built ones
-        const exercises = workoutData[group] || [];
-        exercises.forEach((ex, idx) => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <div class="flex-between w-full">
-                    <div>
-                        <strong id="ex-name-${group}-${idx}">${ex.name}</strong><br>
-                        <small class="text-dim" id="ex-desc-${group}-${idx}">${ex.desc}</small>
-                    </div>
-                    <button class="icon-btn btn-small edit-ex-btn" data-group="${group}" data-idx="${idx}">✏️</button>
-                </div>
-            `;
-            
-            // Selecting the exercise
-            li.addEventListener('click', (e) => {
-                if (e.target.classList.contains('edit-ex-btn')) {
-                    e.stopPropagation();
-                    const newName = prompt("Rename exercise:", ex.name);
-                    const newDesc = prompt("New description:", ex.desc);
-                    if (newName) {
-                        ex.name = newName;
-                        ex.desc = newDesc || ex.desc;
-                        renderModalExercises(group);
-                    }
+    // --- Copy Workout Summary ---
+    const copyWorkoutBtn = document.getElementById('copy-workout-btn');
+    if (copyWorkoutBtn) {
+        copyWorkoutBtn.addEventListener('click', () => {
+            let summary = '';
+            const units = appState.units || 'lbs';
+
+            // Use active workout if in session, otherwise last history entry
+            const source = activeWorkout.length > 0
+                ? activeWorkout
+                : (appState.workoutHistory || []).slice(-1)[0]?.exercises;
+
+            if (!source || source.length === 0) {
+                showMojoMessage('Nothing yet', 'Start a workout first!');
+                return;
+            }
+
+            const dateStr = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+            summary += `FlowFit Workout — ${dateStr}\n`;
+            summary += '─'.repeat(30) + '\n';
+
+            let totalVolume = 0;
+            source.forEach(ex => {
+                const completedSets = ex.sets.filter(s => s.completed);
+                if (completedSets.length === 0) {
+                    summary += `${ex.name} (no sets logged)\n`;
                     return;
                 }
-                
-                activeWorkout.push({
-                    name: ex.name,
-                    sets: [ { weight: '', reps: '', completed: false } ]
+                summary += `${ex.name}\n`;
+                completedSets.forEach((s, i) => {
+                    const w = parseFloat(s.weight) || 0;
+                    const r = parseInt(s.reps) || 0;
+                    summary += `  Set ${i + 1}: ${w} ${units} × ${r} reps\n`;
+                    totalVolume += w * r;
                 });
-                exerciseModal.classList.add('hidden');
-                renderTracker();
             });
-            modalExerciseList.appendChild(li);
+
+            summary += '─'.repeat(30) + '\n';
+            summary += `Total Volume: ${totalVolume.toLocaleString()} ${units}\n`;
+
+            navigator.clipboard.writeText(summary).then(() => {
+                showMojoMessage('Copied!', 'Workout summary copied to clipboard.');
+            }).catch(() => {
+                showMojoMessage('Oops', 'Could not copy — try again.');
+            });
+        });
+    }
+
+    // --- Exercise Search & Autocomplete ---
+    const exerciseSearchInput = document.getElementById('exercise-search-input');
+    const exerciseSearchResults = document.getElementById('exercise-search-results');
+
+    // Build a flat list of all exercises for searching
+    const getAllExercises = () => {
+        if (!window.workoutData) return [];
+        const prefs = appState.workoutPreference || {};
+        const results = [];
+        Object.entries(window.workoutData).forEach(([group, exercises]) => {
+            exercises.forEach(ex => {
+                // Apply workout preference variants
+                let name = ex.name, desc = ex.desc;
+                if (ex.modifications) {
+                    if (prefs.lowImpact && ex.modifications.lowImpact) {
+                        name = ex.modifications.lowImpact.name;
+                        desc = ex.modifications.lowImpact.desc;
+                    } else if (prefs.noEquipment && ex.modifications.noEquipment) {
+                        name = ex.modifications.noEquipment.name;
+                        desc = ex.modifications.noEquipment.desc;
+                    }
+                }
+                results.push({ name, desc, group, sets: ex.sets });
+            });
+        });
+        return results;
+    };
+
+    const searchExercises = (query) => {
+        const q = query.toLowerCase().trim();
+        if (!q) return [];
+        const all = getAllExercises();
+        return all.filter(ex =>
+            ex.name.toLowerCase().includes(q) || ex.group.toLowerCase().includes(q) || (q === 'mobility' && ex.group === 'mobility')
+        ).slice(0, 10);
+    };
+
+    const addExerciseToWorkout = (name) => {
+        // Find category for mobility tag
+        const all = getAllExercises();
+        const match = all.find(ex => ex.name === name);
+        const group = match ? match.group : 'custom';
+        const target = match ? match.sets : '';
+        activeWorkout.push({ name, sets: [], group, target });
+        renderTracker();
+        if (exerciseSearchInput) { exerciseSearchInput.value = ''; }
+        if (exerciseSearchResults) exerciseSearchResults.classList.add('hidden');
+    };
+
+    if (exerciseSearchInput) {
+        exerciseSearchInput.addEventListener('input', () => {
+            const q = exerciseSearchInput.value.trim();
+            if (!q) {
+                exerciseSearchResults.classList.add('hidden');
+                return;
+            }
+            const matches = searchExercises(q);
+            exerciseSearchResults.innerHTML = '';
+
+            if (matches.length === 0) {
+                // Offer to create custom
+                const item = document.createElement('div');
+                item.className = 'search-result-item';
+                item.innerHTML = `<strong>+ Add "${q}" as custom exercise</strong>`;
+                item.addEventListener('click', () => addExerciseToWorkout(q));
+                exerciseSearchResults.appendChild(item);
+            } else {
+                matches.forEach(ex => {
+                    const item = document.createElement('div');
+                    item.className = 'search-result-item';
+                    const mobilityTag = ex.group === 'mobility' ? '<span class="mobility-tag">Mobility</span>' : '';
+                    item.innerHTML = `<strong>${ex.name} ${mobilityTag}</strong><small class="text-dim">${ex.desc}</small>`;
+                    item.addEventListener('click', () => addExerciseToWorkout(ex.name));
+                    exerciseSearchResults.appendChild(item);
+                });
+                // Also offer custom at bottom
+                const customItem = document.createElement('div');
+                customItem.className = 'search-result-item search-result-custom';
+                customItem.innerHTML = `<strong>+ Add "${q}" as custom</strong>`;
+                customItem.addEventListener('click', () => addExerciseToWorkout(q));
+                exerciseSearchResults.appendChild(customItem);
+            }
+
+            exerciseSearchResults.classList.remove('hidden');
         });
 
-        // Add "Create Custom" option at bottom
-        const customLi = document.createElement('li');
-        customLi.className = 'glass-hover p-4 text-center border-t-1 border-glass';
-        customLi.innerHTML = `<strong>+ Create Custom Exercise</strong>`;
-        customLi.addEventListener('click', () => {
-            const name = prompt("Enter Exercise Name:");
-            if (name) {
-                activeWorkout.push({
-                    name: name,
-                    sets: [ { weight: '', reps: '', completed: false } ]
-                });
-                exerciseModal.classList.add('hidden');
-                renderTracker();
+        // Hide results on blur (with delay so clicks register)
+        exerciseSearchInput.addEventListener('blur', () => {
+            setTimeout(() => {
+                if (exerciseSearchResults) exerciseSearchResults.classList.add('hidden');
+            }, 200);
+        });
+
+        // Re-show on focus if there's text
+        exerciseSearchInput.addEventListener('focus', () => {
+            if (exerciseSearchInput.value.trim()) {
+                exerciseSearchInput.dispatchEvent(new Event('input'));
             }
         });
-        modalExerciseList.appendChild(customLi);
+    }
+
+    // ===== EXERCISE LIBRARY MODAL =====
+    const libraryModal = document.getElementById('library-modal');
+    const openLibraryBtn = document.getElementById('open-library-btn');
+    const closeLibraryModalBtn = document.getElementById('close-library-modal-btn');
+    const libraryCategories = document.getElementById('library-categories');
+    const libraryExerciseList = document.getElementById('library-exercise-list');
+
+    let currentLibraryCat = 'chest';
+
+    const renderLibraryCategories = () => {
+        if (!libraryCategories) return;
+        const cats = Object.keys(workoutData);
+        libraryCategories.innerHTML = '';
+        cats.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = `library-cat-btn ${cat === currentLibraryCat ? 'active' : ''}`;
+            const label = cat.charAt(0).toUpperCase() + cat.slice(1).replace('-', '/');
+            btn.innerText = label;
+            btn.addEventListener('click', () => {
+                currentLibraryCat = cat;
+                renderLibraryCategories();
+                renderLibraryExercises();
+            });
+            libraryCategories.appendChild(btn);
+        });
+    };
+
+    const renderLibraryExercises = () => {
+        if (!libraryExerciseList) return;
+        const exercises = workoutData[currentLibraryCat] || [];
+        libraryExerciseList.innerHTML = '';
+        
+        exercises.forEach(ex => {
+            const item = document.createElement('div');
+            item.className = 'library-ex-item';
+            
+            // Handle variants or display modifications
+            const name = ex.name;
+            item.innerHTML = `<span>${name}</span>`;
+            
+            item.addEventListener('click', () => {
+                addExerciseToWorkout(name);
+                if (libraryModal) closeModalGeneric(libraryModal);
+            });
+            libraryExerciseList.appendChild(item);
+        });
+    };
+
+    if (openLibraryBtn) {
+        openLibraryBtn.addEventListener('click', () => {
+            if (libraryModal) {
+                renderLibraryCategories();
+                renderLibraryExercises();
+                openModalGeneric(libraryModal);
+            }
+        });
+    }
+
+    if (closeLibraryModalBtn) {
+        closeLibraryModalBtn.addEventListener('click', () => {
+            if (libraryModal) closeModalGeneric(libraryModal);
+        });
+    }
+
+
+    // --- Compact Tracker Rendering ---
+    const getPastExercisePerformance = (exName) => {
+        if (!appState.workoutHistory) return null;
+        for (let i = appState.workoutHistory.length - 1; i >= 0; i--) {
+            const h = appState.workoutHistory[i];
+            if (h.exercises) {
+                const pastEx = h.exercises.find(e => e.name === exName);
+                if (pastEx && pastEx.sets && pastEx.sets.length > 0) {
+                    const bestSet = [...pastEx.sets].sort((a,b) => (b.weight*b.reps) - (a.weight*a.reps))[0];
+                    return { date: h.date, set: bestSet };
+                }
+            }
+        }
+        return null;
     };
 
     const renderTracker = () => {
         trackerContainer.innerHTML = '';
+        const units = appState.units || 'lbs';
+
         activeWorkout.forEach((exercise, exIndex) => {
             const card = document.createElement('div');
-            card.className = 'glass-card tracker-item';
-            
-            let html = `<h4>${exercise.name}</h4>`;
-            
-            // Render sets
-            exercise.sets.forEach((set, setIndex) => {
-                const isCompletedRow = set.completed ? 'completed' : '';
-                const disabledStr = set.completed ? 'disabled' : '';
-                html += `
-                    <div class="set-row ${isCompletedRow}">
-                        <span class="text-dim text-sm">Set ${setIndex + 1}</span>
-                        <input type="number" class="tracker-input weight-input" placeholder="lbs" value="${set.weight}" data-ex="${exIndex}" data-set="${setIndex}" ${disabledStr}>
-                        <input type="number" class="tracker-input rep-input" placeholder="reps" value="${set.reps}" data-ex="${exIndex}" data-set="${setIndex}" ${disabledStr}>
-                        <button class="check-btn ${set.completed ? 'checked' : ''}" data-ex="${exIndex}" data-set="${setIndex}">✓</button>
-                    </div>
-                `;
-            });
+            card.className = 'glass-card compact-exercise-card';
 
-            html += `<button class="btn btn-secondary btn-small mt-2 add-set-btn" data-ex="${exIndex}"></button>`;
-            html += `
-                <div class="flex-between mt-3">
-                    <button class="btn btn-secondary btn-small add-set-btn" data-ex="${exIndex}">+ Add Set</button>
-                    <button class="ask-mojo-btn" data-exname="${exercise.name}">🐒 Ask Mojo Form Tips</button>
+            // Exercise header
+            const header = document.createElement('div');
+            header.className = 'compact-ex-header';
+            header.innerHTML = `
+                <div class="flex-between" style="align-items: flex-start;">
+                    <div>
+                        <h4 class="compact-ex-name">${exercise.name}</h4>
+                        ${exercise.target ? `<div class="text-xs text-dim mt-1" style="font-weight: 500;">${exercise.target}</div>` : ''}
+                    </div>
+                    <div class="flex gap-2 align-center">
+                        <button class="ask-mojo-btn-sm" data-exname="${exercise.name}" title="Form tips">🐒</button>
+                        <button class="remove-ex-btn" data-ex="${exIndex}" title="Remove exercise">×</button>
+                    </div>
                 </div>
             `;
-            card.innerHTML = html;
+            card.appendChild(header);
+
+            const pastPerf = getPastExercisePerformance(exercise.name);
+            if (pastPerf && pastPerf.set && pastPerf.set.weight > 0) {
+                const pastDiv = document.createElement('div');
+                const pDate = new Date(pastPerf.date).toLocaleDateString(undefined, {month:'short', day:'numeric'});
+                pastDiv.className = 'text-xs text-dim mb-3';
+                pastDiv.innerHTML = `<strong>Prior Best (${pDate}):</strong> ${pastPerf.set.weight}${units} × ${pastPerf.set.reps} reps`;
+                card.appendChild(pastDiv);
+            }
+
+            // Logged sets as compact pills
+            if (exercise.sets.length > 0) {
+                const pillsWrap = document.createElement('div');
+                pillsWrap.className = 'set-pills';
+                exercise.sets.forEach((set, setIdx) => {
+                    const pill = document.createElement('span');
+                    pill.className = 'set-pill';
+                    pill.innerHTML = `<strong>${set.weight}</strong>${units} × <strong>${set.reps}</strong>`;
+                    pill.title = `Set ${setIdx + 1} — tap to remove`;
+                    pill.addEventListener('click', () => {
+                        exercise.sets.splice(setIdx, 1);
+                        renderTracker();
+                    });
+                    pillsWrap.appendChild(pill);
+                });
+                card.appendChild(pillsWrap);
+            }
+
+            // Quick-log input row
+            const logRow = document.createElement('div');
+            logRow.className = 'quick-log-row';
+            const lastSet = exercise.sets[exercise.sets.length - 1];
+            const mobilityTag = exercise.group === 'mobility' ? '<span class="mobility-tag">Mobility</span>' : '';
+            if (header.querySelector('.compact-ex-name')) {
+                header.querySelector('.compact-ex-name').innerHTML += mobilityTag;
+            }
+
+            logRow.innerHTML = `
+                <input type="number" class="quick-input weight-quick" placeholder="${units}" value="${lastSet ? lastSet.weight : ''}" inputmode="decimal">
+                <span class="quick-log-x">×</span>
+                <input type="number" class="quick-input reps-quick" placeholder="reps" value="${lastSet ? lastSet.reps : ''}" inputmode="numeric">
+                <button class="log-set-btn" data-ex="${exIndex}">Log</button>
+            `;
+            card.appendChild(logRow);
+
             trackerContainer.appendChild(card);
         });
 
-        // Add event listeners for dynamic inputs
-        document.querySelectorAll('.weight-input, .rep-input').forEach(input => {
-            input.addEventListener('change', (e) => {
-                const exIdx = e.target.getAttribute('data-ex');
-                const setIdx = e.target.getAttribute('data-set');
-                if (e.target.classList.contains('weight-input')) {
-                    activeWorkout[exIdx].sets[setIdx].weight = e.target.value;
-                } else {
-                    activeWorkout[exIdx].sets[setIdx].reps = e.target.value;
+        const handleSetLog = (exIdx, weightVal, repsVal) => {
+            if (!weightVal || !repsVal) return;
+            const weight = parseFloat(weightVal);
+            const reps = parseInt(repsVal);
+
+            const setData = { weight: weightVal, reps: repsVal, completed: true };
+            activeWorkout[exIdx].sets.push(setData);
+
+            // Track stats
+            appState.completedExercises++;
+            const todayStr = new Date().toDateString();
+            if (appState.lastWorkoutDate !== todayStr) {
+                appState.streak++;
+                appState.lastWorkoutDate = todayStr;
+            }
+
+            const exName = activeWorkout[exIdx].name;
+            if (weight > 0) {
+                if (!appState.personalRecords) appState.personalRecords = {};
+                if (!appState.personalRecords[exName] || weight > appState.personalRecords[exName]) {
+                    const isNewPR = !!appState.personalRecords[exName];
+                    appState.personalRecords[exName] = weight;
+                    if (isNewPR) {
+                        showMojoMessage('🏆 NEW PR!', `${exName}: ${weight} ${appState.units || 'lbs'} — crushing it!`);
+                    }
+                    renderPRs();
                 }
+            }
+
+            // Haptic success
+            if (navigator.vibrate) navigator.vibrate(50);
+
+            addXP(10);
+            saveState();
+            updateDashboard();
+            renderTracker();
+            startRestTimer(restDuration);
+
+            // Occasional Partner Nudge simulation
+            if (Math.random() > 0.7) setTimeout(triggerPartnerNudge, 2000);
+        };
+
+        // Attach event listeners
+        document.querySelectorAll('.log-set-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const exIdx = parseInt(btn.dataset.ex);
+                const card = btn.closest('.compact-exercise-card');
+                const weightVal = card.querySelector('.weight-quick').value.trim();
+                const repsVal = card.querySelector('.reps-quick').value.trim();
+                handleSetLog(exIdx, weightVal, repsVal);
             });
         });
 
-        document.querySelectorAll('.add-set-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const exIdx = e.target.getAttribute('data-ex');
-                // copy previous set's weight if exists
-                const previousSet = activeWorkout[exIdx].sets[activeWorkout[exIdx].sets.length - 1];
-                activeWorkout[exIdx].sets.push({ weight: previousSet ? previousSet.weight : '', reps: '', completed: false });
+        // Remove exercise
+        document.querySelectorAll('.remove-ex-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const exIdx = parseInt(btn.dataset.ex);
+                activeWorkout.splice(exIdx, 1);
                 renderTracker();
             });
         });
 
-        document.querySelectorAll('.check-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const exIdx = parseInt(e.target.getAttribute('data-ex'));
-                const setIdx = parseInt(e.target.getAttribute('data-set'));
-                if (!activeWorkout[exIdx].sets[setIdx].completed) {
-                    const weight = parseFloat(activeWorkout[exIdx].sets[setIdx].weight) || 0;
-                    activeWorkout[exIdx].sets[setIdx].completed = true;
-                    appState.completedExercises++;
-                    const todayStr = new Date().toDateString();
-                    if (appState.lastWorkoutDate !== todayStr) {
-                        appState.streak++;
-                        appState.lastWorkoutDate = todayStr;
-                    }
-                    
-                    // Check for Personal Record!
-                    const exName = activeWorkout[exIdx].name;
-                    if (weight > 0) {
-                        if (!appState.personalRecords) appState.personalRecords = {};
-                        if (!appState.personalRecords[exName] || weight > appState.personalRecords[exName]) {
-                            const isNewPR = !!appState.personalRecords[exName];
-                            appState.personalRecords[exName] = weight;
-                            if (isNewPR) {
-                                showMojoMessage('🏆 NEW PR!', `${exName}: ${weight} lbs — crushing it!`);
-                            }
-                            renderPRs();
-                        }
-                    }
-
-                    addXP(10);
-                    saveState();
-                    updateDashboard();
-                    renderTracker();
-
-                    // Start rest timer
-                    startRestTimer(restDuration);
-                }
-            });
-        });
-
-        // Ask Mojo form guide
-        document.querySelectorAll('.ask-mojo-btn').forEach(btn => {
+        // Mojo form tips
+        document.querySelectorAll('.ask-mojo-btn-sm').forEach(btn => {
             btn.addEventListener('click', () => {
                 openMojoFormGuide(btn.getAttribute('data-exname'));
             });
         });
+
+        // Auto-focus the reps input after typing weight (on Enter)
+        document.querySelectorAll('.weight-quick').forEach(input => {
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const repsInput = input.closest('.quick-log-row').querySelector('.reps-quick');
+                    if (repsInput) repsInput.focus();
+                }
+            });
+        });
+
+        // Log on Enter from reps field
+        document.querySelectorAll('.reps-quick').forEach(input => {
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const logBtn = input.closest('.quick-log-row').querySelector('.log-set-btn');
+                    if (logBtn) logBtn.click();
+                }
+            });
+        });
+    };
+
+    // --- Estimated 1RM Helper (Epley Formula) ---
+    const estimate1RM = (weight, reps) => {
+        const w = parseFloat(weight);
+        const r = parseInt(reps);
+        if (!w || w <= 0 || !r || r <= 0) return 0;
+        if (r === 1) return w;
+        return Math.round(w * (1 + r / 30));
+    };
+
+    // --- Muscle Group Lookup ---
+    const getExerciseMuscleGroup = (exName) => {
+        if (!window.workoutData) return 'Other';
+        for (const [group, exercises] of Object.entries(window.workoutData)) {
+            if (exercises.some(ex => ex.name === exName)) {
+                return group.replace(/-/g, ' & ').replace(/\b\w/g, c => c.toUpperCase());
+            }
+        }
+        return 'Other';
     };
 
     // Finish Workout
@@ -891,28 +1159,59 @@ document.addEventListener('DOMContentLoaded', () => {
         finishWorkoutBtn.addEventListener('click', () => {
             let totalVolume = 0;
             let setsCompleted = 0;
+            const muscleGroupVolume = {};
             
             activeWorkout.forEach(ex => {
+                const group = getExerciseMuscleGroup(ex.name);
                 ex.sets.forEach(set => {
                     if (set.completed && set.weight && set.reps) {
-                        totalVolume += (parseFloat(set.weight) * parseInt(set.reps));
+                        const vol = parseFloat(set.weight) * parseInt(set.reps);
+                        totalVolume += vol;
                         setsCompleted++;
+                        muscleGroupVolume[group] = (muscleGroupVolume[group] || 0) + vol;
                     }
                 });
             });
 
-            // Stop rest timer if still going
             stopRestTimer();
 
             if (setsCompleted > 0) {
                 appState.workoutHistory.push({
                     date: new Date().toISOString(),
                     volume: totalVolume,
-                    exercises: activeWorkout
+                    exercises: activeWorkout,
+                    muscleGroupVolume
                 });
                 addXP(50);
                 saveState();
-                if (workoutStatus) workoutStatus.innerText = `Amazing work! You moved ${totalVolume.toLocaleString()} lbs today!`;
+
+                // Build volume chart UI
+                let chartHtml = '<div class="volume-chart">';
+                Object.entries(muscleGroupVolume)
+                    .sort((a, b) => b[1] - a[1])
+                    .forEach(([g, v]) => {
+                        const pct = Math.min(100, Math.round((v / totalVolume) * 100));
+                        chartHtml += `
+                            <div class="chart-row">
+                                <div class="chart-label-row">
+                                    <span>${g}</span>
+                                    <span>${v.toLocaleString()} ${appState.units || 'lbs'} (${pct}%)</span>
+                                </div>
+                                <div class="chart-bar-bg">
+                                    <div class="chart-bar-fill" style="width: ${pct}%"></div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                chartHtml += '</div>';
+
+                if (workoutStatus) workoutStatus.innerText = `Amazing work! ${totalVolume.toLocaleString()} ${appState.units || 'lbs'} total!`;
+                const workoutStatusSub = document.getElementById('workout-status-sub');
+                if (workoutStatusSub) workoutStatusSub.innerHTML = `<strong>Volume Breakdown:</strong>` + chartHtml;
+                
+                // Final Mojo message
+                showMojoMessage("Workout Complete!", `You did ${setsCompleted} sets today! Mojo is proud.`);
+                if (Math.random() > 0.5) setTimeout(triggerPartnerNudge, 3000);
             } else {
                 if (workoutStatus) workoutStatus.innerText = "Session finished (no volume logged).";
             }
@@ -920,13 +1219,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (activeWorkoutContainer) activeWorkoutContainer.classList.add('hidden');
             if (workoutControls) workoutControls.classList.remove('hidden');
             if (startWorkoutBtn) startWorkoutBtn.innerText = "Start Another";
+            renderHistory();
         });
     }
 
     // ===== REST TIMER MODULE =====
-    let restDuration = 60; // default seconds
+    let restDuration = appState.defaultRestTimer || 60;
     let restInterval = null;
-    let restRemaining = 60;
+    let restRemaining = restDuration;
     const restOverlay = document.getElementById('rest-timer-overlay');
     const restDisplay = document.getElementById('rest-timer-display');
     const skipRestBtn = document.getElementById('skip-rest-btn');
@@ -945,7 +1245,7 @@ document.addEventListener('DOMContentLoaded', () => {
             g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
             o.start(ctx.currentTime);
             o.stop(ctx.currentTime + 0.5);
-            // Triple beep
+            // Mojo encouragement sound - high beep
             setTimeout(() => {
                 const o2 = ctx.createOscillator();
                 o2.connect(g);
@@ -955,6 +1255,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 o2.stop(ctx.currentTime + 0.4);
             }, 300);
         } catch(e) { console.log('Audio not available'); }
+    };
+
+    // Add partner reactions to the timer overlay
+    if (restOverlay) {
+        const reactionsDiv = document.createElement('div');
+        reactionsDiv.className = 'flex gap-4 justify-center mt-6 pt-4';
+        reactionsDiv.style.borderTop = '1px solid var(--glass-border)';
+        reactionsDiv.innerHTML = `
+            <button class="icon-btn nudge-btn" data-type="fire" title="Send Fire!">🔥</button>
+            <button class="icon-btn nudge-btn" data-type="highfive" title="Send High Five!">✋</button>
+            <button class="icon-btn nudge-btn" data-type="flex" title="Send Flex!">💪</button>
+        `;
+        restOverlay.querySelector('.rest-timer-card').appendChild(reactionsDiv);
+
+        reactionsDiv.querySelectorAll('.nudge-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const type = btn.getAttribute('data-type');
+                const emojiMap = { fire: "🔥", highfive: "✋", flex: "💪" };
+                showNudge(emojiMap[type], "You", `Sent a ${type} reaction!`);
+                if (navigator.vibrate) navigator.vibrate(100);
+                // Mock partner response
+                setTimeout(() => {
+                    showNudge(emojiMap[type], window.partnerState.name, "Reacted back!");
+                }, 1500);
+            });
+        });
+    }
+
+    const speakText = (text) => {
+        if (!appState.voiceGuidance) return;
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.05;
+        utterance.pitch = 1.1;
+        window.speechSynthesis.speak(utterance);
     };
 
     const startRestTimer = (secs) => {
@@ -969,6 +1305,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 restDisplay.innerText = restRemaining;
                 if (restRemaining <= 10) {
                     restDisplay.classList.add('urgent');
+                    if (restRemaining <= 3 && restRemaining > 0) {
+                        speakText(restRemaining.toString());
+                    }
                 } else {
                     restDisplay.classList.remove('urgent');
                 }
@@ -976,6 +1315,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (restRemaining <= 0) {
                 stopRestTimer();
                 beepSound();
+                speakText("Let's go!");
                 showMojoMessage("Time!", "Rest over — next set GO! 🔥");
             }
         }, 1000);
@@ -991,12 +1331,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (skipRestBtn) skipRestBtn.addEventListener('click', stopRestTimer);
 
     if (restDurationBtns.length > 0) {
+        // Highlight the saved default rest duration button
         restDurationBtns.forEach(btn => {
+            if (parseInt(btn.getAttribute('data-secs')) === restDuration) {
+                btn.classList.add('active');
+            }
             btn.addEventListener('click', () => {
                 restDurationBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 restDuration = parseInt(btn.getAttribute('data-secs'));
-                // Restart with new duration if timer is running
                 if (restInterval) startRestTimer(restDuration);
             });
         });
@@ -1005,61 +1348,452 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== WEEKLY SCHEDULE MODULE =====
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const muscleGroups = [
-        { id: 'rest', label: '😴 Rest Day', emoji: '😴' },
-        { id: 'back-shoulders', label: 'Back & Shoulders', emoji: '💪' },
-        { id: 'legs-glutes', label: 'Legs & Glutes', emoji: '🦵' },
-        { id: 'chest-triceps', label: 'Chest & Triceps', emoji: '🏋️' },
-        { id: 'core-cardio', label: 'Core & Cardio', emoji: '🔥' },
-        { id: 'full-body', label: 'Full Body', emoji: '⚡' },
-        { id: 'biceps', label: 'Biceps', emoji: '💪' },
-        { id: 'glutes-hams', label: 'Glutes & Hams', emoji: '🍑' }
+        { id: 'rest', label: 'Rest Day', emoji: '😴' },
+        { id: 'back-shoulders', label: 'Back & Shoulders', emoji: '💪', map: ['back', 'shoulders'] },
+        { id: 'legs-glutes', label: 'Legs & Glutes', emoji: '🦵', map: ['legs'] },
+        { id: 'chest-triceps', label: 'Chest & Triceps', emoji: '🏋️', map: ['chest'] },
+        { id: 'core-cardio', label: 'Core & Cardio', emoji: '🔥', map: ['core', 'cardio'] },
+        { id: 'full-body', label: 'Full Body', emoji: '⚡', map: ['full-body'] },
+        { id: 'biceps', label: 'Biceps', emoji: '💪', map: ['arms'] },
+        { id: 'triceps', label: 'Triceps', emoji: '💪', map: ['arms'] },
+        { id: 'quads', label: 'Quads', emoji: '🦵', map: ['legs'] },
+        { id: 'glutes-hams', label: 'Glutes & Hams', emoji: '🍑', map: ['legs'] },
+        { id: 'mobility', label: 'Mobility', emoji: '🧘', map: ['mobility'] },
+        { id: 'cardio', label: 'Cardio', emoji: '🏃', map: ['cardio'] }
     ];
 
     const renderWeekSchedule = () => {
         const grid = document.getElementById('weekly-schedule-grid');
         if (!grid) return;
         const schedule = appState.weekSchedule || {};
-        const todayIdx = (new Date().getDay() + 6) % 7; // Mon=0
+        const todayIdx = (new Date().getDay() + 6) % 7;
+
+        // Calculate current week start (Monday)
+        const now = new Date();
+        const currentDay = (now.getDay() + 6) % 7;
+        const startOfWeek = new Date(now);
+        startOfWeek.setDate(now.getDate() - currentDay);
+        startOfWeek.setHours(0,0,0,0);
 
         grid.innerHTML = '';
         days.forEach((day, i) => {
             const assignment = schedule[i];
             const group = muscleGroups.find(m => m.id === assignment);
+            const plan = (appState.dayPlans || {})[i] || [];
+            
+            // Check if this day of this week is completed
+            const targetDate = new Date(startOfWeek);
+            targetDate.setDate(startOfWeek.getDate() + i);
+            const targetDateStr = targetDate.toDateString();
+            
+            const isCompleted = (appState.workoutHistory || []).some(h => new Date(h.date).toDateString() === targetDateStr);
+
             const card = document.createElement('div');
-            card.className = `day-card ${i === todayIdx ? 'today' : ''} ${assignment === 'rest' ? 'rest-day' : ''}`;
+            card.className = `day-card ${i === todayIdx ? 'today' : ''} ${assignment === 'rest' ? 'rest-day' : ''} ${isCompleted ? 'completed' : ''}`;
             card.innerHTML = `
                 <span class="day-label">${day}</span>
                 <span class="day-emoji">${group ? group.emoji : '＋'}</span>
                 <span class="day-muscles">${group ? (group.id === 'rest' ? 'Rest' : group.label) : 'Tap to plan'}</span>
+                ${plan.length > 0 ? `<span class="day-plan-count">${plan.length} ex</span>` : ''}
             `;
-            card.addEventListener('click', () => assignDay(i));
+            card.addEventListener('click', () => {
+                if (assignment && assignment !== 'rest') {
+                    openDayPlanViewer(i);
+                } else {
+                    openSchedulePicker(i);
+                }
+            });
+            card.addEventListener('dblclick', () => openSchedulePicker(i));
             grid.appendChild(card);
         });
     };
 
-    const assignDay = (dayIdx) => {
-        const options = muscleGroups.map((m, i) => `${i}: ${m.label}`).join('\n');
-        const input = prompt(`Assign ${days[dayIdx]}:\n${options}\n\nEnter number:`);
-        if (input !== null) {
-            const idx = parseInt(input);
-            if (!isNaN(idx) && muscleGroups[idx]) {
+    // Schedule Picker Modal
+    const schedulePickerModal = document.getElementById('schedule-picker-modal');
+    const schedulePickerTitle = document.getElementById('schedule-picker-title');
+    const schedulePickerOptions = document.getElementById('schedule-picker-options');
+    const closeSchedulePickerBtn = document.getElementById('close-schedule-picker-btn');
+
+    // --- Auto-generate a day plan from the exercise library ---
+    const generateDayPlan = (groupId) => {
+        const group = muscleGroups.find(m => m.id === groupId);
+        if (!group || groupId === 'rest' || !window.workoutData) return [];
+        
+        const mapKeys = group.map || [groupId];
+        let allPossible = [];
+        mapKeys.forEach(k => {
+            if (window.workoutData[k]) allPossible = allPossible.concat(window.workoutData[k]);
+        });
+
+        if (allPossible.length === 0) return [];
+
+        const prefs = appState.workoutPreference || {};
+        
+        // Strategy: 2 heavy compound (first half of list), 3 accessories (second half)
+        const compounds = allPossible.slice(0, Math.floor(allPossible.length / 2));
+        const accessories = allPossible.slice(Math.floor(allPossible.length / 2));
+
+        const shuffle = (array) => array.sort(() => Math.random() - 0.5);
+        
+        const selected = [
+            ...shuffle(compounds).slice(0, 2),
+            ...shuffle(accessories).slice(0, 3)
+        ];
+
+        return selected.map(ex => {
+            let name = ex.name, sets = ex.sets;
+            if (ex.modifications) {
+                if (prefs.lowImpact && ex.modifications.lowImpact) name = ex.modifications.lowImpact.name;
+                else if (prefs.noEquipment && ex.modifications.noEquipment) name = ex.modifications.noEquipment.name;
+            }
+            return { name, sets };
+        });
+    };
+
+    const openSchedulePicker = (dayIdx) => {
+        if (schedulePickerTitle) schedulePickerTitle.textContent = `Assign ${days[dayIdx]}`;
+        if (!schedulePickerOptions) return;
+
+        schedulePickerOptions.innerHTML = '';
+        muscleGroups.forEach(group => {
+            const currentAssignment = (appState.weekSchedule || {})[dayIdx];
+            const option = document.createElement('div');
+            option.className = `schedule-picker-option${currentAssignment === group.id ? ' active' : ''}`;
+            option.innerHTML = `<span style="font-size:1.3rem">${group.emoji}</span><span>${group.label}</span>`;
+            option.addEventListener('click', () => {
                 if (!appState.weekSchedule) appState.weekSchedule = {};
-                appState.weekSchedule[dayIdx] = muscleGroups[idx].id;
+                if (!appState.dayPlans) appState.dayPlans = {};
+                appState.weekSchedule[dayIdx] = group.id;
+                // Auto-generate the plan for this day
+                appState.dayPlans[dayIdx] = generateDayPlan(group.id);
                 saveState();
                 renderWeekSchedule();
-            }
+                closeModalGeneric(schedulePickerModal);
+                // Open the plan viewer for this day so user can customize
+                if (group.id !== 'rest') {
+                    openDayPlanViewer(dayIdx);
+                } else {
+                    closeDayPlanViewer();
+                    addXP(5, false);
+                    showMojoMessage("Rest Day Scheduled!", "Recovery is where the growth happens. Great choice!");
+                }
+                updateWorkoutControls();
+            });
+            schedulePickerOptions.appendChild(option);
+        });
+
+        openModalGeneric(schedulePickerModal);
+    };
+
+    if (closeSchedulePickerBtn) {
+        closeSchedulePickerBtn.addEventListener('click', () => closeModalGeneric(schedulePickerModal));
+    }
+
+    // --- Day Plan Viewer ---
+    const dayPlanViewer = document.getElementById('day-plan-viewer');
+    const dayPlanTitle = document.getElementById('day-plan-title');
+    const dayPlanSubtitle = document.getElementById('day-plan-subtitle');
+    const dayPlanExercises = document.getElementById('day-plan-exercises');
+    const closeDayPlanBtn = document.getElementById('close-day-plan-btn');
+    const dayPlanSearchInput = document.getElementById('day-plan-search');
+    const dayPlanSearchResults = document.getElementById('day-plan-search-results');
+    let viewingDayIdx = null;
+
+    const openDayPlanViewer = (dayIdx) => {
+        console.log(`Opening day plan viewer for dayIdx: ${dayIdx} (${days[dayIdx]})`);
+        viewingDayIdx = dayIdx;
+        const groupId = (appState.weekSchedule || {})[dayIdx];
+        const group = muscleGroups.find(m => m.id === groupId);
+        
+        if (!group || groupId === 'rest') {
+            closeDayPlanViewer();
+            return;
+        }
+
+        // Ensure a plan exists
+        if (!appState.dayPlans) appState.dayPlans = {};
+        if (!appState.dayPlans[dayIdx] || appState.dayPlans[dayIdx].length === 0) {
+            appState.dayPlans[dayIdx] = generateDayPlan(groupId);
+            saveState();
+        }
+
+        if (dayPlanTitle) dayPlanTitle.textContent = `${days[dayIdx]}'s Plan`;
+        
+        // --- Unified Plan: Nutrition & Wellness ---
+        const fuelContent = document.getElementById('day-fuel-content');
+        const insightContent = document.getElementById('day-insight-content');
+        const fuelCard = document.getElementById('day-fuel-card');
+        
+        if (fuelContent && window.nutritionData) {
+            const all = [...window.nutritionData.snack, ...window.nutritionData.meal];
+            const recipe = all[dayIdx % all.length];
+            fuelContent.innerHTML = `
+                <p class="text-sm font-bold truncate">${recipe.name}</p>
+                <p class="text-xs opacity-60">${recipe.macros ? `${recipe.macros.protein} protein · ` : ''}${recipe.prepTime}</p>
+            `;
+            fuelCard.onclick = () => openRecipeModal(recipe);
+        }
+
+        if (insightContent) {
+            const insights = [
+                "Focus on explosive movement today for peak power.",
+                "Magnesium might help if you feeling any muscle tightness.",
+                "Hydration is key today—aim for an extra 16oz of water.",
+                "Your cycle phase suggests prioritizing recovery tonight.",
+                "Great day for a PR if you're feeling energetic!",
+                "Try 5 minutes of mindful breathing before you lift.",
+                "Listen to your joints; swap for low-impact if needed."
+            ];
+            insightContent.innerHTML = `<p class="text-xs italic">"${insights[dayIdx % insights.length]}"</p>`;
+        }
+
+        // Show/Hide load preset button
+        const loadRoutineBtn = document.getElementById('load-routine-btn');
+        if (loadRoutineBtn) {
+            const hasPreset = appState.userPresets && appState.userPresets[groupId];
+            loadRoutineBtn.classList.toggle('hidden', !hasPreset);
+        }
+
+        renderDayPlan(dayIdx);
+        
+        if (dayPlanViewer) {
+            dayPlanViewer.classList.remove('hidden');
+            setTimeout(() => {
+                dayPlanViewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
         }
     };
 
-    const editScheduleBtn = document.getElementById('edit-schedule-btn');
-    if (editScheduleBtn) {
-        editScheduleBtn.addEventListener('click', () => {
-            const todayIdx = (new Date().getDay() + 6) % 7;
-            assignDay(todayIdx);
+    const closeDayPlanViewer = () => {
+        viewingDayIdx = null;
+        if (dayPlanViewer) dayPlanViewer.classList.add('hidden');
+    };
+
+    const renderDayPlan = (dayIdx) => {
+        if (!dayPlanExercises) return;
+        const plan = (appState.dayPlans || {})[dayIdx] || [];
+        const groupId = (appState.weekSchedule || {})[dayIdx];
+        const group = muscleGroups.find(m => m.id === groupId);
+
+        if (dayPlanSubtitle) dayPlanSubtitle.textContent = `${group ? group.label : ''} — ${plan.length} exercise${plan.length !== 1 ? 's' : ''}`;
+
+        dayPlanExercises.innerHTML = '';
+        plan.forEach((ex, idx) => {
+            const item = document.createElement('div');
+            item.className = 'day-plan-item';
+            
+            // Look up exercise metadata for labels
+            const allEx = getAllExercises();
+            const meta = allEx.find(a => a.name === ex.name);
+            const muscleLabel = meta ? `<span class="muscle-tag-sm">${meta.group || ''}</span>` : '';
+
+            item.innerHTML = `
+                <div class="day-plan-item-info">
+                    <span class="day-plan-item-num">${idx + 1}</span>
+                    <div>
+                        <div class="flex align-center">
+                            ${muscleLabel}
+                            <strong>${ex.name}</strong>
+                        </div>
+                        <small class="text-dim">${ex.sets || ''}</small>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button class="view-technique-btn btn-icon-sm" data-ex="${ex.name}" title="View Technique">💡</button>
+                    <button class="remove-plan-ex-btn" data-idx="${idx}" title="Remove">&times;</button>
+                </div>
+            `;
+            dayPlanExercises.appendChild(item);
+        });
+
+        // Event Listeners for plan items
+        document.querySelectorAll('.view-technique-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const exName = btn.dataset.ex;
+                showTechniqueVisual(exName);
+            });
+        });
+
+        document.querySelectorAll('.remove-plan-ex-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const idx = parseInt(btn.dataset.idx);
+                appState.dayPlans[dayIdx].splice(idx, 1);
+                saveState();
+                renderDayPlan(dayIdx);
+                updateWorkoutControls();
+                renderWeekSchedule();
+            });
+        });
+    };
+
+    const visualContainer = document.getElementById('technique-visual-container');
+    const visualContent = document.getElementById('technique-visual-content');
+    const closeVisualBtn = document.getElementById('close-visual-btn');
+
+    const showTechniqueVisual = (exName) => {
+        if (!visualContainer || !visualContent) return;
+        
+        const allEx = getAllExercises();
+        const ex = allEx.find(e => e.name === exName);
+        
+        visualContent.innerHTML = `
+            <div class="video-overlay"><div class="play-btn-realistic"></div></div>
+            <div style="padding: 1.5rem; padding-top: 100px; background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 100%); position: relative; z-index: 2;">
+                <h4 class="mb-1 text-white">${exName}</h4>
+                <p class="text-xs opacity-70 mb-3">${ex ? ex.desc : 'Personal training guidance loading...'}</p>
+                <div class="flex gap-2">
+                    <span class="badge-mini">Realistic 3D</span>
+                    <span class="badge-mini">Expert Cue</span>
+                </div>
+            </div>
+        `;
+        
+        visualContainer.classList.remove('hidden');
+        visualContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+
+    if (closeVisualBtn) {
+        closeVisualBtn.addEventListener('click', () => {
+            visualContainer.classList.add('hidden');
         });
     }
 
-    renderWeekSchedule();
+    // --- Shuffle, Save, Load Logic ---
+    const shuffleBtn = document.getElementById('shuffle-day-plan-btn');
+    const saveRoutineBtn = document.getElementById('save-routine-btn');
+    const loadRoutineBtn = document.getElementById('load-routine-btn');
+
+    if (shuffleBtn) {
+        shuffleBtn.addEventListener('click', () => {
+            if (viewingDayIdx === null) return;
+            const groupId = appState.weekSchedule[viewingDayIdx];
+            appState.dayPlans[viewingDayIdx] = generateDayPlan(groupId);
+            saveState();
+            renderDayPlan(viewingDayIdx);
+            renderWeekSchedule();
+        });
+    }
+
+    if (saveRoutineBtn) {
+        saveRoutineBtn.addEventListener('click', () => {
+            if (viewingDayIdx === null) return;
+            const groupId = appState.weekSchedule[viewingDayIdx];
+            if (!appState.userPresets) appState.userPresets = {};
+            appState.userPresets[groupId] = JSON.parse(JSON.stringify(appState.dayPlans[viewingDayIdx]));
+            saveState();
+            showMojoMessage('Routine Saved!', `Your custom ${groupId} routine is locked in.`);
+            if (loadRoutineBtn) loadRoutineBtn.classList.remove('hidden');
+        });
+    }
+
+    if (loadRoutineBtn) {
+        loadRoutineBtn.addEventListener('click', () => {
+            if (viewingDayIdx === null) return;
+            const groupId = appState.weekSchedule[viewingDayIdx];
+            if (appState.userPresets && appState.userPresets[groupId]) {
+                appState.dayPlans[viewingDayIdx] = JSON.parse(JSON.stringify(appState.userPresets[groupId]));
+                saveState();
+                renderDayPlan(viewingDayIdx);
+                renderWeekSchedule();
+                showMojoMessage('Routine Loaded', 'Your saved routine has been applied.');
+            }
+        });
+    }
+
+    if (closeDayPlanBtn) {
+        closeDayPlanBtn.addEventListener('click', closeDayPlanViewer);
+    }
+
+    // Day plan search — add exercises to the plan
+    if (dayPlanSearchInput) {
+        dayPlanSearchInput.addEventListener('input', () => {
+            const q = dayPlanSearchInput.value.trim();
+            if (!q || viewingDayIdx === null) {
+                dayPlanSearchResults.classList.add('hidden');
+                return;
+            }
+
+            const allEx = getAllExercises();
+            const matches = allEx.filter(ex =>
+                ex.name.toLowerCase().includes(q.toLowerCase())
+            ).slice(0, 6);
+
+            dayPlanSearchResults.innerHTML = '';
+
+            if (matches.length === 0) {
+                const item = document.createElement('div');
+                item.className = 'search-result-item';
+                item.innerHTML = `<strong>+ Add "${q}" as custom</strong>`;
+                item.addEventListener('click', () => {
+                    appState.dayPlans[viewingDayIdx].push({ name: q, sets: '' });
+                    saveState();
+                    renderDayPlan(viewingDayIdx);
+                    updateWorkoutControls();
+                    dayPlanSearchInput.value = '';
+                    dayPlanSearchResults.classList.add('hidden');
+                });
+                dayPlanSearchResults.appendChild(item);
+            } else {
+                matches.forEach(ex => {
+                    const item = document.createElement('div');
+                    item.className = 'search-result-item';
+                    item.innerHTML = `<strong>${ex.name}</strong><small class="text-dim">${ex.desc}</small>`;
+                    item.addEventListener('click', () => {
+                        appState.dayPlans[viewingDayIdx].push({ name: ex.name, sets: ex.sets || '' });
+                        saveState();
+                        renderDayPlan(viewingDayIdx);
+                        updateWorkoutControls();
+                        dayPlanSearchInput.value = '';
+                        dayPlanSearchResults.classList.add('hidden');
+                    });
+                    dayPlanSearchResults.appendChild(item);
+                });
+            }
+            dayPlanSearchResults.classList.remove('hidden');
+        });
+
+        dayPlanSearchInput.addEventListener('blur', () => {
+    // --- Workout Controls: Show today's plan context ---
+    const startPlanBtn = document.getElementById('start-plan-btn');
+    const workoutStatusSub = document.getElementById('workout-status-sub');
+
+    const updateWorkoutControls = () => {
+        const todayIdx = (new Date().getDay() + 6) % 7;
+        const groupId = (appState.weekSchedule || {})[todayIdx];
+        const group = muscleGroups.find(m => m.id === groupId);
+        const plan = (appState.dayPlans || {})[todayIdx] || [];
+
+        if (group && groupId !== 'rest' && plan.length > 0) {
+            if (workoutStatus) workoutStatus.textContent = `${group.label} Day`;
+            if (workoutStatusSub) workoutStatusSub.textContent = `${plan.length} exercises ready — tap Start Plan to begin.`;
+            if (startPlanBtn) startPlanBtn.classList.remove('hidden');
+        } else if (group && groupId === 'rest') {
+            if (workoutStatus) workoutStatus.textContent = 'Rest Day 😴';
+            if (workoutStatusSub) workoutStatusSub.textContent = 'Recovery is part of the process.';
+            if (startPlanBtn) startPlanBtn.classList.add('hidden');
+        } else {
+            if (workoutStatus) workoutStatus.textContent = 'Ready to Lift?';
+            if (workoutStatusSub) workoutStatusSub.textContent = 'Plan your week below, or start an empty session.';
+            if (startPlanBtn) startPlanBtn.classList.add('hidden');
+        }
+    };
+
+    // Start Plan button — pre-load today's plan into the active workout
+    if (startPlanBtn) {
+        startPlanBtn.addEventListener('click', () => {
+            const todayIdx = (new Date().getDay() + 6) % 7;
+            const plan = (appState.dayPlans || {})[todayIdx] || [];
+            activeWorkout = plan.map(ex => ({ name: ex.name, sets: [], target: ex.sets }));
+            if (trackerContainer) trackerContainer.innerHTML = '';
+            if (workoutControls) workoutControls.classList.add('hidden');
+            if (activeWorkoutContainer) activeWorkoutContainer.classList.remove('hidden');
+            closeDayPlanViewer();
+            renderTracker();
+        });
+    }
+
+    updateWorkoutControls();
 
     // ===== PERSONAL RECORDS MODULE =====
     const renderPRs = () => {
@@ -1079,14 +1813,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.innerHTML = '';
         prKeys.forEach(name => {
+            const prWeight = prs[name];
+            // Find the best reps logged at this PR weight for 1RM estimate
+            let bestRepsAtPR = 1;
+            (appState.workoutHistory || []).forEach(session => {
+                (session.exercises || []).forEach(ex => {
+                    if (ex.name === name) {
+                        ex.sets.forEach(s => {
+                            if (parseFloat(s.weight) === prWeight && parseInt(s.reps) > bestRepsAtPR) {
+                                bestRepsAtPR = parseInt(s.reps);
+                            }
+                        });
+                    }
+                });
+            });
+            const est1rm = estimate1RM(prWeight, bestRepsAtPR);
             const item = document.createElement('div');
             item.className = 'pr-item';
-            item.innerHTML = `<span>${name}</span><span class="pr-weight">🏆 ${prs[name]} lbs</span>`;
+            item.innerHTML = `
+                <div>
+                    <span>${name}</span>
+                    ${est1rm > prWeight ? `<span class="est-1rm">Est. 1RM: ${est1rm} ${appState.units || 'lbs'}</span>` : ''}
+                </div>
+                <span class="pr-weight">🏆 ${prWeight} ${appState.units || 'lbs'}</span>
+            `;
             container.appendChild(item);
         });
     };
 
     renderPRs();
+
+    // ===== WORKOUT HISTORY MODULE =====
+    const renderHistory = () => {
+        const container = document.getElementById('history-list-container');
+        const badge = document.getElementById('history-count-badge');
+        if (!container) return;
+
+        const history = appState.workoutHistory || [];
+        if (badge) badge.innerText = `${history.length} session${history.length !== 1 ? 's' : ''}`;
+
+        if (history.length === 0) {
+            container.innerHTML = '<p class="text-sm text-dim">Complete your first workout to see history here!</p>';
+            return;
+        }
+
+        container.innerHTML = '';
+        const units = appState.units || 'lbs';
+        history.slice().reverse().slice(0, 20).forEach(session => {
+            const date = new Date(session.date);
+            const dateStr = date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+            const exerciseNames = session.exercises.map(e => e.name).join(', ');
+            const totalSets = session.exercises.reduce((sum, e) => sum + e.sets.filter(s => s.completed).length, 0);
+
+            const item = document.createElement('div');
+            item.className = 'history-item';
+            item.innerHTML = `
+                <div class="history-date">${dateStr}</div>
+                <div class="history-details">
+                    <span class="history-exercises">${exerciseNames}</span>
+                    <span class="history-stats">${totalSets} sets · ${session.volume.toLocaleString()} ${units}</span>
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    };
+
+    renderHistory();
 
     // ===== MOJO FORM GUIDE MODULE =====
     const formGuides = {};
@@ -1133,6 +1925,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${step.warning ? `<div class="step-warning">⚠️ ${step.warning}</div>` : ''}
             </div>
         `;
+        speakText(`${step.step}. ${step.text} ${step.warning ? 'Warning: ' + step.warning : ''}`);
     };
 
     const closeFormBtn = document.getElementById('close-form-modal-btn');
@@ -1142,6 +1935,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeFormBtn) closeFormBtn.addEventListener('click', () => {
         const m = document.getElementById('mojo-form-modal');
         if (m) m.classList.add('hidden');
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
     });
 
     if (prevBtn) prevBtn.addEventListener('click', () => {
@@ -1157,18 +1951,21 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('FlowFit: Phase 1 modules loaded (Rest Timer, Schedule, PRs, Form Guide).');
 
     // ===== WATER TRACKER MODULE (Phase 2) =====
-    const WATER_GOAL = 8;
-    const waterMojoMessages = [
-        '', // 0
-        "One down! Keep sippin' 💧",
-        "Two glasses! You're on a roll 🌊",
-        "Halfway to three! Don't stop now 🥤",
-        "Four glasses! Mojo is impressed 🐒",
-        "More than halfway there! 💪",
-        "Six glasses! You're glowing 🌟",
-        "SO close! One more to go... almost there! 🔥",
-        "ALL 8 GLASSES! Mojo is doing a happy dance! 🎉🐒💧"
-    ];
+    const getWaterGoal = () => appState.waterGoal || 8;
+    const getWaterMessage = (count) => {
+        const goal = getWaterGoal();
+        if (count === 0) return '';
+        if (count >= goal) return `ALL ${goal} GLASSES! Mojo is doing a happy dance! 🎉🐒💧`;
+        if (count === goal - 1) return "SO close! One more to go... almost there! 🔥";
+        const pct = count / goal;
+        if (pct <= 0.15) return "One down! Keep sippin' 💧";
+        if (pct <= 0.3) return "You're on a roll 🌊";
+        if (pct <= 0.45) return "Keep it flowing! 🥤";
+        if (pct <= 0.55) return `${count} glasses! Mojo is impressed 🐒`;
+        if (pct <= 0.7) return "More than halfway there! 💪";
+        if (pct <= 0.85) return "You're glowing 🌟";
+        return "Almost at your goal! 🔥";
+    };
 
     const initWaterTracker = () => {
         const row = document.getElementById('water-glasses-row');
@@ -1183,7 +1980,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         row.innerHTML = '';
-        for (let i = 1; i <= WATER_GOAL; i++) {
+        for (let i = 1; i <= getWaterGoal(); i++) {
             const btn = document.createElement('button');
             btn.className = `water-glass-btn ${i <= (appState.waterCount || 0) ? 'filled' : ''}`;
             btn.setAttribute('data-glass', i);
@@ -1211,9 +2008,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Mojo cheers at 8!
-        if (appState.waterCount === WATER_GOAL) {
+        if (appState.waterCount === getWaterGoal()) {
             addXP(15);
-            showMojoMessage('💧 Fully Hydrated!', 'All 8 glasses done! Mojo is so proud of you!');
+            showMojoMessage('💧 Fully Hydrated!', `All ${getWaterGoal()} glasses done! Mojo is so proud of you!`);
         }
 
         saveState();
@@ -1226,9 +2023,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const bar = document.getElementById('water-progress-bar');
         const msg = document.getElementById('water-mojo-msg');
 
-        if (label) label.innerText = `${count} / ${WATER_GOAL} glasses`;
-        if (bar) bar.style.width = `${(count / WATER_GOAL) * 100}%`;
-        if (msg) msg.innerText = waterMojoMessages[count] || '';
+        if (label) label.innerText = `${count} / ${getWaterGoal()} glasses`;
+        if (bar) bar.style.width = `${(count / getWaterGoal()) * 100}%`;
+        if (msg) msg.innerText = getWaterMessage(count);
     };
 
     const waterResetBtn = document.getElementById('water-reset-btn');
@@ -1483,7 +2280,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const refreshNutritionViews = () => {
         const activeTab = document.querySelector('.nutri-tab.active');
-        renderNutrition(activeTab ? activeTab.getAttribute('data-type') : 'snack');
+        const type = activeTab ? activeTab.getAttribute('data-type') : 'snack';
+        renderNutrition(type);
         renderDailyPicks();
         updateHiddenBtn();
     };
@@ -1526,10 +2324,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderNutrition = (type) => {
-        const items = nutritionData[type];
+        if (!window.nutritionData) return;
+        const items = window.nutritionData[type];
         const allergies = appState.allergies || [];
         const ickFoods = appState.ickFoods || [];
-        const avoidList = [...allergies, ...ickFoods];
+        const avoidList = [...(Array.isArray(allergies) ? allergies : []), ...(Array.isArray(ickFoods) ? ickFoods : [])];
 
         nutritionContainer.innerHTML = '';
         
@@ -1552,10 +2351,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderDailyPicks = () => {
+        if (!window.nutritionData) return;
         const today = new Date().toDateString();
         // Seeded random pick
         const hash = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-        const allRecipes = [...nutritionData.snack, ...nutritionData.meal, ...nutritionData.recovery]
+        const allRecipes = [...window.nutritionData.snack, ...window.nutritionData.meal, ...window.nutritionData.recovery]
             .filter(r => !appState.dislikes.includes(r.name));
 
         if (allRecipes.length < 5) {
@@ -1710,27 +2510,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setupSearch(allergySearch, allergySuggestions, 'allergies', allergyChips, 'chip-allergy');
     setupSearch(ickSearch, ickSuggestions, 'ickFoods', ickChips, 'chip-ick');
-
-    // --- Settings & Preferences Logic ---
-    const settingsToggleBtn = document.getElementById('settings-toggle-btn');
-    const settingsModal = document.getElementById('settings-modal');
-    const closeSettingsBtn = document.getElementById('close-settings-btn');
-    const saveSettingsBtn = document.getElementById('save-settings-btn');
-    const macroToggle = document.getElementById('macro-toggle');
-
-    // Initialize toggle state
-    macroToggle.checked = appState.showMacros || false;
-
-    settingsToggleBtn.addEventListener('click', () => settingsModal.classList.remove('hidden'));
-    closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
-    saveSettingsBtn.addEventListener('click', () => {
-        appState.showMacros = macroToggle.checked;
-        saveState();
-        settingsModal.classList.add('hidden');
-        // Refresh nutrition view to update macro visibility in modal if open
-        const activeTab = document.querySelector('.nutri-tab.active');
-        renderNutrition(activeTab ? activeTab.getAttribute('data-type') : 'snack');
-    });
 
     // --- Recipe Modal Logic ---
     const recipeModal = document.getElementById('recipe-modal');
@@ -1905,25 +2684,325 @@ document.addEventListener('DOMContentLoaded', () => {
     const moodChipsContainer = document.getElementById('mood-chips-container');
     const moodAdviceContainer = document.getElementById('mood-advice-container');
     
-    const irregularToggle = document.getElementById('irregular-cycle-toggle');
-    const cyclePhasesWrapper = document.getElementById('cycle-phases-wrapper');
+    // --- Cycle Setup & Tracking ---
+    const cycleSetupCard = document.getElementById('cycle-setup-card');
+    const cycleTrackerSection = document.getElementById('cycle-tracker-section');
     const flowIntensityContainer = document.getElementById('flow-intensity-container');
     const flowChipsWrapper = document.getElementById('flow-chips-wrapper');
     const periodStartDateInput = document.getElementById('period-start-date');
     const cycleDayReadout = document.getElementById('cycle-day-readout');
+    const cycleLengthReadout = document.getElementById('cycle-length-readout');
     const cycleRadios = document.querySelectorAll('input[name="cycle"]');
+    const conditionNotice = document.getElementById('condition-notice');
+    const conditionNoticeText = document.getElementById('condition-notice-text');
 
-    let activeSymptoms = new Set();
+    let activeSymptoms = [];
     let activeMoodId = null;
     let activeFlowId = null;
+    let partnerState = { name: "Mojo (Solo)", active: false };
 
-    // Load initial state for toggle and date
-    if (appState.lastPeriodStart) {
+    // --- Utility: Nudges & Accountability ---
+    const showNudge = (icon, user, message) => {
+        const container = document.getElementById('nudge-container');
+        if (!container) return;
+
+        // Vibrate if mobile
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+
+        const toast = document.createElement('div');
+        toast.className = 'nudge-toast';
+        toast.innerHTML = `
+            <div class="nudge-icon">${icon}</div>
+            <div>
+                <span class="nudge-user">${user}</span>
+                <span class="nudge-text">${message}</span>
+            </div>
+        `;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(20px)';
+            setTimeout(() => toast.remove(), 400);
+        }, 5000);
+    };
+
+    const triggerPartnerNudge = () => {
+        const nudges = [
+            { icon: "🔥", msg: "Just crushed their first set!" },
+            { icon: "🙌", msg: "Keep pushing, nearly there!" },
+            { icon: "💪", msg: "New Personal Record!" },
+            { icon: "🐒", msg: "Mojo is nodding in approval." }
+        ];
+        const n = nudges[Math.floor(Math.random() * nudges.length)];
+        showNudge(n.icon, window.partnerState.name, n.msg);
+    };
+    const setupStep1 = document.getElementById('setup-step-1');
+    const setupStep2 = document.getElementById('setup-step-2');
+    const setupStep3 = document.getElementById('setup-step-3');
+    const setupCycleLengthSlider = document.getElementById('setup-cycle-length');
+    const setupCycleLengthDisplay = document.getElementById('setup-cycle-length-display');
+    const setupPeriodStart = document.getElementById('setup-period-start');
+    const setupFinishBtn = document.getElementById('setup-finish-btn');
+    const setupStep2Next = document.getElementById('setup-step-2-next');
+    const cycleEditSetupBtn = document.getElementById('cycle-edit-setup-btn');
+
+    let setupSelectedConditions = new Set();
+
+    const showSetupOrTracker = () => {
+        if (appState.cycleSetupDone) {
+            cycleSetupCard.classList.add('hidden');
+            cycleTrackerSection.classList.remove('hidden');
+        } else {
+            cycleSetupCard.classList.remove('hidden');
+            cycleTrackerSection.classList.add('hidden');
+        }
+    };
+
+    // Step 1: regularity buttons
+    document.querySelectorAll('.setup-regularity-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.setup-regularity-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const answer = btn.dataset.answer;
+            appState.cycleRegularity = answer;
+            appState.irregularCycles = (answer !== 'yes');
+
+            if (answer === 'yes') {
+                setupStep2.classList.add('hidden');
+                setupStep3.classList.remove('hidden');
+            } else {
+                setupStep2.classList.remove('hidden');
+                setupStep3.classList.add('hidden');
+            }
+        });
+    });
+
+    // Step 2: condition chips
+    document.querySelectorAll('.setup-condition-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cond = btn.dataset.condition;
+            if (cond === 'none') {
+                setupSelectedConditions.clear();
+                document.querySelectorAll('.setup-condition-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+            } else {
+                document.querySelector('.setup-condition-btn[data-condition="none"]')?.classList.remove('selected');
+                setupSelectedConditions.delete('none');
+                if (setupSelectedConditions.has(cond)) {
+                    setupSelectedConditions.delete(cond);
+                    btn.classList.remove('selected');
+                } else {
+                    setupSelectedConditions.add(cond);
+                    btn.classList.add('selected');
+                }
+            }
+        });
+    });
+
+    if (setupStep2Next) {
+        setupStep2Next.addEventListener('click', () => {
+            setupStep3.classList.remove('hidden');
+        });
+    }
+
+    // Step 3: cycle length slider
+    if (setupCycleLengthSlider) {
+        setupCycleLengthSlider.addEventListener('input', () => {
+            setupCycleLengthDisplay.textContent = setupCycleLengthSlider.value;
+        });
+    }
+
+    // Finish setup
+    // --- Hysterectomy-aware UI toggling ---
+    const periodDateBox = document.getElementById('period-date-box');
+    const cycleStatusBar = document.querySelector('.cycle-status-bar');
+
+    const applyHysterectomyMode = () => {
+        const isHyst = !!(appState.conditions && appState.conditions.hysterectomy);
+        if (periodDateBox) periodDateBox.classList.toggle('hidden', isHyst);
+        if (cycleStatusBar) cycleStatusBar.classList.toggle('hidden', isHyst);
+        if (cycleDayReadout) cycleDayReadout.classList.toggle('hidden', isHyst);
+        if (cycleLengthReadout) cycleLengthReadout.classList.toggle('hidden', isHyst);
+    };
+
+    if (setupFinishBtn) {
+        setupFinishBtn.addEventListener('click', () => {
+            appState.cycleLength = parseInt(setupCycleLengthSlider.value) || 28;
+            if (setupPeriodStart.value) {
+                appState.lastPeriodStart = setupPeriodStart.value;
+            }
+            // Save conditions
+            const conds = {};
+            ['pcos', 'endometriosis', 'hormonal-bc', 'perimenopause', 'hysterectomy', 'pregnancy', 'postpartum'].forEach(c => {
+                conds[c] = setupSelectedConditions.has(c);
+            });
+            appState.conditions = conds;
+            appState.cycleSetupDone = true;
+            saveState();
+            showSetupOrTracker();
+            applyHysterectomyMode();
+            if (!conds.hysterectomy) {
+                calculatePhase();
+            }
+            updateCycleBox();
+            showMojoMessage('Cycle Tracking Set Up!', 'Mojo will tailor your advice to your cycle.');
+        });
+    }
+
+    // Edit setup button — re-show the setup card
+    if (cycleEditSetupBtn) {
+        cycleEditSetupBtn.addEventListener('click', () => {
+            appState.cycleSetupDone = false;
+            saveState();
+            // Pre-fill the setup card with existing values
+            setupCycleLengthSlider.value = appState.cycleLength || 28;
+            setupCycleLengthDisplay.textContent = appState.cycleLength || 28;
+            if (appState.lastPeriodStart) setupPeriodStart.value = appState.lastPeriodStart;
+            // Pre-select regularity
+            const regAnswer = appState.cycleRegularity || 'yes';
+            document.querySelectorAll('.setup-regularity-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.answer === regAnswer);
+            });
+            // Pre-select conditions
+            setupSelectedConditions.clear();
+            const conds = appState.conditions || {};
+            document.querySelectorAll('.setup-condition-btn').forEach(b => {
+                const hasCond = !!conds[b.dataset.condition];
+                b.classList.toggle('selected', hasCond);
+                if (hasCond) setupSelectedConditions.add(b.dataset.condition);
+            });
+            // Show appropriate steps
+            setupStep1.classList.remove('hidden');
+            if (regAnswer !== 'yes') {
+                setupStep2.classList.remove('hidden');
+            } else {
+                setupStep2.classList.add('hidden');
+            }
+            setupStep3.classList.remove('hidden');
+            showSetupOrTracker();
+        });
+    }
+
+    // Load initial period date into tracker
+    if (appState.lastPeriodStart && periodStartDateInput) {
         periodStartDateInput.value = appState.lastPeriodStart;
     }
-    irregularToggle.checked = appState.irregularCycles || false;
 
-    // Render Mood chips
+    // --- Proportional Phase Calculation ---
+    const getPhaseBreakpoints = (cycleLen) => {
+        // Phases scale proportionally to cycle length
+        // Menstrual: ~18% (period itself), Follicular: ~28%, Ovulatory: ~7%, Luteal: ~47% (but luteal is fairly fixed ~12-16 days)
+        // The luteal phase is the most biologically consistent (~14 days), so we anchor on that.
+        const lutealDays = Math.min(Math.round(cycleLen * 0.47), cycleLen - 7); // cap so other phases have room
+        const menstrualDays = Math.round(cycleLen * 0.18);
+        const ovulatoryDays = Math.max(2, Math.round(cycleLen * 0.07));
+        const follicularDays = cycleLen - menstrualDays - ovulatoryDays - lutealDays;
+
+        return {
+            menstrual: { start: 1, end: menstrualDays },
+            follicular: { start: menstrualDays + 1, end: menstrualDays + follicularDays },
+            ovulatory: { start: menstrualDays + follicularDays + 1, end: menstrualDays + follicularDays + ovulatoryDays },
+            luteal: { start: menstrualDays + follicularDays + ovulatoryDays + 1, end: cycleLen },
+            lengths: { menstrual: menstrualDays, follicular: follicularDays, ovulatory: ovulatoryDays, luteal: lutealDays }
+        };
+    };
+
+    const getCycleLength = () => {
+        if (appState.periodHistory && appState.periodHistory.length >= 2) {
+            const dates = appState.periodHistory.slice(-4).map(d => new Date(d)).sort((a, b) => a - b);
+            let total = 0, count = 0;
+            for (let i = 1; i < dates.length; i++) {
+                const diff = Math.floor((dates[i] - dates[i-1]) / (1000 * 60 * 60 * 24));
+                if (diff > 0 && diff < 60) { total += diff; count++; }
+            }
+            if (count > 0) return Math.round(total / count);
+        }
+        return appState.cycleLength || 28;
+    };
+
+    const calculatePhase = () => {
+        if (!appState.lastPeriodStart) {
+            if (cycleDayReadout) cycleDayReadout.innerText = 'Log your period start date below.';
+            return;
+        }
+
+        const start = new Date(appState.lastPeriodStart);
+        const today = new Date();
+        const diffDays = Math.floor(Math.abs(today - start) / (1000 * 60 * 60 * 24)) + 1;
+        const cycleLength = getCycleLength();
+        const cycleDay = diffDays % cycleLength || cycleLength;
+        const bp = getPhaseBreakpoints(cycleLength);
+
+        if (cycleDayReadout) cycleDayReadout.innerText = `Day ${cycleDay} of ${cycleLength}`;
+        if (cycleLengthReadout) cycleLengthReadout.innerText = `${cycleLength}-day cycle`;
+
+        let projectedPhase = 'luteal';
+        if (cycleDay <= bp.menstrual.end) projectedPhase = 'menstrual';
+        else if (cycleDay <= bp.follicular.end) projectedPhase = 'follicular';
+        else if (cycleDay <= bp.ovulatory.end) projectedPhase = 'ovulatory';
+
+        cycleRadios.forEach(radio => {
+            if (radio.value === projectedPhase) radio.checked = true;
+        });
+
+        // Update phase bar visualization
+        updatePhaseBar(cycleDay, cycleLength, bp);
+    };
+
+    const updatePhaseBar = (cycleDay, cycleLength, bp) => {
+        const segMenstrual = document.getElementById('seg-menstrual');
+        const segFollicular = document.getElementById('seg-follicular');
+        const segOvulatory = document.getElementById('seg-ovulatory');
+        const segLuteal = document.getElementById('seg-luteal');
+        const marker = document.getElementById('cycle-day-marker');
+
+        if (!segMenstrual) return;
+
+        const pct = (days) => ((days / cycleLength) * 100).toFixed(1) + '%';
+        segMenstrual.style.width = pct(bp.lengths.menstrual);
+        segFollicular.style.width = pct(bp.lengths.follicular);
+        segOvulatory.style.width = pct(bp.lengths.ovulatory);
+        segLuteal.style.width = pct(bp.lengths.luteal);
+
+        if (marker && cycleDay) {
+            marker.style.left = `calc(${((cycleDay - 0.5) / cycleLength * 100).toFixed(1)}% - 2px)`;
+        }
+    };
+
+    // --- Condition-aware notice ---
+    const updateConditionNotice = () => {
+        const conds = appState.conditions || {};
+        const active = Object.entries(conds).filter(([_, v]) => v).map(([k]) => k);
+        const isIrregular = appState.irregularCycles;
+
+        if (active.length === 0 && !isIrregular) {
+            conditionNotice.classList.add('hidden');
+            return;
+        }
+
+        conditionNotice.classList.remove('hidden');
+        let messages = [];
+
+        if (isIrregular) {
+            messages.push('Your cycle may not follow standard phase timing.');
+        }
+        if (conds.pcos) messages.push('PCOS can cause longer or unpredictable cycles — phase estimates are approximate.');
+        if (conds.endometriosis) messages.push('Endometriosis may affect symptoms beyond typical phase patterns.');
+        if (conds['hormonal-bc']) messages.push('Hormonal birth control can suppress or alter natural cycle phases.');
+        if (conds.perimenopause) messages.push('Perimenopause brings cycle length changes — trust your symptoms over the calendar.');
+        if (conds.hysterectomy) messages.push('Without a period to track, your hormonal cycle still happens — select your phase manually based on how you feel, and let symptoms guide you.');
+        if (conds.pregnancy) messages.push('Cycle tracking is paused during pregnancy. Focus on symptoms and how you feel.');
+        if (conds.postpartum) messages.push('Postpartum cycles can take months to normalize. Be patient with yourself.');
+
+        if (messages.length > 0) {
+            messages.push('We\'ll prioritize your symptoms and mood to guide recommendations.');
+        }
+
+        conditionNoticeText.innerHTML = messages.join('<br>');
+    };
+
+    // --- Render chips (mood, symptom, flow) ---
     const renderMoodChips = () => {
         if (!moodChipsContainer) return;
         moodChipsContainer.innerHTML = '';
@@ -1932,11 +3011,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.className = `symptom-chip ${activeMoodId === mood.id ? 'selected' : ''}`;
             btn.innerText = mood.label;
             btn.addEventListener('click', () => {
-                if (activeMoodId === mood.id) {
-                    activeMoodId = null;
-                } else {
-                    activeMoodId = mood.id;
-                }
+                activeMoodId = activeMoodId === mood.id ? null : mood.id;
                 renderMoodChips();
                 updateCycleBox();
             });
@@ -1944,7 +3019,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Render Symptom chips
     const renderSymptomChips = () => {
         if (!symptomChipsContainer) return;
         symptomChipsContainer.innerHTML = '';
@@ -1953,11 +3027,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.className = `symptom-chip ${activeSymptoms.has(sym.id) ? 'selected' : ''}`;
             btn.innerText = sym.label;
             btn.addEventListener('click', () => {
-                if (activeSymptoms.has(sym.id)) {
-                    activeSymptoms.delete(sym.id);
-                } else {
-                    activeSymptoms.add(sym.id);
-                }
+                activeSymptoms.has(sym.id) ? activeSymptoms.delete(sym.id) : activeSymptoms.add(sym.id);
                 renderSymptomChips();
                 updateCycleBox();
             });
@@ -1965,7 +3035,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Render Flow chips
     const renderFlowChips = () => {
         if (!flowChipsWrapper) return;
         flowChipsWrapper.innerHTML = '';
@@ -1974,11 +3043,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.className = `symptom-chip ${activeFlowId === flow.id ? 'selected' : ''}`;
             btn.innerText = flow.label;
             btn.addEventListener('click', () => {
-                if (activeFlowId === flow.id) {
-                    activeFlowId = null;
-                } else {
-                    activeFlowId = flow.id;
-                }
+                activeFlowId = activeFlowId === flow.id ? null : flow.id;
                 renderFlowChips();
                 updateCycleBox();
             });
@@ -1986,36 +3051,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const calculatePhase = () => {
-        if (!periodStartDateInput.value || irregularToggle.checked) return;
-
-        const start = new Date(periodStartDateInput.value);
-        const today = new Date();
-        const diffTime = Math.abs(today - start);
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-        const cycleDay = diffDays % 28 || 28;
-
-        cycleDayReadout.innerText = `Cycle Day ${cycleDay}: Calculating phase automatically...`;
-
-        let projectedPhase = 'follicular';
-        if (cycleDay <= 5) projectedPhase = 'menstrual';
-        else if (cycleDay <= 13) projectedPhase = 'follicular';
-        else if (cycleDay <= 15) projectedPhase = 'ovulatory';
-        else projectedPhase = 'luteal';
-
-        // Update radios
-        cycleRadios.forEach(radio => {
-            if (radio.value === projectedPhase) {
-                radio.checked = true;
-            }
-        });
-    };
-    
+    // --- Main update function ---
     const updateCycleBox = () => {
         const selectedPhase = document.querySelector('input[name="cycle"]:checked')?.value || "follicular";
-        const symData = cycleData[selectedPhase];
-        const isIrregular = irregularToggle.checked;
-        
+        const symData = window.cycleData?.[selectedPhase];
+        if (!symData) return;
+
+        const isIrregular = appState.irregularCycles;
+        const hasConditions = Object.values(appState.conditions || {}).some(v => v);
+
         // Dashboard Quick View
         const dashPhaseName = document.getElementById('dash-phase-name');
         const dashCycleDay = document.getElementById('dash-cycle-day');
@@ -2030,84 +3074,52 @@ document.addEventListener('DOMContentLoaded', () => {
             flowIntensityContainer.classList.remove('hidden');
         } else {
             flowIntensityContainer.classList.add('hidden');
-            activeFlowId = null; 
+            activeFlowId = null;
             renderFlowChips();
         }
 
-        // Handle Irregular Toggle UI
-        if (isIrregular) {
-            cyclePhasesWrapper.classList.add('opacity-50');
-            cycleDayReadout.innerText = "Manual override: Irregular cycle logic active.";
-            phaseMood.innerHTML = `<em>Since you have indicated irregular cycles or conditions, standard phase estimates may be inaccurate. We'll focus on your symptoms to guide you.</em>`;
-        } else {
-            cyclePhasesWrapper.classList.remove('opacity-50');
-            if (periodStartDateInput.value) {
-                const start = new Date(periodStartDateInput.value);
-                const today = new Date();
-                const diffTime = Math.abs(today - start);
-                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-                const cycleDay = (diffDays % 28 === 0) ? 28 : (diffDays % 28);
-                cycleDayReadout.innerText = `Cycle Day ${cycleDay}: Tracking automatically based on your start date.`;
-            } else {
-                cycleDayReadout.innerText = "Log a date to auto-calculate your phase, or select manually below.";
-            }
-            phaseMood.innerText = symData.mood;
+        // Phase mood text — always show it, but add a caveat for irregular/conditions
+        phaseMood.innerText = symData.mood;
+        if (isIrregular || hasConditions) {
+            phaseMood.innerHTML += `<br><em class="text-xs" style="opacity:0.7;">Phase timing is approximate for your cycle. Your logged symptoms below will refine these recommendations.</em>`;
         }
 
-        // Give mood specific advice if clicked
+        // Mood advice
         if (activeMoodId) {
             moodAdviceContainer.innerHTML = `<div class="advice-box" style="border-left-color: var(--primary); background: rgba(79, 70, 229, 0.1);"><p>${moodData[activeMoodId]}</p></div>`;
         } else {
             moodAdviceContainer.innerHTML = '';
         }
 
-        let movementText = '';
-        let nutritionText = '';
+        let movementText = `<p><strong>Phase Focus:</strong> ${symData.movement || symData.baseMovement}</p>`;
+        let nutritionText = `<p><strong>Phase Focus:</strong> ${symData.nutrition || symData.baseNutrition}</p>`;
 
-        if (!isIrregular) {
-            movementText += `<p><strong>Phase Focus:</strong> ${symData.movement || symData.baseMovement}</p>`;
-            nutritionText += `<p><strong>Phase Focus:</strong> ${symData.nutrition || symData.baseNutrition}</p>`;
-        } else {
-            movementText += `<p><strong>Irregular Cycle Base:</strong> Focus on gentle movement and mobility unless energy is high.</p>`;
-            nutritionText += `<p><strong>Irregular Cycle Base:</strong> Keep blood sugar stable. Hydrate heavily.</p>`;
-        }
-
-        // Add Flow specific adjustments
+        // Flow-specific adjustments
         if (selectedPhase === 'menstrual' && activeFlowId) {
             const fData = flowData[activeFlowId];
             if (fData) {
-                movementText += `<p class="mt-2 text-sm">💡 <em>For ${activeFlowId}:</em> ${fData.movement}</p>`;
-                nutritionText += `<p class="mt-2 text-sm">💡 <em>For ${activeFlowId}:</em> ${fData.nutrition}</p>`;
+                movementText += `<p class="mt-2 text-sm">💡 <em>For ${activeFlowId} flow:</em> ${fData.movement}</p>`;
+                nutritionText += `<p class="mt-2 text-sm">💡 <em>For ${activeFlowId} flow:</em> ${fData.nutrition}</p>`;
             }
         }
 
-        // Add Symptom specific adjustments
-        if (activeSymptoms.size > 0) {
-            activeSymptoms.forEach(id => {
-                const sData = symptomData[id];
-                if (sData) {
-                    movementText += `<p class="mt-2 text-sm">💡 <em>For ${id}:</em> ${sData.movement}</p>`;
-                    nutritionText += `<p class="mt-2 text-sm">💡 <em>For ${id}:</em> ${sData.nutrition}</p>`;
-                }
-            });
-        }
+        // Symptom-specific adjustments
+        activeSymptoms.forEach(id => {
+            const sData = window.symptomData?.[id];
+            if (sData) {
+                movementText += `<p class="mt-2 text-sm">💡 <em>For ${id}:</em> ${sData.movement}</p>`;
+                nutritionText += `<p class="mt-2 text-sm">💡 <em>For ${id}:</em> ${sData.nutrition}</p>`;
+            }
+        });
 
         if (phaseMovement) phaseMovement.innerHTML = movementText;
         if (phaseNutrition) phaseNutrition.innerHTML = nutritionText;
+
+        updateConditionNotice();
     };
 
-    if (cycleRadios) {
-        cycleRadios.forEach(radio => radio.addEventListener('change', updateCycleBox));
-    }
-    
-    if (irregularToggle) {
-        irregularToggle.addEventListener('change', () => {
-            appState.irregularCycles = irregularToggle.checked;
-            saveState();
-            calculatePhase();
-            updateCycleBox();
-        });
-    }
+    // Event listeners for tracker
+    cycleRadios.forEach(radio => radio.addEventListener('change', updateCycleBox));
 
     if (periodStartDateInput) {
         periodStartDateInput.addEventListener('change', () => {
@@ -2117,11 +3129,156 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCycleBox();
         });
     }
-    
-    renderMoodChips(); 
-    renderSymptomChips(); 
-    renderFlowChips(); 
-    calculatePhase();
+
+    // Initialize
+    showSetupOrTracker();
+    applyHysterectomyMode();
+    renderMoodChips();
+    renderSymptomChips();
+    renderFlowChips();
+    if (!(appState.conditions && appState.conditions.hysterectomy)) {
+        calculatePhase();
+    }
     updateCycleBox();
+
+    // ===== INSIGHTS & STATS =====
+    window.renderInsights = () => {
+        const volumeChart = document.getElementById('volume-chart-container');
+        const muscleChart = document.getElementById('muscle-chart-container');
+        const calendar = document.getElementById('consistency-calendar');
+        if (!volumeChart || !muscleChart || !calendar) return;
+
+        const history = appState.workoutHistory || [];
+        
+        // 1. Volume Chart (Last 8 sessions)
+        volumeChart.innerHTML = '';
+        const recentHistory = history.slice(-8).reverse();
+        let maxVol = 100;
+        const vols = recentHistory.map(h => {
+            let v = 0;
+            if (h.exercises) {
+                h.exercises.forEach(ex => {
+                    if (ex.sets) {
+                        ex.sets.forEach(s => {
+                            if (s.weight && s.reps) v += (parseFloat(s.weight) * parseInt(s.reps));
+                        });
+                    }
+                });
+            }
+            if (v > maxVol) maxVol = v;
+            return { date: h.date, vol: v };
+        });
+        
+        vols.forEach(item => {
+            const hPct = maxVol > 0 ? Math.max((item.vol / maxVol) * 100, 5) : 5;
+            const shortDate = new Date(item.date).toLocaleDateString(undefined, {month:'numeric', day:'numeric'});
+            volumeChart.innerHTML += `
+                <div class="insight-bar-wrapper">
+                    <div class="insight-tooltip">${item.vol} ${appState.units}</div>
+                    <div class="insight-bar" style="height: ${hPct}%"></div>
+                    <div class="insight-label">${shortDate}</div>
+                </div>
+            `;
+        });
+        if (vols.length === 0) {
+            volumeChart.innerHTML = '<p class="text-dim text-sm text-center full-width">No workout data yet.</p>';
+        }
+
+        // 2. Muscle Distribution
+        muscleChart.innerHTML = '';
+        const muscleCounts = {};
+        let totalEx = 0;
+        history.forEach(h => {
+             if (h.exercises) {
+                 h.exercises.forEach(ex => {
+                     const g = ex.group || 'other';
+                     muscleCounts[g] = (muscleCounts[g] || 0) + 1;
+                     totalEx++;
+                 });
+             }
+        });
+        if (totalEx === 0) {
+            muscleChart.innerHTML = '<p class="text-dim text-sm text-center mt-4">Start working out to see your distribution.</p>';
+        } else {
+            const mgLabels = {
+                'back-shoulders': 'Back/Shoulder',
+                'legs-glutes': 'Legs/Glutes',
+                'chest-triceps': 'Chest/Tri',
+                'core-cardio': 'Core/Cardio',
+                'full-body': 'Full Body',
+                'biceps': 'Biceps',
+                'mobility': 'Mobility'
+            };
+            Object.keys(muscleCounts).sort((a,b)=>muscleCounts[b]-muscleCounts[a]).slice(0,5).forEach(m => {
+                const pct = Math.round((muscleCounts[m]/totalEx)*100);
+                muscleChart.innerHTML += `
+                    <div class="muscle-bar-row">
+                        <div class="muscle-bar-label">${mgLabels[m] || 'Other'}</div>
+                        <div class="muscle-bar-track">
+                            <div class="muscle-bar-fill" style="width: ${pct}%"></div>
+                        </div>
+                        <div class="muscle-bar-pct">${pct}%</div>
+                    </div>
+                `;
+            });
+        }
+
+        // 3. Consistency Heatmap (Last 28 days)
+        calendar.innerHTML = '';
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        const dayBoxes = [];
+        const historyDates = new Set(history.map(h => new Date(h.date).toDateString()));
+        
+        for (let i = 27; i >= 0; i--) {
+            const d = new Date(today);
+            d.setDate(today.getDate() - i);
+            const isLogged = historyDates.has(d.toDateString());
+            let activeClass = '';
+            if (isLogged) {
+                // Determine intensity? For now just static 2
+                activeClass = 'active-2';
+            }
+            dayBoxes.push(`<div class="heatmap-box ${activeClass}" title="${d.toDateString()}"></div>`);
+        }
+        calendar.innerHTML = dayBoxes.join('');
+    };
+
+    // ===== PWA INSTALL PROMPT =====
+    let deferredPrompt;
+    const installPromptCard = document.getElementById('install-prompt-card');
+    const installBtn = document.getElementById('install-btn');
+    const installDismissBtn = document.getElementById('install-dismiss-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (installPromptCard) installPromptCard.classList.remove('hidden');
+    });
+
+    if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+            if (installPromptCard) installPromptCard.classList.add('hidden');
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt = null;
+            }
+        });
+    }
+    if (installDismissBtn) {
+        installDismissBtn.addEventListener('click', () => {
+            if (installPromptCard) installPromptCard.classList.add('hidden');
+        });
+    }
+
+    // --- Final Initialization Call ---
+    console.log("FlowFit: Initializing UI...");
+    updateDashboard();
+    renderWeekSchedule();
+    renderNutrition('snack');
+    renderDailyPicks();
+    if (typeof updateInsights === 'function') updateInsights();
+    if (typeof renderHistory === 'function') renderHistory();
+
 });
 

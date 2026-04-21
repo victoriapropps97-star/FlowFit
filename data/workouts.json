@@ -1,0 +1,86 @@
+{
+  "chest": [
+    { "name": "Barbell Bench Press (Flat)", "sets": "4 sets of 8 reps", "desc": "Squeeze the chest at the top and maintain a slight back arch." },
+    { "name": "Dumbbell Bench Press (Flat)", "sets": "4 sets of 8-10 reps", "desc": "Allows for an extended range of motion." },
+    { "name": "Barbell Bench Press (Incline)", "sets": "3 sets of 10 reps", "desc": "Targets upper chest. Keep your feet planted." },
+    { "name": "Dumbbell Bench Press (Incline)", "sets": "3 sets of 10-12 reps", "desc": "Pinch your shoulder blades together." },
+    { "name": "Decline Bench Press", "sets": "3 sets of 10 reps", "desc": "Keep elbows tucked in at a 45-degree angle." },
+    { "name": "Cable Crossovers", "sets": "3 sets of 15 reps", "desc": "Imagine hugging a large tree." },
+    { "name": "Machine Chest Press", "sets": "3 sets of 12 reps", "desc": "Great for getting volume safely." },
+    { "name": "Pec Deck Machine", "sets": "3 sets of 15 reps", "desc": "Isolate the chest fibers without engaging triceps." },
+    { "name": "Push-ups", "sets": "3 sets to failure", "desc": "Keep your core tight and elbows tucked.", "modifications": { "lowImpact": { "name": "Wall Push-ups", "desc": "Stand and push from the wall." }, "noEquipment": { "name": "Knee Push-ups", "desc": "Drop to knees to reduce load." } } }
+  ],
+  "back": [
+    { "name": "Barbell Rows", "sets": "4 sets of 8 reps", "desc": "Hinge at the hips, pull the bar to your belly button." },
+    { "name": "Dumbbell Rows", "sets": "3 sets of 10-12 reps", "desc": "Keep that back straight and pull to your hips!" },
+    { "name": "T-Bar Rows", "sets": "3 sets of 10 reps", "desc": "Use a V-grip handle, squeeze lats at the top." },
+    { "name": "Pull-ups", "sets": "3 sets to failure", "desc": "Focus on pulling with your lats, not your arms.", "modifications": { "noEquipment": { "name": "Assisted Pull-ups", "desc": "Use a band or machine." } } },
+    { "name": "Lat Pulldown (Wide Grip)", "sets": "3 sets of 10-12 reps", "desc": "Bring the bar to your upper chest." },
+    { "name": "Lat Pulldown (Close Grip)", "sets": "3 sets of 10-12 reps", "desc": "Lean back slightly and pull to your lower chest." },
+    { "name": "Seated Cable Row", "sets": "3 sets of 12 reps", "desc": "Don't swing your torso." }
+  ],
+  "shoulders": [
+    { "name": "Overhead Press (Barbell)", "sets": "4 sets of 8-10 reps", "desc": "Core tight, press without leaning too far back." },
+    { "name": "Dumbbell Shoulder Press (Seated)", "sets": "4 sets of 8-10 reps", "desc": "Control the weight on the way down." },
+    { "name": "Machine Shoulder Press", "sets": "3 sets of 12 reps", "desc": "Strict movement plane for safely adding volume." },
+    { "name": "Lateral Raises (Dumbbell)", "sets": "4 sets of 15 reps", "desc": "Pour the pitchers of water at the top." },
+    { "name": "Lateral Raises (Cable)", "sets": "3 sets of 15 reps", "desc": "Constant tension throughout the movement." },
+    { "name": "Front Raises", "sets": "3 sets of 12 reps", "desc": "Raise to eye level, do not swing." },
+    { "name": "Rear Delt Flyes (Dumbbell)", "sets": "3 sets of 12-15 reps", "desc": "Hinge forward and fly." },
+    { "name": "Face Pulls", "sets": "3 sets of 15 reps", "desc": "Great for shoulder health. Pull towards your nose." }
+  ],
+  "legs": [
+    { "name": "Barbell Squats", "sets": "4 sets of 8 reps", "desc": "Chest up, sink deep, drive out of the hole." },
+    { "name": "Hack Squat", "sets": "3 sets of 10 reps", "desc": "Focus on quad drive, press through mid-foot." },
+    { "name": "Leg Press", "sets": "4 sets of 12 reps", "desc": "Don't lock your knees out!" },
+    { "name": "Goblet Squats", "sets": "4 sets of 10 reps", "desc": "Hold DB/KB against your chest." },
+    { "name": "Bulgarian Split Squats", "sets": "3 sets of 8-10 reps per leg", "desc": "The burn means it's working." },
+    { "name": "Walking Lunges", "sets": "3 sets of 20 steps", "desc": "Keep your balance and stay low." },
+    { "name": "Leg Extensions", "sets": "3 sets of 15 reps", "desc": "Pause at the top for maximum tension on quads." },
+    { "name": "Romanian Deadlifts (Barbell)", "sets": "3 sets of 12 reps", "desc": "Hinge at the hips. Hamstrings loaded." },
+    { "name": "Romanian Deadlifts (Dumbbell)", "sets": "3 sets of 12 reps", "desc": "Keep dumbbells close to your legs." },
+    { "name": "Leg Curls (Seated)", "sets": "3 sets of 12 reps", "desc": "Isolate the hamstrings." },
+    { "name": "Leg Curls (Lying)", "sets": "3 sets of 12 reps", "desc": "Squeeze hips into the pad." },
+    { "name": "Hip Thrusts (Barbell)", "sets": "4 sets of 10 reps", "desc": "The king of glutes. Pause at the top." },
+    { "name": "Calf Raises (Standing)", "sets": "4 sets of 20 reps", "desc": "Full stretch at the bottom." },
+    { "name": "Calf Raises (Seated)", "sets": "4 sets of 15 reps", "desc": "Puts focus on the soleus muscle." }
+  ],
+  "arms": [
+    { "name": "Barbell Curls", "sets": "3 sets of 10 reps", "desc": "No swinging! Pin elbows to ribs." },
+    { "name": "Dumbbell Curls", "sets": "3 sets of 12 reps", "desc": "Supinate (twist) at the top." },
+    { "name": "Hammer Curls", "sets": "3 sets of 12 reps", "desc": "Target the brachialis." },
+    { "name": "Preacher Curls", "sets": "3 sets of 10 reps", "desc": "Isolate those biceps." },
+    { "name": "Cable Curls", "sets": "3 sets of 15 reps", "desc": "Keep constant tension." },
+    { "name": "Tricep Pushdowns (Rope)", "sets": "4 sets of 12 reps", "desc": "Pull the rope apart at the bottom." },
+    { "name": "Tricep Pushdowns (Straight Bar)", "sets": "4 sets of 12 reps", "desc": "Lock out your elbows." },
+    { "name": "Skull Crushers (EZ Bar)", "sets": "3 sets of 10-12 reps", "desc": "Lower to forehead, extend up." },
+    { "name": "Overhead Tricep Extension (Dumbbell)", "sets": "3 sets of 12 reps", "desc": "Keep elbows close to your head." },
+    { "name": "Tricep Dips", "sets": "3 sets of 10-12 reps", "desc": "Stay upright." }
+  ],
+  "core": [
+    { "name": "Plank", "sets": "3 sets, hold for 45-60s", "desc": "Squeeze your glutes and brace your core." },
+    { "name": "Hanging Leg Raises", "sets": "3 sets of 10-15 reps", "desc": "Lift legs without swinging." },
+    { "name": "Cable Crunches", "sets": "3 sets of 15 reps", "desc": "Flex spine, pull down with abs." },
+    { "name": "Russian Twists", "sets": "3 sets of 20 reps", "desc": "Control the twist, don't rush." },
+    { "name": "Bicycle Crunches", "sets": "3 sets of 20 reps per side", "desc": "Elbow to opposite knee." },
+    { "name": "Ab Rollouts", "sets": "3 sets of 10 reps", "desc": "Keep core extremely braced." }
+  ],
+  "full-body": [
+    { "name": "Kettlebell Swings", "sets": "4 sets of 15 reps", "desc": "It's a hip hinge, not a squat." },
+    { "name": "Thrusters", "sets": "3 sets of 12 reps", "desc": "Seamless movement from squat to press." },
+    { "name": "Renegade Rows", "sets": "3 sets of 10 reps per side", "desc": "Keep your hips completely still." },
+    { "name": "Power Cleans", "sets": "5 sets of 3 reps", "desc": "Explosive movement from hips." },
+    { "name": "Burpees", "sets": "3 sets of 10 reps", "desc": "Love them or hate them." }
+  ],
+  "mobility": [
+    { "name": "World's Greatest Stretch", "sets": "3 rounds", "desc": "A flowing mobility sequence for full body." },
+    { "name": "Thoracic Rotations", "sets": "3 sets of 10 per side", "desc": "Improve upper back mobility." },
+    { "name": "90/90 Hip Switches", "sets": "3 sets of 8 per side", "desc": "Open hips and improve squat comfort." }
+  ],
+  "cardio": [
+    { "name": "Rowing Machine", "sets": "20 minutes", "desc": "Steady-state rowing for endurance." },
+    { "name": "Treadmill Sprints", "sets": "10 rounds", "desc": "30s sprint / 60s walk." },
+    { "name": "Stairmaster", "sets": "20 minutes", "desc": "Pace yourself, no handrails if possible." },
+    { "name": "Jump Rope", "sets": "5 sets of 2 minutes", "desc": "Light on your feet." }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "menstrual": {
+    "mood": "You might feel inward, sensitive, or seeking rest. It's perfectly okay to take a break and focus on self-care.",
+    "baseMovement": "Low intensity (Walking, Stretching, Yoga). Focus on decongesting the pelvic floor. Avoid heavy core work.",
+    "baseNutrition": "Iron-rich foods (Red meat, Spinach, Lentils). Warm soothing liquids. Magnesium (Dark chocolate, Almonds) to reduce cramps."
+  },
+  "follicular": {
+    "mood": "Estrogen is rising! You may feel more confident, creative, and ready to socialize or try new things.",
+    "baseMovement": "High intensity (Powerlifting, HIIT, Boxing). You are most resilient to stress right now. Push for those PRs!",
+    "baseNutrition": "Fermented foods for gut health. Sprouts, leafy greens, and protein-packed grains like Quinoa to fuel your energy."
+  },
+  "ovulatory": {
+    "mood": "Confidence and energy usually peak. You might feel more sociable, attractive, and physically capable.",
+    "baseMovement": "Explosive movement (Sprinting, Heavy lifting). Your strength is likely at its absolute highest this week.",
+    "baseNutrition": "Anti-inflammatory foods (Berries, Turmeric). Plenty of water and fiber to help the body process estrogen effectively."
+  },
+  "luteal": {
+    "mood": "Progesterone is high. You might feel more introverted, prone to PMS symptoms, or craving comfort and slower paces.",
+    "baseMovement": "Moderate to Low intensity. Focus on strength maintenance and mobility. Listen to your body's energy signals.",
+    "baseNutrition": "Complex carbs (sweet potatoes, brown rice) stabilize blood sugar. Magnesium-rich foods help combat symptoms."
+  }
+}

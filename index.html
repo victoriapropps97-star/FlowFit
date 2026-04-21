@@ -2,46 +2,120 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowFit - Elevate Your Wellness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>MojoFit - Elevate Your Wellness</title>
+    <meta name="description" content="Your intelligent fitness companion. Track squats, plan your muscle groups, and level up with Mojo the Monkey.">
+    <meta name="theme-color" content="#4f46e5">
+
+    <!-- For PWABuilder Store Score -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="MojoFit">
+    <meta name="apple-mobile-web-app-title" content="MojoFit">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- iOS / Apple -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MojoFit">
+    <link rel="apple-touch-icon" href="assets/buddy1.png">
+
+    <!-- Fonts & Styles -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="app.js" defer></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('[MojoFit] Service Worker registered:', reg.scope))
+                    .catch(err => console.warn('[MojoFit] SW registration failed:', err));
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="app-container">
+        <!-- Privacy Lock Screen -->
+        <section id="lock-screen" class="lock-screen hidden">
+            <div class="lock-logo">🌊</div>
+            <h2 class="mb-4">Enter PIN</h2>
+            <div class="pin-display">
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+            </div>
+            <div class="keypad">
+                <button class="key" data-val="1">1</button>
+                <button class="key" data-val="2">2</button>
+                <button class="key" data-val="3">3</button>
+                <button class="key" data-val="4">4</button>
+                <button class="key" data-val="5">5</button>
+                <button class="key" data-val="6">6</button>
+                <button class="key" data-val="7">7</button>
+                <button class="key" data-val="8">8</button>
+                <button class="key" data-val="9">9</button>
+                <div></div>
+                <button class="key" data-val="0">0</button>
+                <button class="key backspace" data-val="back">⌫</button>
+            </div>
+            <p id="lock-error" class="text-xs text-secondary mt-6 hidden">Incorrect PIN. Try again.</p>
+        </section>
+
+        <!-- Nudge Notifications -->
+        <div id="nudge-container" class="nudge-container"></div>
+        
+        <!-- Install Prompt -->
+        <div id="install-prompt-card" class="install-prompt-banner hidden" style="margin: 1rem; border-radius: var(--radius-md); padding: 1rem; background: var(--primary); color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);">
+            <div>
+                <h3 class="mb-1" style="font-size: 1.1rem;">Install MojoFit</h3>
+                <p class="text-xs opacity-80" style="margin:0;">Get the fast, offline native app experience!</p>
+            </div>
+            <div class="flex gap-2">
+                <button id="install-btn" class="btn" style="background: white; color: var(--primary); padding: 0.5rem 1rem;">Install</button>
+                <button id="install-dismiss-btn" class="btn-close" style="color: white; opacity: 0.8; font-size: 1.5rem; line-height: 1;">×</button>
+            </div>
+        </div>
+
         <!-- Sidebar Navigation -->
-        <nav class="sidebar">
+        <nav class="sidebar" role="navigation" aria-label="Main navigation">
             <div class="logo">
-                <span class="icon">🌊</span> FlowFit
+                <span class="icon">🌊</span> MojoFit
             </div>
             <ul class="nav-links">
-                <li data-target="dashboard" class="active">
+                <li data-target="dashboard" class="active" role="button" tabindex="0" aria-controls="dashboard" onclick="navigateTo(this.getAttribute('data-target'))">
                     <span class="icon">🏠</span> Dashboard
                 </li>
-                <li data-target="workouts">
+                <li data-target="workouts" role="button" tabindex="0" aria-controls="workouts" onclick="navigateTo(this.getAttribute('data-target'))">
                     <span class="icon">⚡</span> Workouts
                 </li>
-                <li data-target="nutrition">
+                <li data-target="nutrition" role="button" tabindex="0" aria-controls="nutrition" onclick="navigateTo(this.getAttribute('data-target'))">
                     <span class="icon">🥑</span> Nutrition
                 </li>
-                <li data-target="wellness">
+                <li data-target="wellness" role="button" tabindex="0" aria-controls="wellness" onclick="navigateTo(this.getAttribute('data-target'))">
                     <span class="icon">🌸</span> Wellness
                 </li>
-                <li data-target="goals">
+                <li data-target="goals" role="button" tabindex="0" aria-controls="goals" onclick="navigateTo(this.getAttribute('data-target'))">
                     <span class="icon">🎯</span> Goals
+                </li>
+                <li data-target="insights" role="button" tabindex="0" aria-controls="insights" onclick="navigateTo(this.getAttribute('data-target'))">
+                    <span class="icon">📊</span> Insights
                 </li>
             </ul>
         </nav>
 
         <!-- Main Content Area -->
-        <main class="main-content">
+        <main id="main-app" class="main-content">
             
             <!-- Dashboard View -->
             <section id="dashboard" class="view active">
                 <header class="view-header flex-between">
                     <div>
-                        <h1>Welcome Back!</h1>
+                        <h1 id="welcome-heading">Welcome Back!</h1>
                         <p class="subtitle" id="daily-quote">"Strength does not come from physical capacity. It comes from an indomitable will."</p>
                     </div>
                     <div class="flex align-center gap-4">
@@ -80,13 +154,22 @@
                         </div>
                         <div class="stat-value mt-2" id="dash-cycle-day">Day --</div>
                         <p class="text-xs text-dim mt-2" id="dash-phase-tip">Log your cycle in Wellness for tips.</p>
-                        <button class="btn btn-secondary btn-small mt-4" onclick="document.querySelector('[data-target=\'wellness\']').click()">Full Tracker</button>
+                        <button id="open-wellness-btn" class="btn btn-secondary btn-small mt-4">Full Tracker</button>
                     </div>
                     
                     <div class="glass-card stat-card">
                         <h3>Weekly Streak</h3>
                         <div class="stat-value" id="streak-display">🔥 0 Days</div>
                         <p class="stat-subtitle">You move, you win.</p>
+                    </div>
+
+                    <div id="partner-status-card" class="glass-card stat-card partner-card">
+                        <div class="flex-between">
+                            <h3>Accountability</h3>
+                            <div id="partner-pulse" class="partner-avatar-pulse hidden"></div>
+                        </div>
+                        <div class="stat-value" id="partner-name-display">Mojo (Solo)</div>
+                        <p class="stat-subtitle" id="partner-status-text">Mojo is watching your back!</p>
                     </div>
                 </div>
                 
@@ -95,7 +178,7 @@
                         <h3>Next Up</h3>
                         <div class="stat-value">Flow & Fuel</div>
                         <p class="stat-subtitle">Consistency is key.</p>
-                        <button class="btn btn-primary mt-4" onclick="document.querySelector('[data-target=\'workouts\']').click()">Start</button>
+                        <button id="start-workouts-btn" class="btn btn-primary mt-4">Start</button>
                     </div>
                     <div class="glass-card feature-card">
                         <h3>Your Progress</h3>
@@ -127,6 +210,8 @@
                     <p id="water-mojo-msg" class="text-xs text-dim mt-2 text-center"></p>
                 </div>
             </section>
+
+            <!-- (Settings moved to main Preferences modal at bottom) -->
 
 
             <!-- Goals View -->
@@ -167,11 +252,11 @@
             </section>
 
             <!-- Add Goal Modal -->
-            <div id="add-goal-modal" class="modal hidden">
+            <div id="add-goal-modal" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="add-goal-title">
                 <div class="modal-content glass-card">
                     <div class="flex-between mb-4">
-                        <h2>New Goal</h2>
-                        <button id="close-goal-modal-btn" class="btn-close">&times;</button>
+                        <h2 id="add-goal-title">New Goal</h2>
+                        <button id="close-goal-modal-btn" class="btn-close" aria-label="Close new goal dialog">&times;</button>
                     </div>
 
                     <div class="mb-4">
@@ -208,10 +293,10 @@
             </div>
 
             <!-- Goal Celebrate Overlay -->
-            <div id="goal-celebrate-overlay" class="celebrate-overlay hidden">
+            <div id="goal-celebrate-overlay" class="celebrate-overlay hidden" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="celebrate-title">
                 <div class="celebrate-card glass-card grad-primary text-white text-center">
                     <div style="font-size: 4rem; margin-bottom: 1rem;">🏆🎉🐒</div>
-                    <h2>GOAL CRUSHED!</h2>
+                    <h2 id="celebrate-title">GOAL CRUSHED!</h2>
                     <p id="celebrate-goal-name" class="mt-2 opacity-80"></p>
                     <p class="mt-2 text-sm opacity-70">Mojo is SO proud of you!</p>
                     <button id="close-celebrate-btn" class="btn mt-4" style="background: white; color: var(--primary);">Let's Go! 🔥</button>
@@ -225,24 +310,117 @@
                         <h1>Workout Tracker</h1>
                         <p class="subtitle">Log your sets, track your volume, and smash those goals.</p>
                     </div>
-                    <div class="flex gap-2">
-                        <button id="share-session-btn" class="btn btn-secondary btn-small">📤 Share Code</button>
-                        <button id="join-session-btn" class="btn btn-secondary btn-small">📥 Join Partner</button>
-                    </div>
+                    <button id="copy-workout-btn" class="btn btn-secondary btn-small">📋 Copy Summary</button>
                 </header>
+
+                <!-- Workout Controls (primary action — top of page) -->
+                <div id="workout-controls" class="glass-card mb-6">
+                    <div class="flex-between">
+                        <div>
+                            <h3 id="workout-status">Ready to Lift?</h3>
+                            <p class="text-sm text-dim" id="workout-status-sub">Start a new session to track progress.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button id="start-plan-btn" class="btn btn-primary hidden">Start Plan</button>
+                            <button id="start-workout-btn" class="btn btn-secondary">Empty Session</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Workout Session -->
+                <div id="active-workout-container" class="hidden">
+                    <div class="exercise-actions mb-4 flex gap-2">
+                        <button id="open-library-btn" class="btn btn-primary flex-1">📚 Add from Library</button>
+                        <div class="exercise-search-wrap flex-2" style="position: relative;">
+                            <input type="text" id="exercise-search-input" class="beautiful-input full-width" placeholder="Search exercises...">
+                            <div id="exercise-search-results" class="exercise-search-results hidden"></div>
+                        </div>
+                    </div>
+
+                    <div id="tracker-exercises-container" class="tracker-list">
+                        <!-- JS injects compact exercise cards here -->
+                    </div>
+
+                    <button id="finish-workout-btn" class="btn btn-primary full-width mt-6">Finish & Log Workout</button>
+                </div>
 
                 <!-- Weekly Schedule -->
                 <div class="glass-card mb-6" id="weekly-schedule-card">
                     <div class="flex-between mb-4">
                         <div>
                             <h3>📅 My Weekly Schedule</h3>
-                            <p class="text-xs text-dim">Plan your week. Tap a day to assign a muscle group.</p>
+                            <p class="text-xs text-dim">Tap any day to assign a muscle group.</p>
                         </div>
-                        <button id="edit-schedule-btn" class="btn btn-secondary btn-small">Edit Week</button>
                     </div>
                     <div id="weekly-schedule-grid" class="week-schedule-grid">
-                        <!-- JS will inject day cards here -->
+                        <!-- JS injects day cards here -->
                     </div>
+                </div>
+
+                <!-- Day Plan Viewer (shown when a day with a plan is selected) -->
+                <div id="day-plan-viewer" class="glass-card mb-6 hidden">
+                    <div class="flex-between mb-3">
+                        <div>
+                            <h3 id="day-plan-title">Monday's Plan</h3>
+                            <div class="flex gap-2 align-center mt-1">
+                                <p class="text-xs text-dim" id="day-plan-subtitle">Back & Shoulders — 5 exercises</p>
+                                <button id="shuffle-day-plan-btn" class="btn-icon-sm" title="Shuffle exercises">🔄</button>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button id="save-routine-btn" class="btn btn-small btn-secondary" title="Save this as my custom routine">💾 Save Routine</button>
+                            <button id="load-routine-btn" class="btn btn-small btn-secondary hidden" title="Load my saved routine">📂 Load Routine</button>
+                            <button id="close-day-plan-btn" class="btn-close">&times;</button>
+                        </div>
+                    </div>
+                    
+                    <div id="unified-plan-insights" class="mb-6 flex gap-3">
+                        <div id="day-fuel-card" class="glass-card flex-1 p-3 clickable" style="border-left: 3px solid var(--secondary);">
+                            <div class="flex-between mb-1">
+                                <h5 class="text-xs uppercase opacity-70 tracking-tighter">⚡ Daily Fuel</h5>
+                                <span class="badge-mini">Recipe</span>
+                            </div>
+                            <div id="day-fuel-content">
+                                <p class="text-sm font-bold truncate">Loading fuel...</p>
+                                <p class="text-xs opacity-60">High protein focus</p>
+                            </div>
+                        </div>
+                        <div id="day-insight-card" class="glass-card flex-1 p-3" style="border-left: 3px solid var(--primary);">
+                            <div class="flex-between mb-1">
+                                <h5 class="text-xs uppercase opacity-70 tracking-tighter">🧠 Mojo Insight</h5>
+                                <span class="badge-mini">Tip</span>
+                            </div>
+                            <div id="day-insight-content">
+                                <p class="text-xs italic">"Push your limits gently today."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="technique-visual-container" class="technique-visual-wrap hidden mb-6">
+                        <div class="flex-between mb-2">
+                            <h4 class="text-xs uppercase tracking-wide opacity-70">Expert Technique Guide</h4>
+                            <button id="close-visual-btn" class="btn-close-xs">&times;</button>
+                        </div>
+                        <div class="visual-premium-video glass-card" id="technique-visual-content">
+                            <!-- Visual content injected here -->
+                            <div class="video-overlay">
+                                <div class="play-btn-realistic"></div>
+                            </div>
+                            <div class="flex-center" style="height: 180px; background: linear-gradient(45deg, #111, #222);">
+                                <p class="text-xs text-dim uppercase tracking-widest">Realistic 3D Technique Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="text-xs uppercase tracking-widest mb-3 opacity-50">Lifting Routine</h4>
+                    <div id="day-plan-exercises" class="day-plan-list">
+                        <!-- JS injects exercise items here -->
+                    </div>
+                    <div class="day-plan-add-wrap mt-3">
+                        <input type="text" id="day-plan-search" class="beautiful-input full-width" placeholder="Search to add another exercise...">
+                        <div id="day-plan-search-results" class="exercise-search-results hidden"></div>
+                    </div>
+                    <button id="use-day-plan-btn" class="btn btn-primary full-width mt-6">🔥 Start This Workout</button>
+                </div>
                 </div>
 
                 <!-- Personal Records -->
@@ -256,47 +434,27 @@
                     </div>
                 </div>
 
-
-                <div id="workout-controls" class="glass-card mb-6">
-                    <div class="flex-tween flex-between">
-                        <div>
-                            <h3 id="workout-status">Ready to Lift?</h3>
-                            <p class="text-sm text-dim">Start a new session to track progress.</p>
-                        </div>
-                        <button id="start-workout-btn" class="btn btn-primary">Start</button>
+                <!-- Workout History -->
+                <div class="glass-card mb-6" id="history-card">
+                    <div class="flex-between mb-3">
+                        <h3>📊 Workout History</h3>
+                        <span id="history-count-badge" class="tag" style="background: var(--secondary); color: white;">0 sessions</span>
+                    </div>
+                    <div id="history-list-container" class="history-list">
+                        <p class="text-sm text-dim">Complete your first workout to see history here!</p>
                     </div>
                 </div>
 
-                <div id="active-workout-container" class="hidden">
-                    <div class="flex-between mb-4">
-                        <h3>Active Session</h3>
-                        <button id="add-exercise-btn" class="btn btn-secondary btn-small">+ Add Exercise</button>
-                    </div>
-                    
-                    <div id="tracker-exercises-container" class="tracker-list">
-                        <!-- Javascript will inject exercise trackers here -->
-                    </div>
-
-                    <button id="finish-workout-btn" class="btn btn-primary full-width mt-6">Finish & Log Workout</button>
-                </div>
-
-                <!-- Exercise Selection Modal -->
-                <div id="exercise-modal" class="modal hidden">
+                <!-- Schedule Picker Modal -->
+                <div id="schedule-picker-modal" class="modal hidden" role="dialog" aria-modal="true">
                     <div class="modal-content glass-card">
                         <div class="flex-between mb-4">
-                            <h2>Select Exercise</h2>
-                            <button id="close-modal-btn" class="btn-close">×</button>
+                            <h2 id="schedule-picker-title">Assign Day</h2>
+                            <button id="close-schedule-picker-btn" class="btn-close">&times;</button>
                         </div>
-                        <select id="modal-muscle-group" class="beautiful-select full-width mb-4">
-                            <option value="back-shoulders">Back & Shoulders</option>
-                            <option value="legs-glutes">Legs & Glutes</option>
-                            <option value="chest-triceps">Chest & Triceps</option>
-                            <option value="core-cardio">Core & Cardio</option>
-                            <option value="full-body">Full Body Flow</option>
-                        </select>
-                        <ul id="modal-exercise-list" class="exercise-select-list">
-                            <!-- Exercise options injected here -->
-                        </ul>
+                        <div id="schedule-picker-options" class="schedule-picker-grid">
+                            <!-- JS injects muscle group option cards here -->
+                        </div>
                     </div>
                 </div>
             </section>
@@ -314,7 +472,7 @@
                     <div class="timer-display" id="rest-timer-display">60</div>
                     <p class="text-xs text-dim text-center mb-3">seconds remaining</p>
                     <div class="flex gap-2 justify-center">
-                        <button class="rest-duration-btn active" data-secs="30">30s</button>
+                        <button class="rest-duration-btn" data-secs="30">30s</button>
                         <button class="rest-duration-btn" data-secs="60">60s</button>
                         <button class="rest-duration-btn" data-secs="90">90s</button>
                         <button class="rest-duration-btn" data-secs="120">120s</button>
@@ -438,25 +596,102 @@
                     <button id="finish-recovery-btn" class="btn btn-primary full-width mt-6">I feel better! (+20 XP)</button>
                 </div>
 
-                <div class="wellness-grid mt-8">
-                    <!-- Cycle Tracking (Optional) -->
-                    <div class="glass-card cycle-card">
-                        <h3>Cycle Tracking</h3>
-                        <div class="flex-between mb-4">
-                            <p class="text-sm text-dim">Phase-based training optimization.</p>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="irregular-cycle-toggle">
-                                <span class="slider"></span>
-                                <span class="toggle-label text-xs">Irregular Cycle / Conditions</span>
-                            </label>
+                <!-- Cycle Setup Card (shown once until configured) -->
+                <div id="cycle-setup-card" class="glass-card cycle-setup-card mt-8">
+                    <div class="cycle-setup-header">
+                        <div class="flex align-center gap-3 mb-2">
+                            <img src="assets/buddy1.png" class="mojo-mini-head" alt="Mojo">
+                            <div>
+                                <h3 class="mb-0">Set Up Cycle Tracking</h3>
+                                <p class="text-xs text-dim">Personalize your experience so Mojo can give you the best advice.</p>
+                            </div>
                         </div>
-                        <div class="mb-4" style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid var(--primary);">
+                    </div>
+
+                    <!-- Step 1: Regular cycles? -->
+                    <div id="setup-step-1" class="setup-step">
+                        <p class="text-sm mb-3">Do you experience regular cycles?</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <button class="btn btn-secondary setup-regularity-btn" data-answer="yes">Yes, mostly regular</button>
+                            <button class="btn btn-secondary setup-regularity-btn" data-answer="no">No, they're irregular</button>
+                            <button class="btn btn-secondary setup-regularity-btn" data-answer="unsure">Not sure</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Conditions (shown if no/unsure) -->
+                    <div id="setup-step-2" class="setup-step hidden">
+                        <p class="text-sm mb-2">Do any of these apply to you? <span class="text-xs text-dim">(select all that apply)</span></p>
+                        <div class="flex gap-2 flex-wrap mb-4">
+                            <button class="symptom-chip setup-condition-btn" data-condition="pcos">PCOS</button>
+                            <button class="symptom-chip setup-condition-btn" data-condition="endometriosis">Endometriosis</button>
+                            <button class="symptom-chip setup-condition-btn" data-condition="hormonal-bc">Hormonal Birth Control</button>
+                            <button class="symptom-chip setup-condition-btn" data-condition="perimenopause">Perimenopause</button>
+                            <button class="symptom-chip setup-condition-btn" data-condition="hysterectomy">Hysterectomy (ovaries retained)</button>
+                            <button class="symptom-chip setup-condition-btn" data-condition="pregnancy">Pregnancy</button>
+                            <button class="symptom-chip setup-condition-btn" data-condition="postpartum">Postpartum</button>
+                            <button class="symptom-chip setup-condition-btn" data-condition="none">None of these</button>
+                        </div>
+                        <button id="setup-step-2-next" class="btn btn-primary btn-small">Next</button>
+                    </div>
+
+                    <!-- Step 3: Cycle length + first day -->
+                    <div id="setup-step-3" class="setup-step hidden">
+                        <div class="mb-4">
+                            <label class="text-sm mb-1 block">How long is your typical cycle? <span class="text-xs text-dim">(days from period to period)</span></label>
+                            <div class="flex align-center gap-3">
+                                <input type="range" id="setup-cycle-length" min="21" max="50" value="28" class="cycle-range-slider">
+                                <span id="setup-cycle-length-display" class="text-sm font-semibold" style="min-width: 5ch; text-align: center;">28</span>
+                            </div>
+                            <p class="text-xs text-dim mt-1">Most cycles range 21–35 days. If yours varies a lot, pick your best guess — we'll adapt over time.</p>
+                        </div>
+                        <div class="mb-4">
+                            <label for="setup-period-start" class="text-sm mb-1 block">First day of your last period:</label>
+                            <input type="date" id="setup-period-start" class="beautiful-date-picker full-width">
+                            <p class="text-xs text-dim mt-1">This helps auto-detect your current phase. You can skip this and select manually later.</p>
+                        </div>
+                        <button id="setup-finish-btn" class="btn btn-primary full-width">Save & Start Tracking</button>
+                    </div>
+                </div>
+
+                <!-- Cycle Tracker (shown after setup) -->
+                <div id="cycle-tracker-section" class="wellness-grid mt-8 hidden">
+                    <div class="glass-card cycle-card">
+                        <div class="flex-between mb-4">
+                            <h3>Cycle Tracking</h3>
+                            <button id="cycle-edit-setup-btn" class="btn btn-secondary btn-small">Edit Setup</button>
+                        </div>
+
+                        <div class="cycle-status-bar mb-4">
+                            <div class="flex-between mb-2">
+                                <span class="text-sm" id="cycle-day-readout">Day --</span>
+                                <span class="text-xs text-dim" id="cycle-length-readout">-- day cycle</span>
+                            </div>
+                            <div class="cycle-phase-bar">
+                                <div class="phase-segment menstrual-seg" id="seg-menstrual"></div>
+                                <div class="phase-segment follicular-seg" id="seg-follicular"></div>
+                                <div class="phase-segment ovulatory-seg" id="seg-ovulatory"></div>
+                                <div class="phase-segment luteal-seg" id="seg-luteal"></div>
+                                <div class="cycle-day-marker" id="cycle-day-marker"></div>
+                            </div>
+                            <div class="flex-between mt-1">
+                                <span class="text-xs text-dim">Menstrual</span>
+                                <span class="text-xs text-dim">Follicular</span>
+                                <span class="text-xs text-dim">Ovulatory</span>
+                                <span class="text-xs text-dim">Luteal</span>
+                            </div>
+                        </div>
+
+                        <div id="condition-notice" class="condition-notice hidden mb-4">
+                            <p class="text-xs" id="condition-notice-text"></p>
+                        </div>
+
+                        <div id="period-date-box" class="mb-4" style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid var(--primary);">
                             <div class="flex-between">
                                 <label for="period-start-date" class="text-sm">First day of last period:</label>
                                 <input type="date" id="period-start-date" class="beautiful-date-picker">
                             </div>
-                            <p id="cycle-day-readout" class="text-xs text-dim mt-2">Log a date to auto-calculate your phase, or select manually below.</p>
                         </div>
+
                         <div class="cycle-phases" id="cycle-phases-wrapper">
                             <label class="cycle-radio">
                                 <input type="radio" name="cycle" value="menstrual">
@@ -481,7 +716,7 @@
                                 <!-- JS Injection for Flow Chips -->
                             </div>
                         </div>
-                        
+
                         <div class="cycle-interactive-container mt-6">
                             <div class="cycle-section mood-section">
                                 <h4>Current Phase Focus</h4>
@@ -500,7 +735,7 @@
                                     <!-- JS Injection for Chips -->
                                 </div>
                             </div>
-                            
+
                             <div class="cycle-recommendations-grid mt-4">
                                 <div class="cycle-section move-section">
                                     <h4>Movement & Stretches</h4>
@@ -515,20 +750,100 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Insights / Stats View -->
+            <section id="insights" class="view">
+                <header class="view-header">
+                    <h1>📊 Insights & Stats</h1>
+                    <p class="subtitle">Track your consistency and monitor your gains over time.</p>
+                </header>
+
+                <div class="glass-card mb-6">
+                    <h3>Volume Lifted Over Time</h3>
+                    <p class="text-xs text-dim mb-4">Total weight × reps across your last 8 sessions.</p>
+                    <div id="volume-chart-container" class="insights-bar-chart flex align-end gap-2" style="height: 200px; padding: 1rem 0; border-bottom: 2px solid var(--border-color);">
+                        <!-- JS injected bars -->
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="glass-card stat-card">
+                        <h3>Muscle Group Focus</h3>
+                        <div id="muscle-chart-container" class="flex-column gap-3 mt-4">
+                            <!-- JS injected bars -->
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <h3>Consistency Snapshot</h3>
+                        <p class="text-xs text-dim mb-4">Your workout heatmap.</p>
+                        <div id="consistency-calendar" class="flex flex-wrap gap-1">
+                            <!-- JS injected boxes -->
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div> <!-- /app-container -->
 
-    <!-- Settings Modal -->
-    <div id="settings-modal" class="modal hidden">
-        <div class="modal-content glass-card center-modal">
+    <!-- Settings / Preferences Modal -->
+    <div id="settings-modal" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="settings-modal-title">
+        <div class="modal-content glass-card center-modal settings-modal-scroll">
             <div class="flex-between mb-4">
-                <h2>Preferences</h2>
-                <button id="close-settings-btn" class="btn-close">×</button>
+                <h2 id="settings-modal-title">Preferences</h2>
+                <button id="close-settings-btn" class="btn-close" aria-label="Close preferences">×</button>
             </div>
-            <div class="mb-6">
-                <div class="flex-between p-4 glass-hover round-md">
+
+            <!-- Profile -->
+            <div class="settings-section">
+                <h4 class="settings-section-title">Profile</h4>
+                <div class="mb-4">
+                    <label class="text-sm mb-1 block">Display Name</label>
+                    <input type="text" id="pref-display-name" class="beautiful-input full-width" placeholder="What should Mojo call you?">
+                </div>
+                <div class="mb-4">
+                    <label class="text-sm mb-1 block">Fitness Level</label>
+                    <select id="pref-fitness-level" class="beautiful-select full-width">
+                        <option value="beginner">Beginner — new to working out</option>
+                        <option value="intermediate">Intermediate — consistent for a while</option>
+                        <option value="advanced">Advanced — experienced lifter/athlete</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Workout -->
+            <div class="settings-section">
+                <h4 class="settings-section-title">Workout</h4>
+                <div class="mb-4">
+                    <label class="text-sm mb-1 block">Weight Units</label>
+                    <div class="flex gap-2">
+                        <button class="btn btn-secondary btn-small unit-btn" data-unit="lbs">lbs</button>
+                        <button class="btn btn-secondary btn-small unit-btn" data-unit="kg">kg</button>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="text-sm mb-1 block">Default Rest Timer</label>
+                    <div class="flex gap-2">
+                        <button class="btn btn-secondary btn-small rest-pref-btn" data-secs="30">30s</button>
+                        <button class="btn btn-secondary btn-small rest-pref-btn" data-secs="60">60s</button>
+                        <button class="btn btn-secondary btn-small rest-pref-btn" data-secs="90">90s</button>
+                        <button class="btn btn-secondary btn-small rest-pref-btn" data-secs="120">120s</button>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="flex-column">
+                        <label><input type="checkbox" id="pref-modified"> Require modified/accessible workouts</label>
+                        <label><input type="checkbox" id="pref-lowimpact"> Prefer low-impact alternatives</label>
+                        <label><input type="checkbox" id="pref-noequipment"> Prefer no-equipment alternatives</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nutrition & Hydration -->
+            <div class="settings-section">
+                <h4 class="settings-section-title">Nutrition & Hydration</h4>
+                <div class="flex-between p-4 glass-hover round-md mb-4">
                     <div>
-                        <h4 class="mb-1">Nutritional Macro Data</h4>
+                        <h4 class="mb-1">Show Macro Data</h4>
                         <p class="text-xs text-dim">Display Protein, Carbs, and Fats for recipes.</p>
                     </div>
                     <label class="toggle-switch">
@@ -536,8 +851,99 @@
                         <span class="slider"></span>
                     </label>
                 </div>
+                <div class="mb-4">
+                    <label class="text-sm mb-1 block">Daily Water Goal (glasses)</label>
+                    <div class="flex align-center gap-3">
+                        <input type="range" id="pref-water-goal" min="4" max="16" value="8" class="cycle-range-slider">
+                        <span id="pref-water-goal-display" class="text-sm font-semibold" style="min-width: 3ch; text-align: center;">8</span>
+                    </div>
+                </div>
             </div>
+
+            <!-- Security & Privacy -->
+            <div class="settings-section">
+                <div class="flex-between mb-4">
+                    <h4 class="settings-section-title">Security & Privacy</h4>
+                    <span class="privacy-badge">Local Only</span>
+                </div>
+                <p class="text-xs text-dim mb-4">MojoFit never sends your data to the cloud. All information stays on this device.</p>
+                
+                <div class="flex-between p-4 glass-hover round-md mb-4">
+                    <div>
+                        <h4 class="mb-1">Privacy Lock</h4>
+                        <p class="text-xs text-dim">Require a PIN to access the app.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="pref-lock-enabled">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div id="pin-setup-wrap" class="mb-4 hidden">
+                    <label class="text-sm mb-1 block">Set 4-Digit PIN</label>
+                    <div class="flex gap-2">
+                        <input type="password" id="pref-pin-input" class="beautiful-input" placeholder="****" maxlength="4" style="width: 100px; letter-spacing: 0.5em; text-align: center;">
+                        <button id="save-pin-btn" class="btn btn-secondary btn-small">Save PIN</button>
+                    </div>
+                </div>
+                
+                <h4 class="settings-section-title mt-6">Data Backup</h4>
+                <p class="text-xs text-dim mb-3">Export your data safely to transfer to a new device or backup.</p>
+                <div class="flex gap-2">
+                    <button id="export-data-btn" class="btn btn-secondary btn-small full-width">Export</button>
+                    <button id="import-data-btn" class="btn btn-secondary btn-small full-width">Import</button>
+                    <input type="file" id="import-file-input" accept=".json" class="hidden">
+                </div>
+            </div>
+
+            <!-- General -->
+            <div class="settings-section">
+                <h4 class="settings-section-title">General</h4>
+                
+                <div class="flex-between p-4 glass-hover round-md mb-4 mt-2">
+                    <div>
+                        <h4 class="mb-1">Mojo Voice Guidance</h4>
+                        <p class="text-xs text-dim">Mojo speaks timers and tips aloud.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="pref-voice-guidance">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="mb-4">
+                    <label class="text-sm mb-1 block">Quote Change Frequency</label>
+                    <select id="quote-frequency-select" class="beautiful-select full-width">
+                        <option value="1">Daily</option>
+                        <option value="3">Every 3 days</option>
+                        <option value="7">Weekly</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Accessibility -->
+            <div class="settings-section">
+                <h4 class="settings-section-title">Accessibility</h4>
+                <div class="flex-between p-4 glass-hover round-md mb-4">
+                    <div>
+                        <h4 class="mb-1">Reduce Motion</h4>
+                        <p class="text-xs text-dim">Turn off animations and transitions.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="pref-reduce-motion">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
             <button id="save-settings-btn" class="btn btn-primary full-width">Done</button>
+
+            <!-- Danger Zone -->
+            <div class="settings-section danger-zone">
+                <h4 class="settings-section-title">Danger Zone</h4>
+                <p class="text-xs text-dim mb-3">This permanently deletes all your data — goals, workout history, cycle info, and the privacy PIN. This cannot be undone.</p>
+                <button id="reset-all-data-btn" class="btn btn-small full-width" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);">Wipe All Data & Start Fresh</button>
+            </div>
         </div>
     </div>
 
@@ -583,5 +989,28 @@
             </div>
         </div>
     </div>
+        </div>
+    </div>
+
+    <!-- Exercise Library Modal -->
+    <div id="library-modal" class="modal hidden">
+        <div class="modal-content glass-card library-modal-content">
+            <div class="flex-between mb-4">
+                <h2>Exercise Library</h2>
+                <button id="close-library-modal-btn" class="btn-close">×</button>
+            </div>
+            
+            <div class="library-categories" id="library-categories">
+                <!-- Category chips generated via JS -->
+            </div>
+
+            <div class="library-list-container">
+                <div id="library-exercise-list" class="library-exercise-list">
+                    <!-- Exercises generated via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

@@ -1,0 +1,45 @@
+{
+  "name": "MojoFit - Elevate Your Wellness",
+  "short_name": "MojoFit",
+  "description": "Your intelligent fitness companion. Track squats, plan your muscle groups, and level up with Mojo the Monkey.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f111a",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait",
+  "categories": ["fitness", "health", "lifestyle"],
+  "id": "com.mojofit.app",
+  "dir": "ltr",
+  "lang": "en-US",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "assets/buddy1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/buddy1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/screenshot1.png",
+      "sizes": "1920x945",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "MojoFit Dashboard"
+    },
+    {
+      "src": "assets/screenshot2.png",
+      "sizes": "1920x945",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Workout Planning"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+*.zip
+READY_FOR_GHOST_LINK/
+test_extract/
+node_modules/
+.DS_Store
+Thumbs.db
