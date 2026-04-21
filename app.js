@@ -3353,7 +3353,8 @@ const inspirationalQuotes = [
 
 });
 
-// Service Worker Registration
+// Service Worker Registration (DISABLED TEMPORARILY FOR RECOVERY)
+/*
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
@@ -3361,4 +3362,5 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('SW Failed', err));
     });
 }
+*/
 
