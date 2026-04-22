@@ -23,17 +23,27 @@
 
     <!-- Fonts & Styles -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <!-- Force Reset: Unregister broken Service Workers -->
+    <link rel="stylesheet" href="style.css?v=nuclear_v2">
+    <!-- NUCLEAR RESET: Clear all persistent memory & scripts -->
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(registrations => {
-                for(let registration of registrations) {
-                    registration.unregister();
-                }
-                console.log('[MojoFit] FORCE RESET: Old Service Workers cleared.');
-            });
-        }
+        (function() {
+            console.log('[MojoFit] NUCLEAR RESET: Purging all memory...');
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(regs => {
+                    for(let reg of regs) {
+                        reg.unregister().then(() => console.log('[MojoFit] SW Unregistered'));
+                    }
+                });
+            }
+            // Wipe everything that could hold old settings or broken state
+            localStorage.clear();
+            sessionStorage.clear();
+            if (window.caches) {
+                caches.keys().then(names => {
+                    for (let name of names) caches.delete(name);
+                });
+            }
+        })();
     </script>
 </head>
 <body>
@@ -1012,6 +1022,6 @@
     </div>
 
     <!-- General Scripts -->
-    <script src="app.js"></script>
+    <script src="app.js?v=nuclear_v2"></script>
 </body>
 </html>
